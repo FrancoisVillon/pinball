@@ -8,11 +8,12 @@ public class aPolygon extends Polygon {
 
 	private boolean active = false;
 	String descr = "";
+	String phrase = "";
 	int points = 1;
 	int x, y;
 	ImageIcon img;
 
-	public aPolygon(String str, int point, int[] is, int[] is2, int i, int x, int y, ImageIcon img) {
+	public aPolygon(String str, String phrase, int point, int[] is, int[] is2, int i, int x, int y, ImageIcon img) {
 		super(is, is2, i);
 		// aMyTest.panelA.map.put(str, false);
 		descr = str;
@@ -20,6 +21,7 @@ public class aPolygon extends Polygon {
 		this.points = point;
 		this.x = x;
 		this.y = y;
+		this.phrase = phrase;
 	}
 
 	public String toString() {

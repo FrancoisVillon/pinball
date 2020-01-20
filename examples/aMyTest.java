@@ -89,10 +89,10 @@ public class aMyTest {
 		panelA.add(label);
 		
 		// Afficahge message
-		labelM = new JLabel("00000000000000000000000000000000000000000000000000");
+		labelM = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelM.setForeground(Color.white);
-		labelM.setFont(new Font("squaredance00", labelM.getFont().getStyle(), 40));
-		labelM.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
+		labelM.setFont(new Font("squaredance00", labelM.getFont().getStyle(), 30));
+		labelM.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3);
 		labelM.setSize(label.getPreferredSize());
 		panelA.add(labelM);
@@ -106,7 +106,7 @@ public class aMyTest {
 		    
 
 		label.setText("Score : 0" );
-		labelM.setText("");
+		labelM.setText("Let's go !");
 		panelA.repaint();
 
 		
