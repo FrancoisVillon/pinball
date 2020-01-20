@@ -1,35 +1,39 @@
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
 
 public class aGame {
 
-	static int valR = 222;
-	static int valG = 120;
-	static int valB = 66;
-	static int seuilR = 45;
-	static int seuilG = 60;
-	static int seuilB = 35;
+	final int valR = 222;
+	final int valG = 120;
+	final int valB = 66;
+	final int seuilR = 45;
+	final int seuilG = 60;
+	final int seuilB = 35;
+	
+	final int SCORE_TRIPLE_TARGET = 500;
 
 	private int[] loc = new int[2];
 	private aPolygon prev_area = null;
 
 	int score = 0;
-	
+
 	private int nonAreaCount = 0;
 
+	HashMap<String, aPolygon> map;
+
 	public aGame() {
+		map = aMyTest.panelA.map;
 		initTarget();
 		loc[0] = 0;
 		loc[1] = 0;
 
 	}
-	
-	
 
 	public void searchNplay(BufferedImage image) {
-		aMyTest.panelA.repaint();
 		loc = searchByPrevious(image, loc[0], loc[1]);
 		if (loc[0] == -1 && loc[1] == -1) {
 			// System.out.println("Not found");
@@ -47,9 +51,11 @@ public class aGame {
 
 	// Verif zones
 
-	public static boolean targetAff = false; 
+	public static boolean targetAff = false;
+
 	public boolean verify(int x, int y) {
-		for (aPolygon pol : aMyTest.panelA.list) {
+		for(Entry<String, aPolygon> entry : map.entrySet()) {
+	    aPolygon pol = entry.getValue();
 			// System.out.println(x + " : " + y+ "("+pol.contains(x, y)+")");
 			if (pol.contains(x, y)) {
 				nonAreaCount = 0;
@@ -62,6 +68,9 @@ public class aGame {
 				
 				if (pol.action(prev_area)) {
 					pol.active();
+					
+					actionSpeciale(pol);
+					
 					aMyTest.panelA.paintComponent(null);
 //					if(pol.descr.contains("gauche")) {
 //						if(targetAff) {
@@ -88,6 +97,21 @@ public class aGame {
 	}
 
 	// Recherche balle
+
+	private void actionSpeciale(aPolygon pol) {
+		
+		if(pol.descr.contains("plateforme")) {
+			map.get("rampe").allumer();
+		}
+		
+		if(map.get("target gauche 1").isActive() && map.get("target gauche 2").isActive() && map.get("target gauche 3").isActive()) {
+			map.get("target gauche 1").eteindre();
+			map.get("target gauche 2").eteindre();
+			map.get("target gauche 3").eteindre();
+			score+=SCORE_TRIPLE_TARGET;
+		}
+		
+	}
 
 	public int[] searchByPrevious(BufferedImage img, int prevX, int prevY) {
 		int[] ret = new int[2];
@@ -153,15 +177,12 @@ public class aGame {
 
 	// init
 
-	
 	@SuppressWarnings("serial")
 	private void initTarget() {
-		
-		//aMyTest.panelA.map.put("target gauche 1", false);
 
 		ImageIcon imgTarget = new ImageIcon("/home/nicolas/Bureau/target.png");
 		ImageIcon imgFleche = new ImageIcon("/home/nicolas/Bureau/fleche.png");
-		
+
 		aPolygon targetG1 = new aPolygon("target gauche 1", 100, new int[] { 743, 743, 777, 777 },
 				new int[] { 530, 495, 495, 525 }, 4, 220, 40, imgTarget);
 		aPolygon targetG2 = new aPolygon("target gauche 2", 100, new int[] { 810, 810, 777, 777 },
@@ -169,35 +190,34 @@ public class aGame {
 		aPolygon targetG3 = new aPolygon("target gauche 3", 100, new int[] { 810, 810, 850, 850 },
 				new int[] { 520, 495, 495, 520 }, 4, 230, 385, imgTarget);
 		aPolygon targetD = new aPolygon("target droit", 100, new int[] { 725, 725, 810, 810 },
-				new int[] { 220, 240, 240, 220 }, 4,1690,35, imgTarget);
+				new int[] { 220, 260, 260, 220 }, 4, 1690, 35, imgTarget);
 
 		aPolygon rampe = new aPolygonCompt("rampe", 20,
 				new int[] { 725, 680, 650, 625, 625, 635, 666, 693, 710, 685, 685, 702, 721, 756 },
-				new int[] { 380, 422, 470, 540, 583, 620, 652, 666, 600, 585, 534, 507, 484, 462 }, 14, 715,20, imgFleche);
+				new int[] { 380, 422, 470, 540, 583, 620, 652, 666, 600, 585, 534, 507, 484, 462 }, 14, 715, 20,
+				imgFleche);
 
 		aPolygon plateforme = new aPolygon("plateforme", 500, new int[] { 708, 720, 760, 780, 873, 925, 920, 700 },
-				new int[] { 602, 608, 540, 532, 526, 570, 665, 670 }, 8, 780,160, imgFleche);
-		
+				new int[] { 602, 608, 540, 532, 526, 570, 665, 670 }, 8, 780, 160, imgFleche);
 
-		aPolygon start = new aPolygon("start", 500, new int[] { 1150,1150, 1224, 1224},
-				new int[] { 145, 175, 175, 145}, 4, -1, -1, null);
+		aPolygon start = new aPolygon("start", 500, new int[] { 1150, 1150, 1224, 1224 },
+				new int[] { 145, 175, 175, 145 }, 4, -1, -1, null);
 
 		aPolygonNeedPrev trou = new aPolygonNeedPrev("trou", 250, new int[] { 930, 960, 975, 970, 950, 930, 925 },
-				new int[] { 580, 580, 600, 625, 630, 625, 600 }, 7,-1,-1,null, new ArrayList<aPolygon>() {
+				new int[] { 580, 580, 600, 625, 630, 625, 600 }, 7, -1, -1, null, new ArrayList<aPolygon>() {
 					{
 						add(plateforme);
 					}
 				});
 
-		aMyTest.panelA.list.add(targetG1);
-		aMyTest.panelA.list.add(targetG2);
-		aMyTest.panelA.list.add(targetG3);
-		aMyTest.panelA.list.add(targetD);
-		aMyTest.panelA.list.add(rampe);
-		aMyTest.panelA.list.add(plateforme);
-		aMyTest.panelA.list.add(trou);
-		aMyTest.panelA.list.add(start);
-		
+		map.put(targetG1.descr, targetG1);
+		map.put(targetG2.descr, targetG2);
+		map.put(targetG3.descr, targetG3);
+		map.put(targetD.descr, targetD);
+		map.put(rampe.descr, rampe);
+		map.put(plateforme.descr, plateforme);
+		map.put(trou.descr, trou);
+		map.put(start.descr, start);
 
 	}
 

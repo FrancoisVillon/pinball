@@ -38,6 +38,13 @@ public class aPolygon extends Polygon {
 		}
 	}
 
+	public void allumer() {
+		active = true;
+	}
+	public void eteindre() {
+		active = false;
+	}
+
 	public void draw(Graphics g) {
 		g.drawOval(xpoints[0], ypoints[0], 10, 10);
 		for (int i = 1; i < xpoints.length; i++) {
