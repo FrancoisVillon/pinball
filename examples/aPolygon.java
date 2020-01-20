@@ -17,4 +17,8 @@ public class aPolygon extends Polygon{
 		return "["+descr+"] "+super.toString();
 	}
 
+	public boolean action(aPolygon prev_area) {
+		return !this.equals(prev_area);
+	}
+
 }

@@ -64,7 +64,7 @@ public class aMyTest {
 		window2.setVisible(true);
 
 		// Fenetre affichage
-		JFrame window3 = new JFrame("Afficahge");
+		JFrame window3 = new JFrame("Affichage");
 		panelA = new aMyJPanel();
 
 		ImageIcon fond = new ImageIcon("/home/nicolas/Bureau/aff.png");
