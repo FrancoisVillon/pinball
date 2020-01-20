@@ -31,11 +31,7 @@ public class aPolygon extends Polygon {
 	}
 
 	public void active() {
-		if (active) {
-			active = false;
-		} else {
-			active = true;
-		}
+		allumer();
 	}
 
 	public void allumer() {

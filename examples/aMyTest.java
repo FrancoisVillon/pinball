@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -21,8 +23,10 @@ public class aMyTest {
 	static int count = 0;
 	static WebcamPanel panel;
 	static aMyJPanel panelD, panelA;
-	static JLabel label;
+	static JLabel label, labelM;
 	static aGame game;
+	
+	static int nbBalle = 0;
 
 	public static void main(String[] args) {
 
@@ -83,15 +87,26 @@ public class aMyTest {
 		label.setSize(label.getPreferredSize());
 		panelA.setLayout(null);
 		panelA.add(label);
+		
+		// Afficahge message
+		labelM = new JLabel("00000000000000000000000000000000000000000000000000");
+		labelM.setForeground(Color.white);
+		labelM.setFont(new Font("squaredance00", labelM.getFont().getStyle(), 40));
+		labelM.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
+				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3);
+		labelM.setSize(label.getPreferredSize());
+		panelA.add(labelM);
 
 		window3.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// window3.setUndecorated(true);
 		window3.add(panelA);
 		window3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window3.pack();
-		window3.setVisible(true);
+		window3.setVisible(true);		    
+		    
 
 		label.setText("Score : 0" );
+		labelM.setText("");
 		panelA.repaint();
 
 		
@@ -106,13 +121,21 @@ public class aMyTest {
 		while (true) {
 
 			try {
-				game.searchNplay(webcam.getImage());
+				if(nbBalle>0) {
+					game.searchNplay(webcam.getImage());
+				}else {
+
+					game.waitPartie(webcam.getImage());
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			drawOnScreen(panelD);
 		}
+
+		
+		
 
 	}
 
@@ -131,7 +154,7 @@ public class aMyTest {
 		}
 	}
 
-	public static void refreshScoreLabel() {
+	public static void refreshLabel() {
 		
 		label.setText("Score : " + game.score);
 		panelA.repaint();

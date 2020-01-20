@@ -13,7 +13,7 @@ public class aGame {
 	final int seuilR = 45;
 	final int seuilG = 60;
 	final int seuilB = 35;
-	
+
 	final int SCORE_TRIPLE_TARGET = 500;
 
 	private int[] loc = new int[2];
@@ -41,12 +41,29 @@ public class aGame {
 			// System.out.println(" - > Found (x : " + loc[0] + ", y : " + loc[1]);
 			aMyTest.drawPosBalle(loc[0], loc[1]);
 			if (verify(loc[0], loc[1])) {// TODO finir
-				System.out.println("repaint");
-				aMyTest.refreshScoreLabel();
+				aMyTest.refreshLabel();
 
 			}
+
+			// TODO ? actionSpeciale(prev_area);
 		}
 
+	}
+
+	public void waitPartie(BufferedImage image) {
+		loc = searchByPrevious(image, loc[0], loc[1]);
+		if (loc[0] == -1 && loc[1] == -1) {
+		} else {
+			aMyTest.drawPosBalle(loc[0], loc[1]);
+			if (loc[0] < 360 && loc[1] < 360) {
+				aMyTest.nbBalle = 3;
+				score = 0;
+				aMyTest.labelM.setText("New game !");
+				aMyTest.refreshLabel();
+			}
+
+			// TODO ? actionSpeciale(prev_area);
+		}
 	}
 
 	// Verif zones
@@ -54,33 +71,30 @@ public class aGame {
 	public static boolean targetAff = false;
 
 	public boolean verify(int x, int y) {
-		for(Entry<String, aPolygon> entry : map.entrySet()) {
-	    aPolygon pol = entry.getValue();
-			// System.out.println(x + " : " + y+ "("+pol.contains(x, y)+")");
+
+		for (Entry<String, aPolygon> entry : map.entrySet()) {
+			aPolygon pol = entry.getValue();
+
 			if (pol.contains(x, y)) {
 				nonAreaCount = 0;
 				System.out.println(pol.descr);
-				if(pol.descr.contains("start")) {
-					score = 0;
+
+				if (pol.descr.contains("start") && prev_area != pol) {
+
+					actionStart();
 					prev_area = pol;
 					return true;
 				}
-				
+
 				if (pol.action(prev_area)) {
 					pol.active();
-					
+
 					actionSpeciale(pol);
-					
+
 					aMyTest.panelA.paintComponent(null);
-//					if(pol.descr.contains("gauche")) {
-//						if(targetAff) {
-//							targetAff = false;
-//						}else {
-//							targetAff = true;
-//						}
-//						aMyTest.drawTarget(0,0, targetAff);
-//					}
 					System.out.println(pol.points + " points ! " + pol.descr);
+					aMyTest.labelM.setText(pol.points + " points in " + pol.descr + " !");
+					aMyTest.refreshLabel();
 					score += pol.points;
 					prev_area = pol;
 					return true;
@@ -88,30 +102,76 @@ public class aGame {
 				prev_area = pol;
 				return false;
 			}
+
 		}
 		nonAreaCount++;
-		if(nonAreaCount>5) {
+		if (nonAreaCount > 5) {
 			prev_area = null;
+			actionPerm();
 		}
 		return false;
 	}
 
-	// Recherche balle
+	private void actionPerm() {
+		map.get("rampe").eteindre();
+		map.get("plateforme").eteindre();
+		map.get("fuite").eteindre();
+
+		aMyTest.panelA.paintComponent(null);
+		aMyTest.panelA.repaint();
+	}
+
+	private void actionStart() {
+
+		aMyTest.nbBalle--;
+		if (aMyTest.nbBalle == 0) {
+			aMyTest.labelM.setText("GAME OVER");
+		} else {
+			aMyTest.labelM.setText("Next ball !\n Ball n°" + aMyTest.nbBalle);
+		}
+		aMyTest.refreshLabel();
+		// score = 0;
+		for (Entry<String, aPolygon> entry : map.entrySet()) {
+			aPolygon pol2 = entry.getValue();
+			pol2.eteindre();
+		}
+
+	}
 
 	private void actionSpeciale(aPolygon pol) {
-		
-		if(pol.descr.contains("plateforme")) {
-			map.get("rampe").allumer();
+
+		if (pol == null) {
+			System.out.println("null");
+			map.get("rampe").eteindre();
+			map.get("plateforme").eteindre();
+			map.get("fuite").eteindre();
+		} else {
+
+			if (pol.descr.contains("plateforme")) {
+				map.get("rampe").allumer();
+			} else {
+				map.get("plateforme").eteindre();
+				if (!pol.descr.contains("rampe")) {
+					map.get("rampe").eteindre();
+				}
+			}
+
+			if (!pol.descr.contains("fuite")) {
+				map.get("fuite").eteindre();
+			}
+
+			if (map.get("target gauche 1").isActive() && map.get("target gauche 2").isActive()
+					&& map.get("target gauche 3").isActive()) {
+				map.get("target gauche 1").eteindre();
+				map.get("target gauche 2").eteindre();
+				map.get("target gauche 3").eteindre();
+				score += SCORE_TRIPLE_TARGET;
+				System.out.println("TRIPLE !!");
+			}
 		}
-		
-		if(map.get("target gauche 1").isActive() && map.get("target gauche 2").isActive() && map.get("target gauche 3").isActive()) {
-			map.get("target gauche 1").eteindre();
-			map.get("target gauche 2").eteindre();
-			map.get("target gauche 3").eteindre();
-			score+=SCORE_TRIPLE_TARGET;
-		}
-		
 	}
+
+	// Recherche balle
 
 	public int[] searchByPrevious(BufferedImage img, int prevX, int prevY) {
 		int[] ret = new int[2];
@@ -180,19 +240,19 @@ public class aGame {
 	@SuppressWarnings("serial")
 	private void initTarget() {
 
-		ImageIcon imgTarget = new ImageIcon("/home/nicolas/Bureau/target.png");
 		ImageIcon imgFleche = new ImageIcon("/home/nicolas/Bureau/fleche.png");
+		ImageIcon imgGdeFleche = new ImageIcon("/home/nicolas/Bureau/flecheGde.png");
 
-		aPolygon targetG1 = new aPolygon("target gauche 1", 100, new int[] { 743, 743, 777, 777 },
-				new int[] { 530, 495, 495, 525 }, 4, 220, 40, imgTarget);
-		aPolygon targetG2 = new aPolygon("target gauche 2", 100, new int[] { 810, 810, 777, 777 },
-				new int[] { 530, 495, 495, 525 }, 4, 225, 215, imgTarget);
-		aPolygon targetG3 = new aPolygon("target gauche 3", 100, new int[] { 810, 810, 850, 850 },
-				new int[] { 520, 495, 495, 520 }, 4, 230, 385, imgTarget);
-		aPolygon targetD = new aPolygon("target droit", 100, new int[] { 725, 725, 810, 810 },
-				new int[] { 220, 260, 260, 220 }, 4, 1690, 35, imgTarget);
+		Target targetG1 = new Target("target gauche 1", 100, new int[] { 743, 743, 777, 777 },
+				new int[] { 530, 495, 495, 525 }, 4, 220, 40);
+		Target targetG2 = new Target("target gauche 2", 100, new int[] { 810, 810, 777, 777 },
+				new int[] { 530, 495, 495, 525 }, 4, 225, 215);
+		Target targetG3 = new Target("target gauche 3", 100, new int[] { 810, 810, 850, 850 },
+				new int[] { 520, 495, 495, 520 }, 4, 230, 385);
+		Target targetD = new Target("target droit", 100, new int[] { 725, 725, 810, 810 },
+				new int[] { 220, 260, 260, 220 }, 4, 1690, 35);
 
-		aPolygon rampe = new aPolygonCompt("rampe", 20,
+		aPolygonCompt rampe = new aPolygonCompt("rampe", 20,
 				new int[] { 725, 680, 650, 625, 625, 635, 666, 693, 710, 685, 685, 702, 721, 756 },
 				new int[] { 380, 422, 470, 540, 583, 620, 652, 666, 600, 585, 534, 507, 484, 462 }, 14, 715, 20,
 				imgFleche);
@@ -200,15 +260,18 @@ public class aGame {
 		aPolygon plateforme = new aPolygon("plateforme", 500, new int[] { 708, 720, 760, 780, 873, 925, 920, 700 },
 				new int[] { 602, 608, 540, 532, 526, 570, 665, 670 }, 8, 780, 160, imgFleche);
 
-		aPolygon start = new aPolygon("start", 500, new int[] { 1150, 1150, 1224, 1224 },
-				new int[] { 145, 175, 175, 145 }, 4, -1, -1, null);
-
 		aPolygonNeedPrev trou = new aPolygonNeedPrev("trou", 250, new int[] { 930, 960, 975, 970, 950, 930, 925 },
 				new int[] { 580, 580, 600, 625, 630, 625, 600 }, 7, -1, -1, null, new ArrayList<aPolygon>() {
 					{
 						add(plateforme);
 					}
 				});
+
+		aPolygonCompt fuite = new aPolygonCompt("fuite", 0, new int[] { 910, 910, 1045, 1113, 1063, 1010 },
+				new int[] { 212, 164, 168, 295, 307, 210 }, 6, 1635, 625, imgGdeFleche);
+
+		aPolygon start = new aPolygon("start", 500, new int[] { 1150, 1150, 1224, 1224 },
+				new int[] { 145, 175, 175, 145 }, 4, -1, -1, null);
 
 		map.put(targetG1.descr, targetG1);
 		map.put(targetG2.descr, targetG2);
@@ -218,6 +281,7 @@ public class aGame {
 		map.put(plateforme.descr, plateforme);
 		map.put(trou.descr, trou);
 		map.put(start.descr, start);
+		map.put(fuite.descr, fuite);
 
 	}
 
