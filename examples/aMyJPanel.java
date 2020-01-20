@@ -3,6 +3,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 class aMyJPanel extends JPanel {
 	BufferedImage image;
 	 int x = 0, y = 0;

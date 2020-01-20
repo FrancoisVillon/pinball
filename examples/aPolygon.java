@@ -1,5 +1,6 @@
 import java.awt.Polygon;
 
+@SuppressWarnings("serial")
 public class aPolygon extends Polygon{
 
 	boolean active = false;

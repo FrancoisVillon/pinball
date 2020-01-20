@@ -1,7 +1,7 @@
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.HashMap;
 
+@SuppressWarnings("serial")
 public class aMyBackgroundPanel extends aMyJPanel {
 	HashMap<String, aPolygon> aff = new HashMap<String, aPolygon>();
 
