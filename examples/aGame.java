@@ -28,6 +28,7 @@ public class aGame {
 	public aGame() {
 		map = aMyTest.panelA.map;
 		initTarget();
+		prev_area = map.get("start");
 		loc[0] = 0;
 		loc[1] = 0;
 
@@ -45,7 +46,6 @@ public class aGame {
 
 			}
 
-			// TODO ? actionSpeciale(prev_area);
 		}
 
 	}
@@ -57,13 +57,13 @@ public class aGame {
 			aMyTest.drawPosBalle(loc[0], loc[1]);
 			if (loc[0] < 360 && loc[1] < 360) {
 				aMyTest.nbBalle = 3;
-				System.out.println("balles : "+aMyTest.nbBalle);
+				System.out.println("balles : " + aMyTest.nbBalle);
+				System.out.println("NEW GAME !");
 				score = 0;
 				aMyTest.labelM.setText("New game !");
 				aMyTest.refreshLabel();
 			}
 
-			// TODO ? actionSpeciale(prev_area);
 		}
 	}
 
@@ -78,17 +78,17 @@ public class aGame {
 
 			if (pol.contains(x, y)) {
 				nonAreaCount = 0;
-				System.out.println(pol.descr);
+				// System.out.println(pol.descr);
 
-				if (pol.descr.contains("start") && prev_area != pol) {
-
-					System.out.println(pol.descr);
+				if (pol.descr.contains("start") && !pol.equals(prev_area)) {
+					System.out.println("+" + pol.descr);
 					actionStart();
 					prev_area = pol;
 					return true;
 				}
-				if(!pol.descr.contains("start")) {
-					System.out.println(pol.descr);
+
+				if (!pol.descr.contains("start")) {
+					System.out.println("-" + pol.descr);
 				}
 
 				if (pol.action(prev_area)) {
@@ -109,7 +109,7 @@ public class aGame {
 			}
 
 		}
-		if (prev_area == null || !prev_area.descr.contains("start")) {
+		if (prev_area == null || (!prev_area.descr.contains("start") && !prev_area.descr.contains("launch") )) {
 			nonAreaCount++;
 		}
 		if (nonAreaCount > 5) {
@@ -129,20 +129,33 @@ public class aGame {
 	}
 
 	private void actionStart() {
+		System.out.println("action start");
 
-		aMyTest.nbBalle--;
-
-		System.out.println("ball -- ("+aMyTest.nbBalle+")");
-		if (aMyTest.nbBalle == 0) {
-			aMyTest.labelM.setText("GAME OVER");
-		} else {
-			aMyTest.labelM.setText("Next ball !\n Ball n°" + aMyTest.nbBalle);
+		if(prev_area == null) {
+			System.out.println("prev area = null");
 		}
-		aMyTest.refreshLabel();
-		// score = 0;
-		for (Entry<String, aPolygon> entry : map.entrySet()) {
-			aPolygon pol2 = entry.getValue();
-			pol2.eteindre();
+		
+		if (prev_area == null || !prev_area.descr.contains("launch")) {
+			aMyTest.nbBalle--;
+			System.out.println("ball -- (" + aMyTest.nbBalle + ")");
+
+			if (aMyTest.nbBalle == 0) {
+				aMyTest.labelM.setText("GAME OVER");
+			} else {
+				aMyTest.labelM.setText("Next ball !\n Ball n°" + aMyTest.nbBalle);
+			}
+			aMyTest.refreshLabel();
+			// score = 0;
+			for (Entry<String, aPolygon> entry : map.entrySet()) {
+				aPolygon pol2 = entry.getValue();
+				pol2.eteindre();
+			}
+		}
+
+		if (prev_area != null && prev_area.descr.contains("launch")) {
+			System.out.println("redep ?");
+			aMyTest.labelM.setText("re Deploy");
+			aMyTest.refreshLabel();
 		}
 
 	}
@@ -169,9 +182,9 @@ public class aGame {
 				map.get("fuite").eteindre();
 			}
 
-			if (pol.descr.contains("hyperspace")) {
+			if (pol.descr.contains("hyperspace_ball")) {
 				aMyTest.nbBalle++;
-				System.out.println("ball ++ ("+aMyTest.nbBalle+")");
+				System.out.println("ball ++ (" + aMyTest.nbBalle + ")");
 			}
 
 			if (map.get("target gauche 1").isActive() && map.get("target gauche 2").isActive()
@@ -291,11 +304,14 @@ public class aGame {
 		aPolygon start = new aPolygon("start", "", 500, new int[] { 1150, 1150, 1224, 1224 },
 				new int[] { 145, 175, 175, 145 }, 4, -1, -1, null);
 
-		aPolygon hyperspace = new aPolygon("hyperspace", "Extra ball !", 500, new int[] { 400, 480, 500, 460, 405 },
+		aPolygon hyperspace = new aPolygon("hyperspace_ball", "Extra ball !", 500, new int[] { 400, 480, 500, 460, 405 },
 				new int[] { 230, 230, 210, 176, 214 }, 5, -1, -1, null);
-		
-		aPolygon hyperspace_enter = new aPolygon("hyperspace_enter", "ENter in hyperspace ! 250pts", 250, new int[] { 610,610, 565, 565 },
-				new int[] { 160, 200, 200, 160  }, 4, -1, -1, null);
+
+		aPolygon hyperspace_enter = new aPolygon("hyperspace_enter", "ENter in hyperspace ! 250pts", 250,
+				new int[] { 610, 610, 565, 565 }, new int[] { 160, 200, 200, 160 }, 4, -1, -1, null);
+
+		aPolygon launch = new aPolygon("launch", "launch !", 0, new int[] { 0, 0, 360, 360 },
+				new int[] { 0, 360, 360, 0 }, 4, -1, -1, null);
 
 		map.put(targetG1.descr, targetG1);
 		map.put(targetG2.descr, targetG2);
@@ -308,6 +324,7 @@ public class aGame {
 		map.put(fuite.descr, fuite);
 		map.put(hyperspace.descr, hyperspace);
 		map.put(hyperspace_enter.descr, hyperspace_enter);
+		map.put(launch.descr, launch);
 
 	}
 

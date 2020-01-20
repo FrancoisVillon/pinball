@@ -124,7 +124,6 @@ public class aMyTest {
 				if(nbBalle>0) {
 					game.searchNplay(webcam.getImage());
 				}else {
-
 					game.waitPartie(webcam.getImage());
 				}
 			} catch (Exception e) {
