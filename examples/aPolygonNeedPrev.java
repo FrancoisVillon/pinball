@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 @SuppressWarnings("serial")
 public class aPolygonNeedPrev extends aPolygon {
 
 	private ArrayList<aPolygon> prevAreaList;
 
-	public aPolygonNeedPrev(String str, int point, int[] is, int[] is2, int i, ArrayList<aPolygon> prevAreaList) {
-		super(str, point, is, is2, i);
+	public aPolygonNeedPrev(String str, int point, int[] is, int[] is2, int i, int x, int y, ImageIcon img, ArrayList<aPolygon> prevAreaList) {
+		super(str, point, is, is2, i, x, y, img);
 		this.prevAreaList = prevAreaList;
 	}
 

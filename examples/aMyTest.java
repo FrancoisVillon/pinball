@@ -26,7 +26,7 @@ public class aMyTest {
 
 	public static void main(String[] args) {
 
-		game = new aGame();
+
 
 		// Webcam configuration
 		Webcam webcam = chooseWebcam();
@@ -75,7 +75,7 @@ public class aMyTest {
 		panelA.paintComponent(ggf);
 
 		// Afficahge score
-		label = new JLabel("Score : 0000000000" + game.score);
+		label = new JLabel("Score : 0000000000");
 		label.setForeground(Color.white);
 		label.setFont(new Font("squaredance00", label.getFont().getStyle(), 40));
 		label.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
@@ -85,15 +85,19 @@ public class aMyTest {
 		panelA.add(label);
 
 		window3.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		//window3.setUndecorated(true);
+		// window3.setUndecorated(true);
 		window3.add(panelA);
 		window3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window3.pack();
 		window3.setVisible(true);
 
-		label.setText("Score : " + game.score);
+		label.setText("Score : 0" );
 		panelA.repaint();
 
+		
+		game = new aGame();
+		
+		
 		// init localisation balle
 		int[] loc = new int[2];
 		loc[0] = 0;
@@ -103,18 +107,6 @@ public class aMyTest {
 
 			try {
 				game.searchNplay(webcam.getImage());
-				/*
-				 * loc = game.searchByPrevious(webcam.getImage(), loc[0], loc[1]); if (loc[0] ==
-				 * -1 && loc[1] == -1) { // System.out.println("Not found"); } else { //
-				 * System.out.println(" - > Found (x : " + loc[0] + ", y : " + loc[1]);
-				 * panel.getGraphics().drawRect(loc[0], loc[1], 10, 10); drawOnScreen(panelD,
-				 * loc[0], loc[1]); if (game.verify(loc[0], loc[1])) {
-				 * System.out.println("repaint"); label.setText("Score : " + game.score);
-				 * panelA.repaint();
-				 * 
-				 * } }
-				 */
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -129,14 +121,22 @@ public class aMyTest {
 		drawOnScreen(panelD, x, y);
 	}
 
-	public static void refreshScoreLabel() {
+	public static void drawTarget(int x, int y, boolean active) {
+		if (active) {			
+			/*ImageIcon imic = new ImageIcon("/home/nicolas/Bureau/target.png");
+			panelA.getGraphics().drawImage(imic.getImage(), 220, 40, 52, 113, imic.getImageObserver());// 125, 30, 39,85
+			panelA.getGraphics().drawRect(223, 45, 43, 110);*/
+		} else {
+			panelA.repaint();
+		}
+	}
 
+	public static void refreshScoreLabel() {
+		
 		label.setText("Score : " + game.score);
 		panelA.repaint();
 	}
 
-	
-	
 	private static void drawOnScreen(JPanel panelD, int x, int y) {
 		myCoord.add(new Dimension(720 - y, x));
 		if (myCoord.size() > 15) {
@@ -182,10 +182,9 @@ public class aMyTest {
 
 	}
 
-	
 	private static Webcam chooseWebcam() {
-		for( Webcam webcam : Webcam.getWebcams()) {
-			if(webcam.toString().contains("Razer")) {
+		for (Webcam webcam : Webcam.getWebcams()) {
+			if (webcam.toString().contains("Razer")) {
 				return webcam;
 			}
 		}
