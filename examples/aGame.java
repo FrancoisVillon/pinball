@@ -15,11 +15,13 @@ public class aGame {
 	final int seuilB = 35;
 
 	final int SCORE_TRIPLE_TARGET = 1000;
+	final int SCORE_LIMIT_REDP = 199;
+	int multiplier = 1; 
 
 	private int[] loc = new int[2];
 	private aPolygon prev_area = null;
 
-	int score = 0;
+	int score_total, score = 0;
 
 	private int nonAreaCount = 0;
 
@@ -50,6 +52,8 @@ public class aGame {
 
 		}
 		//TODO draw
+		
+//		multi.draw(aMyTest.panel.getGraphics());
 
 	}
 
@@ -64,7 +68,7 @@ public class aGame {
 				aMyTest.nbBalle = 3;
 				System.out.println("balles : " + aMyTest.nbBalle);
 				System.out.println("NEW GAME !");
-				score = 0;
+				resetPartie();
 				aMyTest.labelM.setText("New game !");
 				aMyTest.labelMP.setText("");
 				aMyTest.refreshLabel();
@@ -99,14 +103,13 @@ public class aGame {
 				if (pol.action(prev_area)) {
 					pol.active();
 
-					System.out.println(pol.points + " points ! " + pol.descr);
 					aMyTest.labelM.setText(pol.phrase);
-					aMyTest.labelMP.setText(pol.phraseScore);
+					aMyTest.labelMP.setText(pol.getPhraseScore(multiplier));
 					aMyTest.refreshLabel();
 					actionSpeciale(pol);
 
 					aMyTest.panelA.paintComponent(null);
-					score += pol.points;
+					addPoints(pol.points);
 					prev_area = pol;
 					return true;
 				}
@@ -140,31 +143,20 @@ public class aGame {
 		if (prev_area == null) {
 			System.out.println("prev area = null");
 		}
+		System.out.println("score : "+score);
 
-		if (prev_area == null || !prev_area.descr.contains("launch")) {
-			aMyTest.nbBalle--;
-			System.out.println("ball -- (" + aMyTest.nbBalle + ")");
 
-			if (aMyTest.nbBalle == 0) {
-				aMyTest.labelM.setText("GAME OVER");
-				aMyTest.labelMP.setText("");
-			} else {
-				aMyTest.labelM.setText("Next ball !");
-				aMyTest.labelMP.setText("Ball n'" + aMyTest.nbBalle);
-			}
-			aMyTest.refreshLabel();
-			// score = 0;
-			for (Entry<String, aPolygon> entry : map.entrySet()) {
-				aPolygon pol2 = entry.getValue();
-				pol2.eteindre();
-			}
-		}
-
-		if (prev_area != null && prev_area.descr.contains("launch")) {
+		if ((prev_area != null && prev_area.descr.contains("launch") )|| score<SCORE_LIMIT_REDP) {
 			aMyTest.labelM.setText("re Deploy");
 			aMyTest.labelMP.setText("");
 			aMyTest.refreshLabel();
 		}
+		
+		if ((prev_area == null || !prev_area.descr.contains("launch")) && score>SCORE_LIMIT_REDP) {
+			resetBall();
+
+		}
+
 
 	}
 
@@ -190,6 +182,12 @@ public class aGame {
 				map.get("fuite").eteindre();
 			}
 
+			if (pol.descr.contains("multi")) {
+				if(multiplier<4) {
+					multiplier++;
+				}
+			}
+
 			if (pol.descr.contains("hyperspace_ball")) {
 				aMyTest.nbBalle++;
 				System.out.println("ball ++ (" + aMyTest.nbBalle + ")");
@@ -200,7 +198,7 @@ public class aGame {
 				map.get("target gauche 1").eteindre();
 				map.get("target gauche 2").eteindre();
 				map.get("target gauche 3").eteindre();
-				score += SCORE_TRIPLE_TARGET;
+				score_total += SCORE_TRIPLE_TARGET;
 				System.out.println("TRIPLE target !!");
 				aMyTest.labelM.setText("Triple target !");
 				aMyTest.labelMP.setText(SCORE_TRIPLE_TARGET + "pts");
@@ -238,21 +236,11 @@ public class aGame {
 
 		for (int i = 0; i < img.getWidth(); i++) {
 			for (int j = 0; j < img.getHeight(); j++) {
-				// if(ligne == 410 && col > 325 && col<335)
-				// printf("ligne : %d, col : %d (%d,%d,%d)\n",ligne,
-				// col,img[((larg*ligne)+col)*3],img[((larg*ligne)+col)*3+1],img[((larg*ligne)+col)*3+2]);
-
 				if (search(img.getRGB(i, j))) {
 					ret[0] = i;
 					ret[1] = j;
 					return ret;
 				}
-
-				/*
-				 * if (r > valR - seuilR && r < valR + seuilR && g > valG - seuilG && g < valG +
-				 * seuilG && b > valB - seuilB && b < valB + seuilB) { // printf("find : ");
-				 * ret[0] = i; ret[1] = j; return ret; }
-				 */
 			}
 		}
 		ret[0] = -1;
@@ -325,6 +313,9 @@ public class aGame {
 		aPolygon launch = new aPolygon("launch", "launch !","", 0, new int[] { 370, 370, 650, 650 },
 				new int[] { 0, 155, 155, 0 }, 4, -1, -1, null);
 
+		aPolygon multi = new aPolygon("multi", "Field Multiplier !","", 0, new int[] { 815, 815, 880, 880 },
+				new int[] { 222, 165,165 ,222}, 4, -1, -1, null);
+
 		aPolygonCompt wormhole = new aPolygonCompt("wormhole", "wormhole","+10 pts", 10,
 				new int[] { 488, 488, 580, 580 }, new int[] { 607, 660, 660, 607 }, 4, -1, -1, null);
 
@@ -342,6 +333,43 @@ public class aGame {
 		map.put(launch.descr, launch);
 		map.put(wormhole.descr, wormhole);
 		map.put(hyperspace_center.descr, hyperspace_center);
+		map.put(multi.descr, multi);
 
 	}
+	
+	
+	private void addPoints(int nbPoints) {
+		score_total+=nbPoints*multiplier;
+		score += nbPoints*multiplier;
+		aMyTest.refreshLabel();
+	}
+	
+	private void resetPartie() {
+		multiplier = 1;
+		score_total = 0;
+	}
+
+	private void resetBall() {
+
+		System.out.println("reset score");
+
+		multiplier = 1;
+		score = 0;
+		aMyTest.nbBalle--;
+		System.out.println("ball -- (" + aMyTest.nbBalle + ")");
+		if (aMyTest.nbBalle == 0) {
+			aMyTest.labelM.setText("GAME OVER");
+			aMyTest.labelMP.setText("");
+		} else {
+			aMyTest.labelM.setText("Next ball !");
+			aMyTest.labelMP.setText("Ball n'" + aMyTest.nbBalle);
+		}
+		aMyTest.refreshLabel();
+		for (Entry<String, aPolygon> entry : map.entrySet()) {
+			aPolygon pol2 = entry.getValue();
+			pol2.eteindre();
+		}
+		
+	}
+	
 }

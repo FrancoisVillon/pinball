@@ -23,7 +23,7 @@ public class aMyTest {
 	static int count = 0;
 	static WebcamPanel panel;
 	static aMyJPanel panelD, panelA;
-	static JLabel label, labelM, labelMP, labelB;
+	static JLabel label, labelM, labelMP, labelB, labelMulti;
 	static aGame game;
 
 	static int nbBalle = 0;
@@ -113,6 +113,16 @@ public class aMyTest {
 		labelB.setSize(labelB.getPreferredSize());
 		panelA.add(labelB);
 
+		// Afficahge mulitplier
+		labelMulti = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+		labelMulti.setForeground(Color.white);
+		labelMulti.setFont(new Font("squaredance00", labelMulti.getFont().getStyle(), 30));
+		labelMulti.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2 ),
+				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() /2));
+		labelMulti.setSize(labelMulti.getPreferredSize());
+		panelA.add(labelMulti);
+		
+		
 		window3.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// window3.setUndecorated(true);
 		window3.add(panelA);
@@ -120,13 +130,18 @@ public class aMyTest {
 		window3.pack();
 		window3.setVisible(true);
 
-		label.setText("Score : 0");
-		labelM.setText("Let's go !");
+		game = new aGame();
+
+		//label.setText("Score : 0");
+		label.setText("");
+		labelM.setText("Pinball Space semi cadet");
 		labelMP.setText("");
-		labelB.setText(""+nbBalle);
+		//labelB.setText(""+nbBalle);
+		//labelMulti.setText(game.multiplier+"x");
+		labelB.setText("Let's go !");
+		labelMulti.setText("");
 		panelA.repaint();
 
-		game = new aGame();
 
 		// init localisation balle
 		int[] loc = new int[2];
@@ -170,8 +185,13 @@ public class aMyTest {
 
 	public static void refreshLabel() {
 
-		label.setText("Score : " + game.score);
-		labelB.setText(""+nbBalle);
+		labelMulti.setText(game.multiplier+"x");
+		label.setText("Score : " + game.score_total);
+		if(game.score<game.SCORE_LIMIT_REDP) {
+			labelB.setText(""+nbBalle+" (D)");
+		}else {
+			labelB.setText(""+nbBalle);
+		}
 		panelA.repaint();
 	}
 	

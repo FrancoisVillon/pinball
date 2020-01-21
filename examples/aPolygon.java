@@ -8,7 +8,8 @@ public class aPolygon extends Polygon {
 
 	private boolean active = false;
 	String descr = "";
-	String phrase = "",phraseScore = "";
+	String phrase = "";
+	private String phraseScore = "";
 	int points = 1;
 	int x, y;
 	ImageIcon img;
@@ -54,6 +55,10 @@ public class aPolygon extends Polygon {
 
 	public boolean isActive() {
 		return active;
+	}
+	
+	public String getPhraseScore(int multiplier) {
+		return phraseScore.replace(points+"", points*multiplier+"");
 	}
 
 }
