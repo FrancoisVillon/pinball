@@ -168,6 +168,7 @@ public class aGame {
 		if ((prev_area != null && prev_area.descr.contains("launch")) || score < SCORE_LIMIT_REDP) {
 			aMyTest.labelM.setText("re Deploy");
 			aMyTest.labelMP.setText("");
+			multiplier=1;
 			aMyTest.refreshLabel();
 		}
 
