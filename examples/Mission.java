@@ -9,16 +9,14 @@ public class Mission {
 	boolean isDone;
 
 	int scorePreStep = 300;
-	int scoreStep = 500;
 	int scoreEnd = 1200;
 
-	public Mission(int score1, int score2, int score3) {
-		this( new ArrayList<>(), score1, score2, score3);
+	public Mission(int scorePreStep, int scoreEnd) {
+		this( new ArrayList<>(), scorePreStep, scoreEnd);
 	}
 
-	public Mission(ArrayList<Step> list, int scorePreStep, int scoreStep, int scoreEnd) {
+	public Mission(ArrayList<Step> list, int scorePreStep, int scoreEnd) {
 		this.scorePreStep = scorePreStep;
-		this.scoreStep = scoreStep;
 		this.scoreEnd = scoreEnd;
 		init();
 		this.list = list;
@@ -35,13 +33,13 @@ public class Mission {
 		isDone = false;
 	}
 
-	public void addFinal() {
-		add("target droit", "Hit right target to conclude");
+	public void addFinal(int score) {
+		add("target droit", "Hit right target to conclude", score);
 	}
 
-	public void add(String area, String str) {
+	public void add(String area, String str, int score) {
 		if (validateArea(area)) {
-			list.add(new Step(area, str));
+			list.add(new Step(area, str, score));
 		}else {
 			System.out.println("Ajout impossible, msg : "+area);
 		}
@@ -86,7 +84,7 @@ public class Mission {
 				}
 				phrase = list.get(index).phrase;
 				aMyTest.refreshLabel();
-				return scoreStep;
+				return list.get(index-1).points;
 			}
 		}
 		return 0;
@@ -97,11 +95,11 @@ public class Mission {
 		if (index == -2) {
 			return "";
 		} else if (index >= list.size()) {
-			return "Mission done : " + scoreEnd + "pts";
+			return "Mission done : " + (scoreEnd*aMyTest.game.multiplier) + "pts";
 		} else if (index <= 0) {
-			return "Won " + scorePreStep + "pts";
+			return "Won " + (scorePreStep*aMyTest.game.multiplier) + "pts";
 		} else {
-			return "Won " + scoreStep + "pts";
+			return "Won " + (list.get(index-1).points*aMyTest.game.multiplier) + "pts";
 		}
 	}
 

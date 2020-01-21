@@ -216,10 +216,10 @@ public class aGame {
 				map.get("target gauche 1").eteindre();
 				map.get("target gauche 2").eteindre();
 				map.get("target gauche 3").eteindre();
-				score_total += SCORE_TRIPLE_TARGET;
+				addPoints(SCORE_TRIPLE_TARGET);
 				System.out.println("TRIPLE target !!");
 				aMyTest.labelM.setText("Triple target !");
-				aMyTest.labelMP.setText(SCORE_TRIPLE_TARGET + "pts");
+				aMyTest.labelMP.setText(SCORE_TRIPLE_TARGET*multiplier + "pts");
 				aMyTest.refreshLabel();
 			}
 		}
@@ -357,26 +357,29 @@ public class aGame {
 	}
 
 	public void initMission() {
-		Mission m = new Mission(300,500,1500);
-		m.add("target droit", "Hit right target");
-		m.add("rampe", "Launch in ramp");
-		m.add("trou", "Put in hole");
-		m.add("hyperspace_enter", "enter in hyperspace");
-		m.addFinal();
+		Mission m = new Mission(300,1500);
+		m.add("target droit", "Hit right target",500);
+		m.add("rampe", "Launch in ramp",500);
+		m.add("trou", "Put in hole",500);
+		m.add("hyperspace_enter", "enter in hyperspace",500);
+		m.addFinal(600);
 		listMissions.add(m);
 		
-		m = new Mission(300,500,1500);
-		m.add("target droit", "Hit right target");
-		m.add("plateforme", "Launch on platform 3");
-		m.add("plateforme", "Launch on platform 2");
-		m.add("plateforme", "Launch on platform 1");
-		m.add("trou", "Put in hole");
-		m.add("target gauche", "Hit left target");
-		m.add("target droit", "Hit right target");
-		m.add("target gauche", "Hit left target");
-		m.add("target droit", "Hit right target");
-		m.add("target gauche", "Hit left target");
-		m.addFinal();
+		m = new Mission(300,1500);
+		m.add("target droit", "Hit right target", 250);
+		m.add("ramp", "Launch on platform 3",250);
+		m.add("plateforme", "Launch on platform 3",250);
+		m.add("ramp", "Launch on platform 2",250);
+		m.add("plateforme", "Launch on platform 2",250);
+		m.add("ramp", "Launch on platform 1",250);
+		m.add("plateforme", "Launch on platform 1",250);
+		m.add("trou", "Put in hole",500);
+		m.add("target gauche", "Hit left target",500);
+		m.add("target droit", "Hit right target",500);
+		m.add("target gauche", "Hit left target",500);
+		m.add("target droit", "Hit right target",500);
+		m.add("target gauche", "Hit left target",500);
+		m.addFinal(600);
 		listMissions.add(m);
 	}
 
