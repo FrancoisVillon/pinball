@@ -55,14 +55,13 @@ public class aGame {
 
 		}
 		// TODO draw
-		targetG3.draw(aMyTest.panel.getGraphics());
-		plateforme.draw(aMyTest.panel.getGraphics());
 
 	}
 
 	private void actionMisson() {
 		if (indexMission < listMissions.size()) {
 			System.out.println("index mission : "+indexMission);
+			System.out.println(prev_area.descr);
 			int scoreRet = listMissions.get(indexMission).isValidate(prev_area);
 			aMyTest.affPointsMission();
 			//if (scoreRet == listMissions.get(indexMission).SCORE_END) {
@@ -105,7 +104,7 @@ public class aGame {
 				nonAreaCount = 0;
 				// System.out.println(pol.descr);
 
-				if(listMissions.get(indexMission).isDone) {
+				if(indexMission<listMissions.size() && listMissions.get(indexMission).isDone) {
 					indexMission++;
 					System.out.println("next mission !");
 				}
@@ -281,8 +280,6 @@ public class aGame {
 	}
 
 	// init
-	aPolygon plateforme;
-	Target targetG3;
 
 	@SuppressWarnings("serial")
 	private void initTarget() {
@@ -294,7 +291,7 @@ public class aGame {
 				new int[] { 530, 495, 495, 525 }, 4, 220, 40);
 		Target targetG2 = new Target("target gauche 2", 100, new int[] { 810, 810, 777, 777 },
 				new int[] { 530, 495, 495, 525 }, 4, 225, 215);
-		targetG3 = new Target("target gauche 3", 100, new int[] { 810, 810, 850, 850 },
+		Target targetG3 = new Target("target gauche 3", 100, new int[] { 810, 810, 850, 850 },
 				new int[] { 520, 495, 495, 520 }, 4, 230, 385);
 		Target targetD = new Target("target droit", 100, new int[] { 725, 725, 810, 810 },
 				new int[] { 220, 260, 260, 220 }, 4, 1690, 35);
@@ -304,7 +301,7 @@ public class aGame {
 				new int[] { 380, 422, 470, 540, 583, 620, 652, 666, 600, 585, 534, 507, 484, 462 }, 14, 715, 20,
 				imgFleche);
 
-		plateforme = new aPolygon("plateforme", "On the platform", "500 pts", 500,
+		aPolygon plateforme = new aPolygon("plateforme", "On the platform", "500 pts", 500,
 				new int[] { 708, 720, 760, 780, 873, 925, 920, 700 },
 				new int[] { 602, 608, 540, 532, 526, 570, 665, 670 }, 8, 780, 160, imgFleche);
 
@@ -332,8 +329,8 @@ public class aGame {
 		aPolygon hyperspace_enter = new aPolygon("hyperspace_enter", "Enter in hyperspace !", " 250pts", 250,
 				new int[] { 610, 610, 565, 565 }, new int[] { 160, 200, 200, 160 }, 4, -1, -1, null);
 
-		aPolygon launch = new aPolygon("launch", "launch !", "", 0, new int[] { 370, 370, 650, 650 },
-				new int[] { 0, 155, 155, 0 }, 4, -1, -1, null);
+		aPolygon launch = new aPolygon("launch", "launch !", "", 0, new int[] { 370, 370, 850, 850 },
+				new int[] { 0, 158, 158, 0 }, 4, -1, -1, null);
 
 		aPolygon multi = new aPolygon("multi", "Field Multiplier !", "", 0, new int[] { 815, 815, 880, 880 },
 				new int[] { 222, 165, 165, 222 }, 4, -1, -1, null);
@@ -360,19 +357,26 @@ public class aGame {
 	}
 
 	public void initMission() {
-		Mission m = new Mission();
-		m.add(map.get("target droit"), "Hit right target");
-		m.add(map.get("rampe"), "Launch in ramp");
-		m.add(map.get("trou"), "Put in hole");
-		m.add(map.get("hyperspace_enter"), "enter in hyperspace");
-
+		Mission m = new Mission(300,500,1500);
+		m.add("target droit", "Hit right target");
+		m.add("rampe", "Launch in ramp");
+		m.add("trou", "Put in hole");
+		m.add("hyperspace_enter", "enter in hyperspace");
+		m.addFinal();
 		listMissions.add(m);
 		
-		m = new Mission();
-		m.add(map.get("target droit"), "Hit right target");
-		m.add(map.get("rampe"), "Launch in ramp");
-		m.add(map.get("trou"), "Put in hole");
-		m.add(map.get("hyperspace_enter"), "enter in hyperspace");
+		m = new Mission(300,500,1500);
+		m.add("target droit", "Hit right target");
+		m.add("plateforme", "Launch on platform 3");
+		m.add("plateforme", "Launch on platform 2");
+		m.add("plateforme", "Launch on platform 1");
+		m.add("trou", "Put in hole");
+		m.add("target gauche", "Hit left target");
+		m.add("target droit", "Hit right target");
+		m.add("target gauche", "Hit left target");
+		m.add("target droit", "Hit right target");
+		m.add("target gauche", "Hit left target");
+		m.addFinal();
 		listMissions.add(m);
 	}
 
@@ -398,6 +402,7 @@ public class aGame {
 		if (aMyTest.nbBalle == 0) {
 			aMyTest.labelM.setText("GAME OVER");
 			aMyTest.labelMP.setText("");
+			resetMission();
 		} else {
 			aMyTest.labelM.setText("Next ball !");
 			aMyTest.labelMP.setText("Ball n'" + aMyTest.nbBalle);
@@ -425,6 +430,13 @@ public class aGame {
 			return listMissions.get(indexMission).getPhrasePoint();
 		}
 		return "";
+	}
+
+	private void resetMission() {
+		for(Mission m : listMissions) {
+			m.init();
+		}
+		
 	}
 
 }

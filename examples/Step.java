@@ -1,10 +1,10 @@
 
 public class Step {
 
-	aPolygon area;
+	String area;
 	String phrase;
 	
-	public Step(aPolygon area, String phrase) {
+	public Step(String area, String phrase) {
 		this.area = area;
 		this.phrase = phrase;
 	}
