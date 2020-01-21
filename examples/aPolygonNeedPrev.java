@@ -7,9 +7,9 @@ public class aPolygonNeedPrev extends aPolygon {
 
 	private ArrayList<aPolygon> prevAreaList;
 
-	public aPolygonNeedPrev(String str, String phrase, int point, int[] is, int[] is2, int i, int x, int y,
+	public aPolygonNeedPrev(String str, String phrase, String phraseScore, int point, int[] is, int[] is2, int i, int x, int y,
 			ImageIcon img, ArrayList<aPolygon> prevAreaList) {
-		super(str, phrase, point, is, is2, i, x, y, img);
+		super(str, phrase,phraseScore, point, is, is2, i, x, y, img);
 		this.prevAreaList = prevAreaList;
 	}
 

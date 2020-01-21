@@ -23,7 +23,7 @@ public class aMyTest {
 	static int count = 0;
 	static WebcamPanel panel;
 	static aMyJPanel panelD, panelA;
-	static JLabel label, labelM;
+	static JLabel label, labelM, labelMP;
 	static aGame game;
 	
 	static int nbBalle = 0;
@@ -96,6 +96,17 @@ public class aMyTest {
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3);
 		labelM.setSize(label.getPreferredSize());
 		panelA.add(labelM);
+		
+
+		
+		// Afficahge message points
+		labelMP = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+		labelMP.setForeground(Color.white);
+		labelMP.setFont(new Font("squaredance00", labelMP.getFont().getStyle(), 30));
+		labelMP.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8,
+				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3 )+labelMP.getFont().getSize()*2);
+		labelMP.setSize(label.getPreferredSize());
+		panelA.add(labelMP);
 
 		window3.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// window3.setUndecorated(true);
@@ -107,6 +118,7 @@ public class aMyTest {
 
 		label.setText("Score : 0" );
 		labelM.setText("Let's go !");
+		labelMP.setText("");
 		panelA.repaint();
 
 		
