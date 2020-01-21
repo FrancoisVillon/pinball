@@ -16,7 +16,7 @@ public class aGame {
 
 	final int SCORE_TRIPLE_TARGET = 1000;
 	final int SCORE_LIMIT_REDP = 199;
-	int multiplier = 1; 
+	int multiplier = 1;
 
 	private int[] loc = new int[2];
 	private aPolygon prev_area = null;
@@ -26,10 +26,13 @@ public class aGame {
 	private int nonAreaCount = 0;
 
 	HashMap<String, aPolygon> map;
+	ArrayList<Mission> listMissions = new ArrayList<>();
+	int indexMission = 0;
 
 	public aGame() {
 		map = aMyTest.panelA.map;
 		initTarget();
+		initMission();
 		prev_area = map.get("start");
 		loc[0] = 0;
 		loc[1] = 0;
@@ -39,7 +42,7 @@ public class aGame {
 	public void searchNplay(BufferedImage image) {
 
 		loc = searchByPrevious(image, loc[0], loc[1]);
-		//fuite.draw(aMyTest.panel.getGraphics());
+		// fuite.draw(aMyTest.panel.getGraphics());
 		if (loc[0] == -1 && loc[1] == -1) {
 			// System.out.println("Not found");
 		} else {
@@ -47,13 +50,24 @@ public class aGame {
 			aMyTest.drawPosBalle(loc[0], loc[1]);
 			if (verify(loc[0], loc[1])) {// TODO finir
 				aMyTest.refreshLabel();
-
+				actionMisson();
 			}
 
 		}
-		//TODO draw
-		
-//		multi.draw(aMyTest.panel.getGraphics());
+		// TODO draw
+		targetG3.draw(aMyTest.panel.getGraphics());
+		plateforme.draw(aMyTest.panel.getGraphics());
+
+	}
+
+	private void actionMisson() {
+		if (indexMission < listMissions.size()) {
+			int scoreRet = listMissions.get(indexMission).isValidate(prev_area);
+			if (scoreRet == listMissions.get(indexMission).SCORE_END) {
+				indexMission++;
+			}
+			addPoints(scoreRet);
+		}
 
 	}
 
@@ -62,9 +76,9 @@ public class aGame {
 		if (loc[0] == -1 && loc[1] == -1) {
 		} else {
 			aMyTest.drawPosBalle(loc[0], loc[1]);
-			if(map.get("launch").contains(loc[0], loc[1])) {
-			//if (loc[0] < 360 && loc[1] < 360) {
-				prev_area=map.get("launch");
+			if (map.get("launch").contains(loc[0], loc[1])) {
+				// if (loc[0] < 360 && loc[1] < 360) {
+				prev_area = map.get("launch");
 				aMyTest.nbBalle = 3;
 				System.out.println("balles : " + aMyTest.nbBalle);
 				System.out.println("NEW GAME !");
@@ -143,20 +157,18 @@ public class aGame {
 		if (prev_area == null) {
 			System.out.println("prev area = null");
 		}
-		System.out.println("score : "+score);
+		System.out.println("score : " + score);
 
-
-		if ((prev_area != null && prev_area.descr.contains("launch") )|| score<SCORE_LIMIT_REDP) {
+		if ((prev_area != null && prev_area.descr.contains("launch")) || score < SCORE_LIMIT_REDP) {
 			aMyTest.labelM.setText("re Deploy");
 			aMyTest.labelMP.setText("");
 			aMyTest.refreshLabel();
 		}
-		
-		if ((prev_area == null || !prev_area.descr.contains("launch")) && score>SCORE_LIMIT_REDP) {
+
+		if ((prev_area == null || !prev_area.descr.contains("launch")) && score > SCORE_LIMIT_REDP) {
 			resetBall();
 
 		}
-
 
 	}
 
@@ -183,7 +195,7 @@ public class aGame {
 			}
 
 			if (pol.descr.contains("multi")) {
-				if(multiplier<4) {
+				if (multiplier < 4) {
 					multiplier++;
 				}
 			}
@@ -262,6 +274,8 @@ public class aGame {
 	}
 
 	// init
+	aPolygon plateforme;
+	Target targetG3;
 
 	@SuppressWarnings("serial")
 	private void initTarget() {
@@ -273,7 +287,7 @@ public class aGame {
 				new int[] { 530, 495, 495, 525 }, 4, 220, 40);
 		Target targetG2 = new Target("target gauche 2", 100, new int[] { 810, 810, 777, 777 },
 				new int[] { 530, 495, 495, 525 }, 4, 225, 215);
-		Target targetG3 = new Target("target gauche 3", 100, new int[] { 810, 810, 850, 850 },
+		targetG3 = new Target("target gauche 3", 100, new int[] { 810, 810, 850, 850 },
 				new int[] { 520, 495, 495, 520 }, 4, 230, 385);
 		Target targetD = new Target("target droit", 100, new int[] { 725, 725, 810, 810 },
 				new int[] { 220, 260, 260, 220 }, 4, 1690, 35);
@@ -283,11 +297,11 @@ public class aGame {
 				new int[] { 380, 422, 470, 540, 583, 620, 652, 666, 600, 585, 534, 507, 484, 462 }, 14, 715, 20,
 				imgFleche);
 
-		aPolygon plateforme = new aPolygon("plateforme", "On the platform","500 pts", 500,
+		plateforme = new aPolygon("plateforme", "On the platform", "500 pts", 500,
 				new int[] { 708, 720, 760, 780, 873, 925, 920, 700 },
 				new int[] { 602, 608, 540, 532, 526, 570, 665, 670 }, 8, 780, 160, imgFleche);
 
-		aPolygonNeedPrev trou = new aPolygonNeedPrev("trou", "Pass in hole","250 pts", 250,
+		aPolygonNeedPrev trou = new aPolygonNeedPrev("trou", "Pass in hole", "250 pts", 250,
 				new int[] { 930, 960, 975, 970, 950, 930, 925 }, new int[] { 580, 580, 600, 625, 630, 625, 600 }, 7, -1,
 				-1, null, new ArrayList<aPolygon>() {
 					{
@@ -295,28 +309,29 @@ public class aGame {
 					}
 				});
 
-		aPolygonCompt fuite = new aPolygonCompt("fuite", "Goodbye my ball","bonus points +5", 5, new int[] { 910, 910, 1045, 1090, 1063, 1010 },
-				new int[] { 212, 164, 168, 260, 307, 210 }, 6, 1635, 625, imgGdeFleche);
+		aPolygonCompt fuite = new aPolygonCompt("fuite", "Goodbye my ball", "bonus points +5", 5,
+				new int[] { 910, 910, 1045, 1090, 1063, 1010 }, new int[] { 212, 164, 168, 260, 307, 210 }, 6, 1635,
+				625, imgGdeFleche);
 
-		aPolygon start = new aPolygon("start", "", "",500, new int[] { 1150, 1150, 1224, 1224 },
+		aPolygon start = new aPolygon("start", "", "", 500, new int[] { 1150, 1150, 1224, 1224 },
 				new int[] { 145, 175, 175, 145 }, 4, -1, -1, null);
 
-		aPolygon hyperspace = new aPolygon("hyperspace_ball", "Extra ball !","", 500,
+		aPolygon hyperspace = new aPolygon("hyperspace_ball", "Extra ball !", "", 500,
 				new int[] { 400, 480, 500, 460, 405 }, new int[] { 230, 230, 210, 176, 214 }, 5, -1, -1, null);
-		
-		aPolygon hyperspace_center = new aPolygon("hyperspace_center", "Hyperspace","500pts", 500,
-				new int[] { 485,485,550,550 }, new int[] { 162,204, 204, 162 }, 4, -1, -1, null);
 
-		aPolygon hyperspace_enter = new aPolygon("hyperspace_enter", "Enter in hyperspace !"," 250pts", 250,
+		aPolygon hyperspace_center = new aPolygon("hyperspace_center", "Hyperspace", "500pts", 500,
+				new int[] { 485, 485, 550, 550 }, new int[] { 162, 204, 204, 162 }, 4, -1, -1, null);
+
+		aPolygon hyperspace_enter = new aPolygon("hyperspace_enter", "Enter in hyperspace !", " 250pts", 250,
 				new int[] { 610, 610, 565, 565 }, new int[] { 160, 200, 200, 160 }, 4, -1, -1, null);
 
-		aPolygon launch = new aPolygon("launch", "launch !","", 0, new int[] { 370, 370, 650, 650 },
+		aPolygon launch = new aPolygon("launch", "launch !", "", 0, new int[] { 370, 370, 650, 650 },
 				new int[] { 0, 155, 155, 0 }, 4, -1, -1, null);
 
-		aPolygon multi = new aPolygon("multi", "Field Multiplier !","", 0, new int[] { 815, 815, 880, 880 },
-				new int[] { 222, 165,165 ,222}, 4, -1, -1, null);
+		aPolygon multi = new aPolygon("multi", "Field Multiplier !", "", 0, new int[] { 815, 815, 880, 880 },
+				new int[] { 222, 165, 165, 222 }, 4, -1, -1, null);
 
-		aPolygonCompt wormhole = new aPolygonCompt("wormhole", "wormhole","+10 pts", 10,
+		aPolygonCompt wormhole = new aPolygonCompt("wormhole", "wormhole", "+10 pts", 10,
 				new int[] { 488, 488, 580, 580 }, new int[] { 607, 660, 660, 607 }, 4, -1, -1, null);
 
 		map.put(targetG1.descr, targetG1);
@@ -336,14 +351,22 @@ public class aGame {
 		map.put(multi.descr, multi);
 
 	}
-	
-	
+
+	public void initMission() {
+		Mission m = new Mission();
+		m.add(map.get("rampe"), "Launch in rampe");
+		m.add(map.get("trou"), "Put in hole");
+		m.add(map.get("hyperspace_enter"), "enter in hyperspace");
+		m.add(map.get("rampe"), "Launch in rampe");
+		listMissions.add(m);
+	}
+
 	private void addPoints(int nbPoints) {
-		score_total+=nbPoints*multiplier;
-		score += nbPoints*multiplier;
+		score_total += nbPoints * multiplier;
+		score += nbPoints * multiplier;
 		aMyTest.refreshLabel();
 	}
-	
+
 	private void resetPartie() {
 		multiplier = 1;
 		score_total = 0;
@@ -369,7 +392,15 @@ public class aGame {
 			aPolygon pol2 = entry.getValue();
 			pol2.eteindre();
 		}
-		
+
 	}
-	
+
+	public String getPhraseMission() {
+
+		if (indexMission < listMissions.size()) {
+			return listMissions.get(indexMission).phrase;
+		}
+		return "Game is done";
+	}
+
 }

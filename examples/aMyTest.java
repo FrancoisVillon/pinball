@@ -23,7 +23,7 @@ public class aMyTest {
 	static int count = 0;
 	static WebcamPanel panel;
 	static aMyJPanel panelD, panelA;
-	static JLabel label, labelM, labelMP, labelB, labelMulti;
+	static JLabel labelS, labelM, labelMP, labelB, labelMulti,labelMiss;
 	static aGame game;
 
 	static int nbBalle = 0;
@@ -77,15 +77,26 @@ public class aMyTest {
 		panelA.paintComponent(ggf);
 
 		// Afficahge score
-		label = new JLabel("Score : 0000000000");
-		label.setForeground(Color.white);
-		label.setFont(new Font("squaredance00", label.getFont().getStyle(), 40));
-		label.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
+		labelS = new JLabel("Score : 0000000000000000000000");
+		labelS.setForeground(Color.white);
+		labelS.setFont(new Font("squaredance00", labelS.getFont().getStyle(), 40));
+		labelS.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 2 / 3);
-		label.setSize(label.getPreferredSize());
+		labelS.setSize(labelS.getPreferredSize());
 		panelA.setLayout(null);
-		panelA.add(label);
+		panelA.add(labelS);
 
+
+		// Affichage mission
+		labelMiss = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+		labelMiss.setForeground(Color.white);
+		labelMiss.setFont(new Font("squaredance00", labelMiss.getFont().getStyle(), 30));
+		labelMiss.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
+				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3);
+		labelMiss.setSize(labelMiss.getPreferredSize());
+		panelA.add(labelMiss);
+		
+		
 		// Afficahge message
 		labelM = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelM.setForeground(Color.white);
@@ -108,7 +119,7 @@ public class aMyTest {
 		labelB = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelB.setForeground(Color.white);
 		labelB.setFont(new Font("squaredance00", labelB.getFont().getStyle(), 30));
-		labelB.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/ 20),
+		labelB.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 20),
 				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 8 / 9));
 		labelB.setSize(labelB.getPreferredSize());
 		panelA.add(labelB);
@@ -117,12 +128,11 @@ public class aMyTest {
 		labelMulti = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelMulti.setForeground(Color.white);
 		labelMulti.setFont(new Font("squaredance00", labelMulti.getFont().getStyle(), 30));
-		labelMulti.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2 ),
-				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() /2));
+		labelMulti.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2),
+				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2));
 		labelMulti.setSize(labelMulti.getPreferredSize());
 		panelA.add(labelMulti);
-		
-		
+
 		window3.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// window3.setUndecorated(true);
 		window3.add(panelA);
@@ -132,16 +142,17 @@ public class aMyTest {
 
 		game = new aGame();
 
-		//label.setText("Score : 0");
-		label.setText("");
+		// label.setText("Score : 0");
+		labelS.setText("");
 		labelM.setText("Pinball Space semi cadet");
 		labelMP.setText("");
-		//labelB.setText(""+nbBalle);
-		//labelMulti.setText(game.multiplier+"x");
-		labelB.setText("Let's go !");
+		// labelB.setText(""+nbBalle);
+		// labelMulti.setText(game.multiplier+"x");
+		labelB.setText("");
+		labelS.setText("Let's go !");
+		labelMiss.setText("");
 		labelMulti.setText("");
 		panelA.repaint();
-
 
 		// init localisation balle
 		int[] loc = new int[2];
@@ -184,17 +195,16 @@ public class aMyTest {
 	}
 
 	public static void refreshLabel() {
-
-		labelMulti.setText(game.multiplier+"x");
-		label.setText("Score : " + game.score_total);
-		if(game.score<game.SCORE_LIMIT_REDP) {
-			labelB.setText(""+nbBalle+" (D)");
-		}else {
-			labelB.setText(""+nbBalle);
+		labelMiss.setText(game.getPhraseMission());
+		labelMulti.setText(game.multiplier + "x");
+		labelS.setText("Score : " + game.score_total);
+		if (game.score < game.SCORE_LIMIT_REDP) {
+			labelB.setText("" + nbBalle + " (D)");
+		} else {
+			labelB.setText("" + nbBalle);
 		}
 		panelA.repaint();
 	}
-	
 
 	private static void drawOnScreen(JPanel panelD, int x, int y) {
 		myCoord.add(new Dimension(720 - y, x));
