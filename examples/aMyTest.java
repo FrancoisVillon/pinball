@@ -23,7 +23,7 @@ public class aMyTest {
 	static int count = 0;
 	static WebcamPanel panel;
 	static aMyJPanel panelD, panelA;
-	static JLabel labelS, labelM, labelMP, labelB, labelMulti,labelMiss;
+	static JLabel labelS, labelM, labelMP, labelB, labelMulti,labelMiss, labelMissP;
 	static aGame game;
 
 	static int nbBalle = 0;
@@ -96,6 +96,15 @@ public class aMyTest {
 		labelMiss.setSize(labelMiss.getPreferredSize());
 		panelA.add(labelMiss);
 		
+		// Affichage points mission
+		labelMissP = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+		labelMissP.setForeground(Color.white);
+		labelMissP.setFont(new Font("squaredance00", labelMissP.getFont().getStyle(), 30));
+		labelMissP.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
+				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3 + 2*labelMissP.getFont().getSize());
+		labelMissP.setSize(labelMissP.getPreferredSize());
+		panelA.add(labelMissP);
+		
 		
 		// Afficahge message
 		labelM = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
@@ -151,6 +160,7 @@ public class aMyTest {
 		labelB.setText("");
 		labelS.setText("Let's go !");
 		labelMiss.setText("");
+		labelMissP.setText("");
 		labelMulti.setText("");
 		panelA.repaint();
 
@@ -195,6 +205,9 @@ public class aMyTest {
 	}
 
 	public static void refreshLabel() {
+		//System.out.println("je suis passé...");
+		//labelMissP.setText("");
+		labelMissP.setText(game.getPointMission());
 		labelMiss.setText(game.getPhraseMission());
 		labelMulti.setText(game.multiplier + "x");
 		labelS.setText("Score : " + game.score_total);
@@ -204,6 +217,12 @@ public class aMyTest {
 			labelB.setText("" + nbBalle);
 		}
 		panelA.repaint();
+	}
+	
+	public static void affPointsMission() {
+		//System.out.println("points mission affichees");
+		//labelMissP.setText(game.getPointMission());
+		//panelA.repaint();
 	}
 
 	private static void drawOnScreen(JPanel panelD, int x, int y) {

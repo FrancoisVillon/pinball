@@ -62,12 +62,14 @@ public class aGame {
 
 	private void actionMisson() {
 		if (indexMission < listMissions.size()) {
+			System.out.println("index mission : "+indexMission);
 			int scoreRet = listMissions.get(indexMission).isValidate(prev_area);
-			if (scoreRet == listMissions.get(indexMission).SCORE_END) {
-				indexMission++;
-			}
+			aMyTest.affPointsMission();
+			//if (scoreRet == listMissions.get(indexMission).SCORE_END) {
+			//}
 			addPoints(scoreRet);
 		}
+		
 
 	}
 
@@ -103,6 +105,11 @@ public class aGame {
 				nonAreaCount = 0;
 				// System.out.println(pol.descr);
 
+				if(listMissions.get(indexMission).isDone) {
+					indexMission++;
+					System.out.println("next mission !");
+				}
+				
 				if (pol.descr.contains("start") && !pol.equals(prev_area)) {
 					System.out.println("+" + pol.descr);
 					actionStart();
@@ -354,10 +361,18 @@ public class aGame {
 
 	public void initMission() {
 		Mission m = new Mission();
-		m.add(map.get("rampe"), "Launch in rampe");
+		m.add(map.get("target droit"), "Hit right target");
+		m.add(map.get("rampe"), "Launch in ramp");
 		m.add(map.get("trou"), "Put in hole");
 		m.add(map.get("hyperspace_enter"), "enter in hyperspace");
-		m.add(map.get("rampe"), "Launch in rampe");
+
+		listMissions.add(m);
+		
+		m = new Mission();
+		m.add(map.get("target droit"), "Hit right target");
+		m.add(map.get("rampe"), "Launch in ramp");
+		m.add(map.get("trou"), "Put in hole");
+		m.add(map.get("hyperspace_enter"), "enter in hyperspace");
 		listMissions.add(m);
 	}
 
@@ -401,6 +416,15 @@ public class aGame {
 			return listMissions.get(indexMission).phrase;
 		}
 		return "Game is done";
+	}
+
+	public String getPointMission() {
+		//System.out.println("get phrase point");
+		if (indexMission < listMissions.size()) {
+			//System.out.println("phrase : "+listMissions.get(indexMission).getPhrasePoint());
+			return listMissions.get(indexMission).getPhrasePoint();
+		}
+		return "";
 	}
 
 }
