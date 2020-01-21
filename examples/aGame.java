@@ -14,7 +14,7 @@ public class aGame {
 	final int seuilG = 60;
 	final int seuilB = 35;
 
-	final int SCORE_TRIPLE_TARGET = 500;
+	final int SCORE_TRIPLE_TARGET = 1000;
 
 	private int[] loc = new int[2];
 	private aPolygon prev_area = null;
@@ -49,7 +49,7 @@ public class aGame {
 			}
 
 		}
-		//fuite.draw(aMyTest.panel.getGraphics());
+		//TODO draw
 
 	}
 
@@ -58,7 +58,9 @@ public class aGame {
 		if (loc[0] == -1 && loc[1] == -1) {
 		} else {
 			aMyTest.drawPosBalle(loc[0], loc[1]);
-			if (loc[0] < 360 && loc[1] < 360) {
+			if(map.get("launch").contains(loc[0], loc[1])) {
+			//if (loc[0] < 360 && loc[1] < 360) {
+				prev_area=map.get("launch");
 				aMyTest.nbBalle = 3;
 				System.out.println("balles : " + aMyTest.nbBalle);
 				System.out.println("NEW GAME !");
@@ -305,7 +307,7 @@ public class aGame {
 					}
 				});
 
-		aPolygonCompt fuite = new aPolygonCompt("fuite", "Goodbye my ball","bonus points +20", 2, new int[] { 910, 910, 1045, 1090, 1063, 1010 },
+		aPolygonCompt fuite = new aPolygonCompt("fuite", "Goodbye my ball","bonus points +5", 5, new int[] { 910, 910, 1045, 1090, 1063, 1010 },
 				new int[] { 212, 164, 168, 260, 307, 210 }, 6, 1635, 625, imgGdeFleche);
 
 		aPolygon start = new aPolygon("start", "", "",500, new int[] { 1150, 1150, 1224, 1224 },
@@ -313,12 +315,15 @@ public class aGame {
 
 		aPolygon hyperspace = new aPolygon("hyperspace_ball", "Extra ball !","", 500,
 				new int[] { 400, 480, 500, 460, 405 }, new int[] { 230, 230, 210, 176, 214 }, 5, -1, -1, null);
+		
+		aPolygon hyperspace_center = new aPolygon("hyperspace_center", "Hyperspace","500pts", 500,
+				new int[] { 485,485,550,550 }, new int[] { 162,204, 204, 162 }, 4, -1, -1, null);
 
 		aPolygon hyperspace_enter = new aPolygon("hyperspace_enter", "Enter in hyperspace !"," 250pts", 250,
 				new int[] { 610, 610, 565, 565 }, new int[] { 160, 200, 200, 160 }, 4, -1, -1, null);
 
-		aPolygon launch = new aPolygon("launch", "launch !","", 0, new int[] { 0, 0, 360, 360 },
-				new int[] { 0, 360, 360, 0 }, 4, -1, -1, null);
+		aPolygon launch = new aPolygon("launch", "launch !","", 0, new int[] { 370, 370, 650, 650 },
+				new int[] { 0, 155, 155, 0 }, 4, -1, -1, null);
 
 		aPolygonCompt wormhole = new aPolygonCompt("wormhole", "wormhole","+10 pts", 10,
 				new int[] { 488, 488, 580, 580 }, new int[] { 607, 660, 660, 607 }, 4, -1, -1, null);
@@ -336,7 +341,7 @@ public class aGame {
 		map.put(hyperspace_enter.descr, hyperspace_enter);
 		map.put(launch.descr, launch);
 		map.put(wormhole.descr, wormhole);
+		map.put(hyperspace_center.descr, hyperspace_center);
 
 	}
-
 }

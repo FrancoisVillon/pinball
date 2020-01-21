@@ -23,14 +23,12 @@ public class aMyTest {
 	static int count = 0;
 	static WebcamPanel panel;
 	static aMyJPanel panelD, panelA;
-	static JLabel label, labelM, labelMP;
+	static JLabel label, labelM, labelMP, labelB;
 	static aGame game;
-	
+
 	static int nbBalle = 0;
 
 	public static void main(String[] args) {
-
-
 
 		// Webcam configuration
 		Webcam webcam = chooseWebcam();
@@ -87,44 +85,49 @@ public class aMyTest {
 		label.setSize(label.getPreferredSize());
 		panelA.setLayout(null);
 		panelA.add(label);
-		
+
 		// Afficahge message
 		labelM = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelM.setForeground(Color.white);
 		labelM.setFont(new Font("squaredance00", labelM.getFont().getStyle(), 30));
 		labelM.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3);
-		labelM.setSize(label.getPreferredSize());
+		labelM.setSize(labelM.getPreferredSize());
 		panelA.add(labelM);
-		
 
-		
 		// Afficahge message points
 		labelMP = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelMP.setForeground(Color.white);
 		labelMP.setFont(new Font("squaredance00", labelMP.getFont().getStyle(), 30));
 		labelMP.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8,
-				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3 )+labelMP.getFont().getSize()*2);
-		labelMP.setSize(label.getPreferredSize());
+				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3) + labelMP.getFont().getSize() * 2);
+		labelMP.setSize(labelMP.getPreferredSize());
 		panelA.add(labelMP);
+
+		// Afficahge nb balle
+		labelB = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+		labelB.setForeground(Color.white);
+		labelB.setFont(new Font("squaredance00", labelB.getFont().getStyle(), 30));
+		labelB.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/ 20),
+				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 8 / 9));
+		labelB.setSize(labelB.getPreferredSize());
+		panelA.add(labelB);
 
 		window3.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// window3.setUndecorated(true);
 		window3.add(panelA);
 		window3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window3.pack();
-		window3.setVisible(true);		    
-		    
+		window3.setVisible(true);
 
-		label.setText("Score : 0" );
+		label.setText("Score : 0");
 		labelM.setText("Let's go !");
 		labelMP.setText("");
+		labelB.setText(""+nbBalle);
 		panelA.repaint();
 
-		
 		game = new aGame();
-		
-		
+
 		// init localisation balle
 		int[] loc = new int[2];
 		loc[0] = 0;
@@ -133,9 +136,9 @@ public class aMyTest {
 		while (true) {
 
 			try {
-				if(nbBalle>0) {
+				if (nbBalle > 0) {
 					game.searchNplay(webcam.getImage());
-				}else {
+				} else {
 					game.waitPartie(webcam.getImage());
 				}
 			} catch (Exception e) {
@@ -145,9 +148,6 @@ public class aMyTest {
 			drawOnScreen(panelD);
 		}
 
-		
-		
-
 	}
 
 	public static void drawPosBalle(int x, int y) {
@@ -156,20 +156,25 @@ public class aMyTest {
 	}
 
 	public static void drawTarget(int x, int y, boolean active) {
-		if (active) {			
-			/*ImageIcon imic = new ImageIcon("/home/nicolas/Bureau/target.png");
-			panelA.getGraphics().drawImage(imic.getImage(), 220, 40, 52, 113, imic.getImageObserver());// 125, 30, 39,85
-			panelA.getGraphics().drawRect(223, 45, 43, 110);*/
+		if (active) {
+			/*
+			 * ImageIcon imic = new ImageIcon("/home/nicolas/Bureau/target.png");
+			 * panelA.getGraphics().drawImage(imic.getImage(), 220, 40, 52, 113,
+			 * imic.getImageObserver());// 125, 30, 39,85 panelA.getGraphics().drawRect(223,
+			 * 45, 43, 110);
+			 */
 		} else {
 			panelA.repaint();
 		}
 	}
 
 	public static void refreshLabel() {
-		
+
 		label.setText("Score : " + game.score);
+		labelB.setText(""+nbBalle);
 		panelA.repaint();
 	}
+	
 
 	private static void drawOnScreen(JPanel panelD, int x, int y) {
 		myCoord.add(new Dimension(720 - y, x));
