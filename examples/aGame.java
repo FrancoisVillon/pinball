@@ -60,15 +60,14 @@ public class aGame {
 
 	private void actionMisson() {
 		if (indexMission < listMissions.size()) {
-			System.out.println("index mission : "+indexMission);
+			System.out.println("index mission : " + indexMission);
 			System.out.println(prev_area.descr);
 			int scoreRet = listMissions.get(indexMission).isValidate(prev_area);
 			aMyTest.affPointsMission();
-			//if (scoreRet == listMissions.get(indexMission).SCORE_END) {
-			//}
+			// if (scoreRet == listMissions.get(indexMission).SCORE_END) {
+			// }
 			addPoints(scoreRet);
 		}
-		
 
 	}
 
@@ -104,11 +103,11 @@ public class aGame {
 				nonAreaCount = 0;
 				// System.out.println(pol.descr);
 
-				if(indexMission<listMissions.size() && listMissions.get(indexMission).isDone) {
+				if (indexMission < listMissions.size() && listMissions.get(indexMission).isDone) {
 					indexMission++;
 					System.out.println("next mission !");
 				}
-				
+
 				if (pol.descr.contains("start") && !pol.equals(prev_area)) {
 					System.out.println("+" + pol.descr);
 					actionStart();
@@ -168,7 +167,7 @@ public class aGame {
 		if ((prev_area != null && prev_area.descr.contains("launch")) || score < SCORE_LIMIT_REDP) {
 			aMyTest.labelM.setText("re Deploy");
 			aMyTest.labelMP.setText("");
-			multiplier=1;
+			multiplier = 1;
 			aMyTest.refreshLabel();
 		}
 
@@ -220,7 +219,7 @@ public class aGame {
 				addPoints(SCORE_TRIPLE_TARGET);
 				System.out.println("TRIPLE target !!");
 				aMyTest.labelM.setText("Triple target !");
-				aMyTest.labelMP.setText(SCORE_TRIPLE_TARGET*multiplier + "pts");
+				aMyTest.labelMP.setText(SCORE_TRIPLE_TARGET * multiplier + "pts");
 				aMyTest.refreshLabel();
 			}
 		}
@@ -339,6 +338,13 @@ public class aGame {
 		aPolygonCompt wormhole = new aPolygonCompt("wormhole", "wormhole", "+10 pts", 10,
 				new int[] { 488, 488, 580, 580 }, new int[] { 607, 660, 660, 607 }, 4, -1, -1, null);
 
+		aPolygon reentry3 = new aPolygon("re-entry 3", "Re entry !", "", 50, new int[] { 398, 398, 466, 466 },
+				new int[] { 261, 318, 318, 261 }, 4, -1, -1, null);
+		aPolygon reentry2 = new aPolygon("re-entry 2", "Re entry !", "", 50, new int[] { 398, 398, 466, 466 },
+				new int[] { 318, 390, 390, 318 }, 4, -1, -1, null);
+		aPolygon reentry1 = new aPolygon("re-entry 1", "Re entry !", "", 50, new int[] { 398, 398, 466, 466 },
+				new int[] { 390, 462, 462, 390 }, 4, -1, -1, null);
+
 		map.put(targetG1.descr, targetG1);
 		map.put(targetG2.descr, targetG2);
 		map.put(targetG3.descr, targetG3);
@@ -354,34 +360,38 @@ public class aGame {
 		map.put(wormhole.descr, wormhole);
 		map.put(hyperspace_center.descr, hyperspace_center);
 		map.put(multi.descr, multi);
+		map.put(reentry3.descr, reentry3);
+		map.put(reentry2.descr, reentry2);
+		map.put(reentry1.descr, reentry1);
 
 	}
 
+
 	public void initMission() {
-		Mission m = new Mission(300,1500);
-		m.add("target droit", "Hit right target",500);
-		m.add("rampe", "Launch in ramp",500);
-		m.add("trou", "Put in hole",500);
-		m.add("hyperspace_enter", "enter in hyperspace",500);
+		Mission m = new Mission(300, 1500);
+		m.add("target droit", "Hit right target", 500);
+		m.add("rampe", "Launch in ramp", 500);
+		m.add("trou", "Put in hole", 500);
+		m.add("hyperspace_enter", "enter in hyperspace", 500);
 		m.addFinal(600);
 		listMissions.add(m);
-		
-		m = new Mission(300,1500);
+
+		m = new Mission(300, 1500);
 		m.add("target droit", "Hit right target", 250);
-		m.add("ramp", "Launch on platform 3",250);
-		m.add("plateforme", "Launch on platform 3",250);
-		m.add("ramp", "Launch on platform 2",250);
-		m.add("plateforme", "Launch on platform 2",250);
-		m.add("ramp", "Launch on platform 1",250);
-		m.add("plateforme", "Launch on platform 1",250);
-		m.add("trou", "Put in hole",500);
-		m.add("target gauche", "Hit left target",500);
-		m.add("target droit", "Hit right target",500);
-		m.add("target gauche", "Hit left target",500);
-		m.add("target droit", "Hit right target",500);
-		m.add("target gauche", "Hit left target",500);
+		m.add("ramp", "Launch on platform 3", 250);
+		m.add("plateforme", "Launch on platform 3", 250);
+		m.add("ramp", "Launch on platform 2", 250);
+		m.add("plateforme", "Launch on platform 2", 250);
+		m.add("ramp", "Launch on platform 1", 250);
+		m.add("plateforme", "Launch on platform 1", 250);
+		m.add("trou", "Put in hole", 500);
+		m.add("target gauche", "Hit left target", 500);
+		m.add("target droit", "Hit right target", 500);
+		m.add("target gauche", "Hit left target", 500);
+		m.add("target droit", "Hit right target", 500);
+		m.add("target gauche", "Hit left target", 500);
 		m.addFinal(600);
-		listMissions.add(m);
+		// listMissions.add(m);
 	}
 
 	private void addPoints(int nbPoints) {
@@ -393,6 +403,7 @@ public class aGame {
 	private void resetPartie() {
 		multiplier = 1;
 		score_total = 0;
+		resetMission();
 	}
 
 	private void resetBall() {
@@ -406,7 +417,8 @@ public class aGame {
 		if (aMyTest.nbBalle == 0) {
 			aMyTest.labelM.setText("GAME OVER");
 			aMyTest.labelMP.setText("");
-			resetMission();
+			aMyTest.labelMiss.setText("");
+			aMyTest.refreshLabel();
 		} else {
 			aMyTest.labelM.setText("Next ball !");
 			aMyTest.labelMP.setText("Ball n'" + aMyTest.nbBalle);
@@ -428,19 +440,21 @@ public class aGame {
 	}
 
 	public String getPointMission() {
-		//System.out.println("get phrase point");
+		// System.out.println("get phrase point");
 		if (indexMission < listMissions.size()) {
-			//System.out.println("phrase : "+listMissions.get(indexMission).getPhrasePoint());
+			// System.out.println("phrase :
+			// "+listMissions.get(indexMission).getPhrasePoint());
 			return listMissions.get(indexMission).getPhrasePoint();
 		}
 		return "";
 	}
 
 	private void resetMission() {
-		for(Mission m : listMissions) {
+		indexMission = 0;
+		for (Mission m : listMissions) {
 			m.init();
 		}
-		
+
 	}
 
 }
