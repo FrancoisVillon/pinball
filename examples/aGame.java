@@ -356,11 +356,11 @@ public class aGame {
 				new int[] { 488, 488, 580, 580 }, new int[] { 607, 660, 660, 607 }, 4, -1, -1, null);
 
 		ReEntry reentry3 = new ReEntry(jpaH, "re-entry 3", 50, new int[] { 398, 398, 466, 466 },
-				new int[] { 251, 308, 308, 251 }, 4, 1719, 104);
+				new int[] { 251, 308, 308, 251 }, 4, 1734+10, 104-15);
 		ReEntry reentry2 = new ReEntry(jpaH, "re-entry 2", 50, new int[] { 398, 398, 466, 466 },
-				new int[] { 308, 380, 380, 308 }, 4, 1361, 103);
+				new int[] { 308, 380, 380, 308 }, 4, 1376+20, 103-15);
 		ReEntry reentry1 = new ReEntry(jpaH, "re-entry 1", 50, new int[] { 398, 398, 466, 466 },
-				new int[] { 380, 452, 452, 380 }, 4, 977, 102);
+				new int[] { 380, 452, 452, 380 }, 4, 992+30, 102-15);
 
 		aPolygon multi = new aPolygon(jpaH, "multi", "Field Multiplier !", "", 0, new int[] { 460, 490, 512,490 },
 				new int[] { 460, 460, 512,530}, 4, 672, 433, imgFleche);
