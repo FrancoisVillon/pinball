@@ -19,7 +19,8 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 
 public class aMyTest {
-	
+
+	static int WIDTH = 1920, HEIGHT = 1080;
 
 	static HashMap<String, aPolygon> map = new HashMap<>();
 
@@ -27,7 +28,7 @@ public class aMyTest {
 	static int count = 0;
 	static WebcamPanel panel;
 	static aMyJPanel panelD, panelA, panelA2;
-	static JLabel labelS, labelM, labelMP, labelB, labelMulti,labelMiss, labelMissP;
+	static JLabel labelS, labelM, labelMP, labelB, labelMulti, labelMiss, labelMissP, labelR;
 	static aGame game;
 
 	static int nbBalle = 0;
@@ -49,7 +50,7 @@ public class aMyTest {
 		window.add(panel);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
-//		window.setVisible(true);
+		// window.setVisible(true);
 
 		// Fenetre tracé/suivi balle
 		JFrame window2 = new JFrame("Tracé");
@@ -67,28 +68,21 @@ public class aMyTest {
 		window2.add(panelD);
 		window2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window2.pack();
-	//	window2.setVisible(true);
-
+		// window2.setVisible(true);
 
 		// Fenetre affichage2 (haut)
 		JFrame window4 = new JFrame("Affichage haut");
 		panelA2 = new aMyJPanel();
+		panelA2.setLayout(null);
+
 
 		ImageIcon fond2 = new ImageIcon("/home/nicolas/Bureau/aff2.png");
-		BufferedImage bimgf2 = new BufferedImage(fond2.getIconWidth(), fond2.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bimgf2 = new BufferedImage(fond2.getIconWidth(), fond2.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
 		Graphics2D ggf2 = bimgf2.createGraphics();
 		ggf2.drawImage(fond2.getImage(), 0, 0, fond2.getImageObserver());
 		panelA2.setImage(bimgf2);
 		panelA2.paintComponent(ggf2);
-		
-		window4.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		// window4.setUndecorated(true);
-		window4.add(panelA2);
-		window4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window4.pack();
-		window4.setVisible(true);
-		
-		
+
 		// Fenetre affichage (bas)
 		JFrame window3 = new JFrame("Affichage bas");
 		panelA = new aMyJPanel();
@@ -100,80 +94,89 @@ public class aMyTest {
 		panelA.setImage(bimgf);
 		panelA.paintComponent(ggf);
 
-		
 		// Afficahge score
 		labelS = new JLabel("Score : 0000000000000000000000");
 		labelS.setForeground(Color.white);
 		labelS.setFont(new Font("squaredance00", labelS.getFont().getStyle(), 40));
-		labelS.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
-				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 2 / 3);
+		labelS.setLocation(WIDTH / 4, HEIGHT * 2 / 3);
 		labelS.setSize(labelS.getPreferredSize());
 		panelA.setLayout(null);
 		panelA.add(labelS);
-
 
 		// Affichage mission
 		labelMiss = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelMiss.setForeground(Color.white);
 		labelMiss.setFont(new Font("squaredance00", labelMiss.getFont().getStyle(), 30));
-		labelMiss.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
-				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3);
+		labelMiss.setLocation(WIDTH / 2, HEIGHT / 3);
 		labelMiss.setSize(labelMiss.getPreferredSize());
 		panelA.add(labelMiss);
-		
+
 		// Affichage points mission
 		labelMissP = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelMissP.setForeground(Color.white);
 		labelMissP.setFont(new Font("squaredance00", labelMissP.getFont().getStyle(), 30));
-		labelMissP.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
-				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3 + 2*labelMissP.getFont().getSize());
+		labelMissP.setLocation(WIDTH / 2, HEIGHT / 3 + 2 * labelMissP.getFont().getSize());
 		labelMissP.setSize(labelMissP.getPreferredSize());
 		panelA.add(labelMissP);
-		
-		
+
 		// Afficahge message
 		labelM = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelM.setForeground(Color.white);
 		labelM.setFont(new Font("squaredance00", labelM.getFont().getStyle(), 30));
-		labelM.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8,
-				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3);
+		labelM.setLocation(WIDTH * 2 / 3, HEIGHT / 2);
 		labelM.setSize(labelM.getPreferredSize());
-		panelA.add(labelM);
+		panelA2.add(labelM);
 
 		// Afficahge message points
 		labelMP = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelMP.setForeground(Color.white);
 		labelMP.setFont(new Font("squaredance00", labelMP.getFont().getStyle(), 30));
-		labelMP.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8,
-				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3) + labelMP.getFont().getSize() * 2);
+		labelMP.setLocation(WIDTH * 2 / 3, HEIGHT / 2 + labelMP.getFont().getSize() * 4);
 		labelMP.setSize(labelMP.getPreferredSize());
-		panelA.add(labelMP);
+		panelA2.add(labelMP);
 
 		// Afficahge nb balle
 		labelB = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelB.setForeground(Color.white);
 		labelB.setFont(new Font("squaredance00", labelB.getFont().getStyle(), 30));
-		labelB.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 20),
-				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 8 / 9));
+		labelB.setLocation(WIDTH * 1 / 20, HEIGHT * 8 / 9);
 		labelB.setSize(labelB.getPreferredSize());
 		panelA.add(labelB);
+
+		// Afficahge rang
+		labelR = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+		labelR.setForeground(Color.white);
+		labelR.setFont(new Font("squaredance00", labelR.getFont().getStyle(), 30));
+		labelR.setLocation(WIDTH * 17 / 20, HEIGHT * 8 / 9);
+		labelR.setSize(labelR.getPreferredSize());
+		panelA2.add(labelR);
 
 		// Afficahge mulitplier
 		labelMulti = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelMulti.setForeground(Color.white);
 		labelMulti.setFont(new Font("squaredance00", labelMulti.getFont().getStyle(), 30));
-		labelMulti.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2),
-				(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2));
+		labelMulti.setLocation(WIDTH * 18 / 20, HEIGHT * 8 / 9);
 		labelMulti.setSize(labelMulti.getPreferredSize());
 		panelA.add(labelMulti);
 
+
+		
+		window4.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// window4.setUndecorated(true);
+		window4.add(panelA2);
+		window4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window4.pack();
+		window4.setVisible(true);
+		
+		
 		window3.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// window3.setUndecorated(true);
 		window3.add(panelA);
 		window3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window3.pack();
 		window3.setVisible(true);
-
+		
+		
 		game = new aGame();
 
 		// label.setText("Score : 0");
@@ -183,6 +186,7 @@ public class aMyTest {
 		// labelB.setText(""+nbBalle);
 		// labelMulti.setText(game.multiplier+"x");
 		labelB.setText("");
+		labelR.setText("");
 		labelS.setText("Let's go !");
 		labelMiss.setText("");
 		labelMissP.setText("");
@@ -193,7 +197,7 @@ public class aMyTest {
 		int[] loc = new int[2];
 		loc[0] = 0;
 		loc[1] = 0;
-
+		
 		while (true) {
 
 			try {
@@ -230,8 +234,9 @@ public class aMyTest {
 	}
 
 	public static void refreshLabel() {
-		//System.out.println("je suis passé...");
-		//labelMissP.setText("");
+		// System.out.println("je suis passé...");
+		// labelMissP.setText("");
+		labelR.setText(game.missionManager.getRang());
 		labelMissP.setText(game.missionManager.phrasePoint);
 		labelMiss.setText(game.missionManager.phrase);
 		labelMulti.setText(game.multiplier + "x");
@@ -243,11 +248,11 @@ public class aMyTest {
 		}
 		panelA.repaint();
 	}
-	
+
 	public static void affPointsMission() {
-		//System.out.println("points mission affichees");
-		//labelMissP.setText(game.getPointMission());
-		//panelA.repaint();
+		// System.out.println("points mission affichees");
+		// labelMissP.setText(game.getPointMission());
+		// panelA.repaint();
 	}
 
 	private static void drawOnScreen(JPanel panelD, int x, int y) {
@@ -312,8 +317,8 @@ public class aMyTest {
 		aMyTest.panelA.repaint();
 		aMyTest.panelA2.paintComponent(null);
 		aMyTest.panelA2.repaint();
-		
-		//System.out.println("multi : "+panel);
-		
+
+		// System.out.println("multi : "+panel);
+
 	}
 }

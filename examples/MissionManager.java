@@ -97,7 +97,7 @@ public class MissionManager {
 		if (choix > listClassMissions.get(rang).listMissions.size() - 1) {
 			choix = listClassMissions.get(rang).listMissions.size() - 1;
 		}
-		System.out.println("choix : " + choix+1 + " / " + (listClassMissions.get(rang).listMissions.size()));
+		System.out.println("choix : " + (choix+1) + " / " + (listClassMissions.get(rang).listMissions.size()));
 		mission = listClassMissions.get(rang).listMissions.get(choix);
 
 	}
@@ -181,6 +181,24 @@ public class MissionManager {
 		indexStart = -2;
 		phrase = "Select mission with left traget";
 		phrasePoint = "";
+	}
+	public String getRang() {
+		switch (rang) {
+		case 0:
+			return "Cadet";
+		case 1:
+			return "Lieutenant";
+		case 2:
+			return "Captain";
+		case 3:
+			return "Commander";
+		case 4:
+			return "Admiral";
+		case 5:
+			return "Fleet Admiral";
+		default:
+			return "";
+		}
 	}
 
 }
