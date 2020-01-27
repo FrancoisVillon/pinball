@@ -49,7 +49,7 @@ public class aMyTest {
 		window.add(panel);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
-		window.setVisible(true);
+//		window.setVisible(true);
 
 		// Fenetre tracé/suivi balle
 		JFrame window2 = new JFrame("Tracé");
@@ -67,7 +67,7 @@ public class aMyTest {
 		window2.add(panelD);
 		window2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window2.pack();
-		window2.setVisible(true);
+	//	window2.setVisible(true);
 
 
 		// Fenetre affichage2 (haut)
@@ -232,8 +232,8 @@ public class aMyTest {
 	public static void refreshLabel() {
 		//System.out.println("je suis passé...");
 		//labelMissP.setText("");
-		labelMissP.setText(game.getPointMission());
-		labelMiss.setText(game.getPhraseMission());
+		labelMissP.setText(game.missionManager.phrasePoint);
+		labelMiss.setText(game.missionManager.phrase);
 		labelMulti.setText(game.multiplier + "x");
 		labelS.setText("Score : " + game.score_total);
 		if (game.score < game.SCORE_LIMIT_REDP) {
@@ -313,7 +313,7 @@ public class aMyTest {
 		aMyTest.panelA2.paintComponent(null);
 		aMyTest.panelA2.repaint();
 		
-		System.out.println("multi : "+panel);
+		//System.out.println("multi : "+panel);
 		
 	}
 }

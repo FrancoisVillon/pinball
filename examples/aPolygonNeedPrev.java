@@ -15,9 +15,9 @@ public class aPolygonNeedPrev extends aPolygon {
 	}
 
 	public boolean action(aPolygon prevArea) {
-		System.out.println(descr);
-		System.out.println(prevAreaList);
-		System.out.println(prevAreaList.contains(prevArea));
+		//System.out.println(descr);
+		//System.out.println(prevAreaList);
+		//System.out.println(prevAreaList.contains(prevArea));
 		return prevAreaList.contains(prevArea);
 
 	}

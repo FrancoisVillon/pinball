@@ -3,12 +3,10 @@ import java.util.Map.Entry;
 
 public class Mission {
 	ArrayList<Step> list = new ArrayList<>();
-	int index;
-	String phrase;
-	String phrasePoint;
+	int index = 0;
 	boolean isDone;
+	private String phrase, phrasePoint;
 
-	int scorePreStep = 300;
 	int scoreEnd = 1200;
 
 	public Mission(int scorePreStep, int scoreEnd) {
@@ -16,7 +14,7 @@ public class Mission {
 	}
 
 	public Mission(ArrayList<Step> list, int scorePreStep, int scoreEnd) {
-		this.scorePreStep = scorePreStep;
+		//this.scorePreStep = scorePreStep;
 		this.scoreEnd = scoreEnd;
 		init();
 		this.list = list;
@@ -27,7 +25,6 @@ public class Mission {
 	}
 
 	public void init() {
-		index = -2;
 		phrase = "Select mission with left traget";
 		phrasePoint = "";
 		isDone = false;
@@ -56,7 +53,23 @@ public class Mission {
 	}
 	
 
-	public int isValidate(aPolygon pol) {
+	public int validate(aPolygon pol) {
+		if (pol.descr.contains(list.get(index).area)) {
+			index++;
+			if (index >= list.size()) {
+				phrase = "Congratulations";
+				aMyTest.refreshLabel();
+				isDone = true;
+				return scoreEnd;
+			}
+			phrase = list.get(index).phrase;
+			aMyTest.refreshLabel();
+			return list.get(index-1).points;
+		}
+		return 0;
+	}
+
+	/*public int isValidate(aPolygon pol) {
 		System.out.println("-> validate...");
 		System.out.println("-> pol : " + pol.descr);
 		System.out.println("-> index : " + index);
@@ -89,19 +102,22 @@ public class Mission {
 			}
 		}
 		return 0;
-	}
+	}*/
 
 	public String getPhrasePoint() {
-		System.out.println("index : " + index);
-		if (index == -2) {
+		if(index == 0) {
 			return "";
-		} else if (index >= list.size()) {
-			return "Mission done : " + (scoreEnd*aMyTest.game.multiplier) + "pts";
-		} else if (index <= 0) {
-			return "Won " + (scorePreStep*aMyTest.game.multiplier) + "pts";
-		} else {
-			return "Won " + (list.get(index-1).points*aMyTest.game.multiplier) + "pts";
 		}
+		return "Won " + (list.get(index-1).points*aMyTest.game.multiplier) + "pts";
+	}
+
+	public String getFinalPhrasePoint() {
+		return "Mission done : " + (scoreEnd*aMyTest.game.multiplier) + "pts";
+	}
+
+
+	public String getPhrase() {
+		return list.get(index).phrase;
 	}
 
 }

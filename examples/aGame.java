@@ -28,13 +28,14 @@ public class aGame {
 	private int nonAreaCount = 0;
 
 	HashMap<String, aPolygon> map;
-	ArrayList<Mission> listMissions = new ArrayList<>();
-	int indexMission = 0;
+
+	MissionManager missionManager;
 
 	public aGame() {
 		map = aMyTest.map;
 		initTarget();
-		initMission();
+		missionManager = new MissionManager();
+
 		prev_area = map.get("start");
 		loc[0] = 0;
 		loc[1] = 0;
@@ -50,26 +51,15 @@ public class aGame {
 		} else {
 			// System.out.println(" - > Found (x : " + loc[0] + ", y : " + loc[1]);
 			aMyTest.drawPosBalle(loc[0], loc[1]);
+
 			if (verify(loc[0], loc[1])) {// TODO finir
 				aMyTest.refreshLabel();
-				actionMisson();
+
+				missionManager.actionMission(loc[0], loc[1], prev_area);
 			}
 
 		}
 		// TODO draw
-
-	}
-
-	private void actionMisson() {
-		if (indexMission < listMissions.size()) {
-			System.out.println("index mission : " + indexMission);
-			System.out.println(prev_area.descr);
-			int scoreRet = listMissions.get(indexMission).isValidate(prev_area);
-			aMyTest.affPointsMission();
-			// if (scoreRet == listMissions.get(indexMission).SCORE_END) {
-			// }
-			addPoints(scoreRet);
-		}
 
 	}
 
@@ -82,7 +72,7 @@ public class aGame {
 				// if (loc[0] < 360 && loc[1] < 360) {
 				prev_area = map.get("launch");
 				aMyTest.nbBalle = 3;
-				System.out.println("balles : " + aMyTest.nbBalle);
+				//System.out.println("balles : " + aMyTest.nbBalle);
 				System.out.println("NEW GAME !");
 				resetPartie();
 				aMyTest.labelM.setText("New game !");
@@ -105,20 +95,20 @@ public class aGame {
 				nonAreaCount = 0;
 				// System.out.println(pol.descr);
 
-				if (indexMission < listMissions.size() && listMissions.get(indexMission).isDone) {
-					indexMission++;
-					System.out.println("next mission !");
+				if (missionManager.isDone()) {
+					// TODO indexMission++;
+					System.out.println("mm is finished ! (useless)");
 				}
 
 				if (pol.descr.contains("start") && !pol.equals(prev_area)) {
-					System.out.println("+" + pol.descr);
+					//System.out.println("+" + pol.descr);
 					actionStart();
 					prev_area = pol;
 					return true;
 				}
 
 				if (!pol.descr.contains("start")) {
-					System.out.println("-" + pol.descr);
+					//TODO System.out.println("-" + pol.descr);
 				}
 
 				if (pol.action(prev_area)) {
@@ -159,11 +149,11 @@ public class aGame {
 	private void actionStart() {
 		System.out.println("action start");
 
-		if (prev_area == null) {
+		/*if (prev_area == null) {
 			System.out.println("prev area = null");
 		}
 		System.out.println("score : " + score);
-
+*/
 		if ((prev_area != null && prev_area.descr.contains("launch")) || score < SCORE_LIMIT_REDP) {
 			aMyTest.labelM.setText("re Deploy");
 			aMyTest.labelMP.setText("");
@@ -181,7 +171,7 @@ public class aGame {
 	private void actionSpeciale(aPolygon pol) {
 
 		if (pol == null) {
-			System.out.println("null");
+			//System.out.println("null");
 			map.get("rampe").eteindre();
 			map.get("plateforme").eteindre();
 			map.get("fuite").eteindre();
@@ -222,8 +212,7 @@ public class aGame {
 				aMyTest.labelMP.setText(SCORE_TRIPLE_TARGET * multiplier + "pts");
 				aMyTest.refreshLabel();
 			}
-			
-			
+
 			if (map.get("re-entry 1").isActive() && map.get("re-entry 2").isActive()
 					&& map.get("re-entry 3").isActive()) {
 				map.get("re-entry 1").eteindre();
@@ -264,13 +253,14 @@ public class aGame {
 	public int[] search_first(BufferedImage img) {
 		// 250, g:107, b:0
 		int[] ret = new int[2];
-
-		for (int i = 0; i < img.getWidth(); i++) {
-			for (int j = 0; j < img.getHeight(); j++) {
-				if (search(img.getRGB(i, j))) {
-					ret[0] = i;
-					ret[1] = j;
-					return ret;
+		if (img != null) {
+			for (int i = 0; i < img.getWidth(); i++) {
+				for (int j = 0; j < img.getHeight(); j++) {
+					if (search(img.getRGB(i, j))) {
+						ret[0] = i;
+						ret[1] = j;
+						return ret;
+					}
 				}
 			}
 		}
@@ -299,6 +289,7 @@ public class aGame {
 
 		ImageIcon imgFleche = new ImageIcon("/home/nicolas/Bureau/fleche.png");
 		ImageIcon imgGdeFleche = new ImageIcon("/home/nicolas/Bureau/flecheGde.png");
+		ImageIcon imgWormhole = new ImageIcon("/home/nicolas/Bureau/woormhole.png");
 		JPanel jpaB = aMyTest.panelA;
 		JPanel jpaH = aMyTest.panelA2;
 
@@ -353,17 +344,17 @@ public class aGame {
 		// Affichage haut
 
 		aPolygonCompt wormhole = new aPolygonCompt(jpaH, "wormhole", "wormhole", "+10 pts", 10,
-				new int[] { 488, 488, 580, 580 }, new int[] { 607, 660, 660, 607 }, 4, -1, -1, null);
+				new int[] { 488, 488, 580, 580 }, new int[] { 607, 660, 660, 607 }, 4, 528, 647, imgWormhole);
 
 		ReEntry reentry3 = new ReEntry(jpaH, "re-entry 3", 50, new int[] { 398, 398, 466, 466 },
-				new int[] { 251, 308, 308, 251 }, 4, 1734+10, 104-15);
+				new int[] { 251, 308, 308, 251 }, 4, 1734 + 10, 104 - 15);
 		ReEntry reentry2 = new ReEntry(jpaH, "re-entry 2", 50, new int[] { 398, 398, 466, 466 },
-				new int[] { 308, 380, 380, 308 }, 4, 1376+20, 103-15);
+				new int[] { 308, 380, 380, 308 }, 4, 1376 + 20, 103 - 15);
 		ReEntry reentry1 = new ReEntry(jpaH, "re-entry 1", 50, new int[] { 398, 398, 466, 466 },
-				new int[] { 380, 452, 452, 380 }, 4, 992+30, 102-15);
+				new int[] { 380, 452, 452, 380 }, 4, 992 + 30, 102 - 15);
 
-		aPolygon multi = new aPolygon(jpaH, "multi", "Field Multiplier !", "", 0, new int[] { 460, 490, 512,490 },
-				new int[] { 460, 460, 512,530}, 4, 672, 433, imgFleche);
+		aPolygon multi = new aPolygon(jpaH, "multi", "Field Multiplier !", "", 0, new int[] { 460, 490, 512, 490 },
+				new int[] { 460, 460, 512, 530 }, 4, 672, 433, imgFleche);
 
 		map.put(targetG1.descr, targetG1);
 		map.put(targetG2.descr, targetG2);
@@ -386,33 +377,6 @@ public class aGame {
 
 	}
 
-	public void initMission() {
-		Mission m = new Mission(300, 1500);
-		m.add("target droit", "Hit right target", 500);
-		m.add("rampe", "Launch in ramp", 500);
-		m.add("trou", "Put in hole", 500);
-		m.add("hyperspace_enter", "enter in hyperspace", 500);
-		m.addFinal(600);
-		listMissions.add(m);
-
-		m = new Mission(300, 1500);
-		m.add("target droit", "Hit right target", 250);
-		m.add("ramp", "Launch on platform 3", 250);
-		m.add("plateforme", "Launch on platform 3", 250);
-		m.add("ramp", "Launch on platform 2", 250);
-		m.add("plateforme", "Launch on platform 2", 250);
-		m.add("ramp", "Launch on platform 1", 250);
-		m.add("plateforme", "Launch on platform 1", 250);
-		m.add("trou", "Put in hole", 500);
-		m.add("target gauche", "Hit left target", 500);
-		m.add("target droit", "Hit right target", 500);
-		m.add("target gauche", "Hit left target", 500);
-		m.add("target droit", "Hit right target", 500);
-		m.add("target gauche", "Hit left target", 500);
-		m.addFinal(600);
-		// listMissions.add(m);
-	}
-
 	private void addPoints(int nbPoints) {
 		score_total += nbPoints * multiplier;
 		score += nbPoints * multiplier;
@@ -422,17 +386,17 @@ public class aGame {
 	private void resetPartie() {
 		multiplier = 1;
 		score_total = 0;
-		resetMission();
+		missionManager.resetMission();
 	}
 
 	private void resetBall() {
 
-		System.out.println("reset score");
+		System.out.println("reset ball");
 
 		multiplier = 1;
 		score = 0;
 		aMyTest.nbBalle--;
-		System.out.println("ball -- (" + aMyTest.nbBalle + ")");
+		//System.out.println("ball -- (" + aMyTest.nbBalle + ")");
 		if (aMyTest.nbBalle == 0) {
 			aMyTest.labelM.setText("GAME OVER");
 			aMyTest.labelMP.setText("");
@@ -450,30 +414,20 @@ public class aGame {
 
 	}
 
-	public String getPhraseMission() {
-
-		if (indexMission < listMissions.size()) {
-			return listMissions.get(indexMission).phrase;
-		}
-		return "Game is done";
-	}
-
-	public String getPointMission() {
-		// System.out.println("get phrase point");
-		if (indexMission < listMissions.size()) {
-			// System.out.println("phrase :
-			// "+listMissions.get(indexMission).getPhrasePoint());
-			return listMissions.get(indexMission).getPhrasePoint();
-		}
-		return "";
-	}
-
-	private void resetMission() {
-		indexMission = 0;
-		for (Mission m : listMissions) {
-			m.init();
-		}
-
-	}
-
+	/*
+	 * public String getPhraseMission() {
+	 * 
+	 * if (indexMission < listMissions.size()) { return
+	 * listMissions.get(indexMission).phrase; } return "Game is done"; }
+	 * 
+	 * public String getPointMission() { // System.out.println("get phrase point");
+	 * if (indexMission < listMissions.size()) { // System.out.println("phrase : //
+	 * "+listMissions.get(indexMission).getPhrasePoint()); return
+	 * listMissions.get(indexMission).getPhrasePoint(); } return ""; }
+	 * 
+	 * private void resetMission() { indexMission = 0; for (Mission m :
+	 * listMissions) { m.init(); }
+	 * 
+	 * }
+	 */
 }
