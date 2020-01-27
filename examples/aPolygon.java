@@ -2,11 +2,13 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class aPolygon extends Polygon {
 
 	private boolean active = false;
+	JPanel myJPanel;
 	String descr = "";
 	String phrase = "";
 	private String phraseScore = "";
@@ -14,8 +16,9 @@ public class aPolygon extends Polygon {
 	int x, y;
 	ImageIcon img;
 
-	public aPolygon(String str, String phrase, String phraseScore, int point, int[] is, int[] is2, int i, int x, int y, ImageIcon img) {
+	public aPolygon(JPanel myJPanel, String str, String phrase, String phraseScore, int point, int[] is, int[] is2, int i, int x, int y, ImageIcon img) {
 		super(is, is2, i);
+		this.myJPanel = myJPanel;
 		// aMyTest.panelA.map.put(str, false);
 		descr = str;
 		this.img = img;

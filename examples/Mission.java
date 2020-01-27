@@ -46,7 +46,7 @@ public class Mission {
 	}
 
 	private boolean validateArea(String area) {
-		for (Entry<String, aPolygon> entry : aMyTest.panelA.map.entrySet()) {
+		for (Entry<String, aPolygon> entry : aMyTest.map.entrySet()) {
 			aPolygon pol = entry.getValue();
 			if(pol.descr.contains(area)) {
 				return true;

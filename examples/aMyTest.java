@@ -7,6 +7,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -18,11 +19,14 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 
 public class aMyTest {
+	
+
+	static HashMap<String, aPolygon> map = new HashMap<>();
 
 	static List<Dimension> myCoord = new ArrayList<Dimension>();
 	static int count = 0;
 	static WebcamPanel panel;
-	static aMyJPanel panelD, panelA;
+	static aMyJPanel panelD, panelA, panelA2;
 	static JLabel labelS, labelM, labelMP, labelB, labelMulti,labelMiss, labelMissP;
 	static aGame game;
 
@@ -65,8 +69,28 @@ public class aMyTest {
 		window2.pack();
 		window2.setVisible(true);
 
-		// Fenetre affichage
-		JFrame window3 = new JFrame("Affichage");
+
+		// Fenetre affichage2 (haut)
+		JFrame window4 = new JFrame("Affichage haut");
+		panelA2 = new aMyJPanel();
+
+		ImageIcon fond2 = new ImageIcon("/home/nicolas/Bureau/aff2.png");
+		BufferedImage bimgf2 = new BufferedImage(fond2.getIconWidth(), fond2.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D ggf2 = bimgf2.createGraphics();
+		ggf2.drawImage(fond2.getImage(), 0, 0, fond2.getImageObserver());
+		panelA2.setImage(bimgf2);
+		panelA2.paintComponent(ggf2);
+		
+		window4.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// window4.setUndecorated(true);
+		window4.add(panelA2);
+		window4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window4.pack();
+		window4.setVisible(true);
+		
+		
+		// Fenetre affichage (bas)
+		JFrame window3 = new JFrame("Affichage bas");
 		panelA = new aMyJPanel();
 
 		ImageIcon fond = new ImageIcon("/home/nicolas/Bureau/aff.png");
@@ -76,6 +100,7 @@ public class aMyTest {
 		panelA.setImage(bimgf);
 		panelA.paintComponent(ggf);
 
+		
 		// Afficahge score
 		labelS = new JLabel("Score : 0000000000000000000000");
 		labelS.setForeground(Color.white);
@@ -279,5 +304,16 @@ public class aMyTest {
 		System.err.println("Webcam Razer not found");
 		System.out.println("Webcam Razer not found");
 		return Webcam.getWebcams().get(0);
+	}
+
+	public static void repaint() {
+
+		aMyTest.panelA.paintComponent(null);
+		aMyTest.panelA.repaint();
+		aMyTest.panelA2.paintComponent(null);
+		aMyTest.panelA2.repaint();
+		
+		System.out.println("multi : "+panel);
+		
 	}
 }
