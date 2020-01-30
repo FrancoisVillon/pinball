@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class MissionManager {
 
-	ArrayList<MissionClass> listClassMissions = new ArrayList<>();
+	ArrayList<MissionClass> listClassMissions;
 	int indexStart = -2;
 	int rang = 0;
 	int scorePreStep = 300;
@@ -26,7 +26,7 @@ public class MissionManager {
 		if (mission == null) {
 			if (indexStart == -2) { // Attente choix mission : target
 				if (area.descr.contains("target gauche")) {
-					System.out.println("\tchoix mission");
+					//System.out.println("\tchoix mission");
 					phrase = "Launch in ramp to validate";
 					phrasePoint = "Won " + (scorePreStep * aMyTest.game.multiplier) + "pts";
 					aMyTest.refreshLabel();
@@ -48,7 +48,7 @@ public class MissionManager {
 					return scorePreStep;
 				}
 			} else {
-				System.out.println("\tmission");
+				//System.out.println("\tmission");
 				int points = mission.validate(area);
 				if (points == mission.scoreEnd) {
 					phrasePoint = mission.getFinalPhrasePoint();
@@ -115,9 +115,8 @@ public class MissionManager {
 	 */
 
 	public void initMission() {
-
 		System.out.println("passé");
-		
+		listClassMissions = new ArrayList<>();
 		ArrayList<Mission> listMissions = new ArrayList<>();
 
 		Mission m = new Mission(300, 1500);
@@ -178,6 +177,7 @@ public class MissionManager {
 
 	public void resetMission() {
 		initMission();
+		rang = 0;
 		indexStart = -2;
 		phrase = "Select mission with left traget";
 		phrasePoint = "";

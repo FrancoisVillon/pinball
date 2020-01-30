@@ -50,7 +50,7 @@ public class aMyTest {
 		window.add(panel);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
-		// window.setVisible(true);
+		window.setVisible(true);
 
 		// Fenetre tracé/suivi balle
 		JFrame window2 = new JFrame("Tracé");

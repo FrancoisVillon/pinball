@@ -376,6 +376,7 @@ public class aGame {
 		map.put(reentry1.descr, reentry1);
 
 	}
+	
 
 	private void addPoints(int nbPoints) {
 		score_total += nbPoints * multiplier;
