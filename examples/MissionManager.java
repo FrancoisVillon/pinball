@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
 public class MissionManager {
 
 	ArrayList<MissionClass> listClassMissions;
@@ -116,14 +118,17 @@ public class MissionManager {
 
 	public void initMission() {
 		System.out.println("passé");
+		aMyJPanel jpaH = aMyTest.panelA2;
+		aMyJPanel jpaB = aMyTest.panelA;
+		
 		listClassMissions = new ArrayList<>();
 		ArrayList<Mission> listMissions = new ArrayList<>();
 
 		Mission m = new Mission(300, 1500);
-		m.add("target droit", "Hit right target", 500);
-		m.add("rampe", "Launch in ramp", 500);
-		m.add("trou", "Put in hole", 500);
-		m.add("hyperspace_enter", "enter in hyperspace", 500);
+		m.add("target droit", "Hit right target", 500, 1445,120,jpaB);
+		m.add("rampe", "Launch in ramp", 500, 800,350,jpaB);
+		m.add("trou", "Put in hole", 500,0,0,jpaB);
+		m.add("hyperspace_enter", "enter in hyperspace", 500, 1500,710,jpaH);
 		m.addFinal(600);
 		listMissions.add(m);
 
@@ -142,7 +147,7 @@ public class MissionManager {
 		m.add("target droit", "Hit right target", 500);
 		m.add("target gauche", "Hit left target", 500);
 		m.addFinal(600);
-		listMissions.add(m);
+		//listMissions.add(m);
 
 		MissionClass mc = new MissionClass(listMissions, "Level 1");
 		listClassMissions.add(mc);
@@ -168,7 +173,7 @@ public class MissionManager {
 		MissionClass mc2 = new MissionClass(listMissions2, "Level 2");
 		listClassMissions.add(mc2);
 		
-		System.out.println(listClassMissions.size());
+		System.out.println("size mission list : "+listClassMissions.size());
 	}
 
 	public boolean isDone() {
@@ -199,6 +204,48 @@ public class MissionManager {
 		default:
 			return "";
 		}
+	}
+	
+	public int getImgX() {
+		if(isDone()) {
+			return -1;
+		}
+		if(indexStart == -2) {
+			return 255;
+		}
+		if(indexStart == -1) {
+			return 800;
+		}
+		return mission.getImgX();
+		
+	}
+	
+	public int getImgY() {
+		if(isDone()) {
+			return -1;
+		}
+		if(indexStart == -2) {
+			return 350;
+		}
+		if(indexStart == -1) {
+			return 350;
+		}
+		return mission.getImgY();
+		
+	}
+	
+
+	public JPanel getJPanel() {
+		if(isDone()) {
+			return null;
+		}
+		if(indexStart == -2) {
+			return aMyTest.panelA;
+		}
+		if(indexStart == -1) {
+			return aMyTest.panelA;
+		}
+		return mission.getJPanel();
 	}
 
 }

@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
+import javax.swing.JPanel;
+
 public class Mission {
 	ArrayList<Step> list = new ArrayList<>();
 	int index = 0;
@@ -31,7 +33,15 @@ public class Mission {
 	}
 
 	public void addFinal(int score) {
-		add("target droit", "Hit right target to conclude", score);
+		add("target droit", "Hit right target to conclude", score, 1445,120, aMyTest.panelA);
+	}
+
+	public void add(String area, String str, int score, int x, int y, JPanel jpa) {
+		if (validateArea(area)) {
+			list.add(new Step(area, str, score, x, y, jpa));
+		}else {
+			System.out.println("Ajout impossible, msg : "+area);
+		}
 	}
 
 	public void add(String area, String str, int score) {
@@ -118,6 +128,16 @@ public class Mission {
 
 	public String getPhrase() {
 		return list.get(index).phrase;
+	}
+
+	public int getImgX() {
+		return list.get(index).x;
+	}
+	public int getImgY() {
+		return list.get(index).y;
+	}
+	public JPanel getJPanel() {
+		return list.get(index).jpa;
 	}
 
 }

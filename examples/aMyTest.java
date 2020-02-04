@@ -155,7 +155,7 @@ public class aMyTest {
 		labelMulti = new JLabel("0000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		labelMulti.setForeground(Color.white);
 		labelMulti.setFont(new Font("squaredance00", labelMulti.getFont().getStyle(), 30));
-		labelMulti.setLocation(WIDTH * 18 / 20, HEIGHT * 8 / 9);
+		labelMulti.setLocation(WIDTH * 14 / 20, HEIGHT * 8 / 9);
 		labelMulti.setSize(labelMulti.getPreferredSize());
 		panelA.add(labelMulti);
 
@@ -239,12 +239,12 @@ public class aMyTest {
 		labelR.setText(game.missionManager.getRang());
 		labelMissP.setText(game.missionManager.phrasePoint);
 		labelMiss.setText(game.missionManager.phrase);
-		labelMulti.setText(game.multiplier + "x");
+		labelMulti.setText("Score multiplier : "+game.multiplier + "x");
 		labelS.setText("Score : " + game.score_total);
 		if (game.score < game.SCORE_LIMIT_REDP) {
-			labelB.setText("" + nbBalle + " (D)");
+			labelB.setText("Ball : " + nbBalle + " (D)");
 		} else {
-			labelB.setText("" + nbBalle);
+			labelB.setText("Ball : " + nbBalle);
 		}
 		panelA.repaint();
 	}

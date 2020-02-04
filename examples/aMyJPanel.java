@@ -2,12 +2,14 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Map.Entry;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 class aMyJPanel extends JPanel {
 	BufferedImage image;
 	int x = 0, y = 0;
+	ImageIcon missionImg = new ImageIcon("/home/nicolas/Bureau/mission.png");
 
 	// ArrayList<aPolygon> list = new ArrayList<>();
 
@@ -22,17 +24,38 @@ class aMyJPanel extends JPanel {
 			for (Entry<String, aPolygon> entry : aMyTest.map.entrySet()) {
 				aPolygon pol = entry.getValue();
 				if (this.equals(pol.myJPanel) && pol.isActive() && pol.x != -1) {
-					//System.out.println(pol.img.equals(null));
+					// System.out.println(pol.img.equals(null));
 					g.drawImage(pol.img.getImage(), pol.x, pol.y, pol.img.getIconWidth(), pol.img.getIconHeight(),
 							pol.img.getImageObserver());// 125, 30, 39,85
-					//g.drawRect(pol.x, pol.y, pol.img.getIconWidth(), pol.img.getIconHeight());
+					// g.drawRect(pol.x, pol.y, pol.img.getIconWidth(), pol.img.getIconHeight());
 				}
 			}
 		} catch (Exception e) {
-			/*System.out.println("ERR : ");
-			e.printStackTrace();*/
+			/*
+			 * System.out.println("ERR : "); e.printStackTrace();
+			 */
 		}
 
+		try {
+			if (aMyTest.game != null && aMyTest.game.missionManager != null
+					&& aMyTest.game.missionManager.getJPanel() != null) {
+				if (this.equals(aMyTest.game.missionManager.getJPanel())) {
+					g.drawImage(missionImg.getImage(), aMyTest.game.missionManager.getImgX(),
+							aMyTest.game.missionManager.getImgY(), missionImg.getIconHeight(),
+							missionImg.getIconWidth(), missionImg.getImageObserver());
+				}
+			}else {
+				System.out.println("1 " + aMyTest.game);
+				System.out.println("2 " + aMyTest.game.missionManager);
+				System.out.println("3 " + aMyTest.game.missionManager.mission);
+				System.out.println("4 " + aMyTest.game.missionManager.mission.getJPanel());
+			}
+		} catch (Exception e) {
+
+			//System.out.println("ERR : ");
+			//e.printStackTrace();
+
+		}
 	}
 
 	public void repaint() {

@@ -97,7 +97,7 @@ public class aGame {
 
 				if (missionManager.isDone()) {
 					// TODO indexMission++;
-					System.out.println("mm is finished ! (useless)");
+					//System.out.println("mm is finished ! (useless)");
 				}
 
 				if (pol.descr.contains("start") && !pol.equals(prev_area)) {
