@@ -45,15 +45,15 @@ class aMyJPanel extends JPanel {
 							aMyTest.game.missionManager.getImg().getIconWidth(), aMyTest.game.missionManager.getImg().getImageObserver());
 				}
 			}else {
-				System.out.println("1 " + aMyTest.game);
-				System.out.println("2 " + aMyTest.game.missionManager);
-				System.out.println("3 " + aMyTest.game.missionManager.mission);
-				System.out.println("4 " + aMyTest.game.missionManager.mission.getJPanel());
+				//System.out.println("1 " + aMyTest.game);
+				//System.out.println("2 " + aMyTest.game.missionManager);
+				//System.out.println("3 " + aMyTest.game.missionManager.mission);
+				//System.out.println("4 " + aMyTest.game.missionManager.mission.getJPanel());
 			}
 		} catch (Exception e) {
 
-			System.out.println("ERR : ");
-			e.printStackTrace();
+			//System.out.println("ERR : ");
+			//wwwwwwwwwwwwe.printStackTrace();
 
 		}
 	}

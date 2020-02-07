@@ -130,10 +130,112 @@ public class MissionManager {
 		missionRamp = new AffMission( 800,280,jpaB, new ImageIcon("/home/nicolas/Bureau/rampMission.png"));
 		AffMission missionHole = new AffMission(100,770,jpaB, new ImageIcon("/home/nicolas/Bureau/holeMission.png"));
 		AffMission missionHyperspace = new AffMission( 1380,50,jpaB, new ImageIcon("/home/nicolas/Bureau/hyperspaceMission.png"));
+		AffMission missionMulti = new AffMission( 720,440,jpaH, new ImageIcon("/home/nicolas/Bureau/rampMission.png"));
+		AffMission missionReEntry = new AffMission( 1380,250,jpaH, new ImageIcon("/home/nicolas/Bureau/reentryMission.png"));
 		
 		listClassMissions = new ArrayList<>();
 		ArrayList<Mission> listMissions = new ArrayList<>();
 
+		
+		
+		
+		Mission m = new Mission(300, 1500);
+        m.add("target droit", "Hit right target", 500, missionTargetD);
+        m.add("multi", "Launch in multi", 500, missionMulti);
+        m.add("rampe", "Launch in ramp", 500, missionRamp);
+        m.add("trou", "Put in hole", 500, missionHole);
+        m.add("hyperspace_enter", "enter in hyperspace", 500, missionHyperspace);
+        m.addFinal(600);
+        listMissions.add(m);
+		
+
+        m = new Mission(300, 2500);
+        m.add("multi", "Launch in multi", 500, missionMulti);
+        m.add("trou", "Put in hole", 100, missionHole);
+        m.add("target gauche", "Hit left target", 500, missionTargetG);
+        m.addFinal(600);
+        listMissions.add(m);
+		
+
+
+        MissionClass mc = new MissionClass(listMissions, "Level 1");
+        listClassMissions.add(mc);
+
+        ArrayList<Mission> listMissions2 = new ArrayList<>();
+
+        m = new Mission(300, 5000);
+        m.add("re-entry", "Pass in Re-entries (3)", 100, missionReEntry);
+        m.add("re-entry", "Pass in Re-entries (2)", 100, missionReEntry);
+        m.add("re-entry", "Pass in Re-entry", 100, missionReEntry);
+        m.addFinal(600);
+        listMissions2.add(m);
+        
+
+
+        m = new Mission(300, 7500);
+        m.add("target droit", "Hit right target", 100, missionTargetD);
+        m.add("target gauche", "Hit left target (3)", 100, missionTargetG);
+        m.add("target gauche", "Hit left target (2)", 100, missionTargetG);
+        m.add("target gauche", "Hit left target", 100, missionTargetG);
+        m.add("multi", "Hit multiplier", 100, missionMulti);
+        m.add("hyperspace_enter", "enter in hyperspace", 500, missionHyperspace);
+        m.addFinal(600);        
+        listMissions2.add(m);
+
+        MissionClass mc2 = new MissionClass(listMissions2, "Level 2");
+        listClassMissions.add(mc2);
+        
+        ArrayList<Mission> listMissions4 = new ArrayList<>();
+       
+        m = new Mission(300, 10000);
+
+        m.add("target droit", "Hit right target", 500, missionTargetD);
+        m.add("hyperspace", "enter in hyperspace (3)", 500, missionHyperspace);
+        m.add("hyperspace", "enter in hyperspace (2)", 500, missionHyperspace);
+        m.add("hyperspace", "enter in hyperspace", 500, missionHyperspace);
+        m.add("re-entry", "Pass in Re-entries (3)", 100, missionReEntry);
+        m.add("re-entry", "Pass in Re-entries (2)", 100, missionReEntry);
+        m.add("re-entry", "Pass in Re-entry", 100, missionReEntry);
+        m.add("multi", "Hit multiplier", 100, missionMulti);
+        m.add("rampe", "Launch in ramp", 500, missionRamp);
+        m.add("trou", "Put in hole", 100, missionHole);
+        m.add("target gauche", "Hit left target (3)", 100, missionTargetG);
+        m.add("target gauche", "Hit left target (2)", 100, missionTargetG);
+        m.add("target gauche", "Hit left target", 100, missionTargetG);
+        m.addFinal(600);
+		listMissions4.add(m);
+		
+		
+
+        m = new Mission(300, 10000);
+
+        m.add("target droit", "Hit right target", 500, missionTargetD);
+        m.add("hyperspace_enter", "enter in hyperspace", 500, missionHyperspace);
+        m.add("target droit", "Hit right target", 500, missionTargetD);
+        m.add("hyperspace_center", "Go to center to hyperspace", 500, missionHyperspace);
+        m.add("target droit", "Hit right target", 500, missionTargetD);
+        m.add("hyperspace", "Go all the way to hyperspace", 500, missionHyperspace);
+        m.add("rampe", "Launch in ramp", 500, missionRamp);
+        m.add("trou", "Put in hole", 100, missionHole);
+        m.add("target gauche", "Hit left target (3)", 100, missionTargetG);
+        m.add("target gauche", "Hit left target (2)", 100, missionTargetG);
+        m.add("target gauche", "Hit left target", 100, missionTargetG);
+        m.addFinal(600);
+		listMissions4.add(m);
+		
+		/* hyperspace = new aPolygon(jpaB, "hyperspace_ball", "Extra ball !", "", 500,
+				new int[] { 400, 480, 500, 460, 405 }, new int[] { 230, 230, 210, 176, 214 }, 5, -1, -1, null);
+
+		aPolygon hyperspace_center = new aPolygon(jpaB, "hyperspace_center", "Hyperspace", "500pts", 500,
+				new int[] { 485, 485, 550, 550 }, new int[] { 162, 204, 204, 162 }, 4, -1, -1, null);
+
+		aPolygon hyperspace_enter*/
+
+        MissionClass mc3 = new MissionClass(listMissions4, "Level 3");
+        listClassMissions.add(mc3);
+        /*
+		
+		
 		Mission m = new Mission(300, 1500);
 		m.add("target droit", "Hit right target", 500, missionTargetD);
 		m.add("rampe", "Launch in ramp", 500,missionRamp);
@@ -182,7 +284,7 @@ public class MissionManager {
 
 		MissionClass mc2 = new MissionClass(listMissions2, "Level 2");
 		listClassMissions.add(mc2);
-		
+		*/
 		System.out.println("size mission list : "+listClassMissions.size());
 	}
 
