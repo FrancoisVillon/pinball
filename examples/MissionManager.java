@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class MissionManager {
@@ -116,38 +117,47 @@ public class MissionManager {
 	 * }
 	 */
 
+	AffMission missionTargetG, missionTargetD, missionRamp;
+	
 	public void initMission() {
 		System.out.println("passé");
+		
 		aMyJPanel jpaH = aMyTest.panelA2;
 		aMyJPanel jpaB = aMyTest.panelA;
+
+		missionTargetD = new AffMission(1500,80,jpaB, new ImageIcon("/home/nicolas/Bureau/targetDroitMission.png"));
+		missionTargetG = new AffMission(310, 150, jpaB, new ImageIcon("/home/nicolas/Bureau/targetGaucheMission.png"));
+		missionRamp = new AffMission( 800,280,jpaB, new ImageIcon("/home/nicolas/Bureau/rampMission.png"));
+		AffMission missionHole = new AffMission(100,770,jpaB, new ImageIcon("/home/nicolas/Bureau/holeMission.png"));
+		AffMission missionHyperspace = new AffMission( 1380,50,jpaB, new ImageIcon("/home/nicolas/Bureau/hyperspaceMission.png"));
 		
 		listClassMissions = new ArrayList<>();
 		ArrayList<Mission> listMissions = new ArrayList<>();
 
 		Mission m = new Mission(300, 1500);
-		m.add("target droit", "Hit right target", 500, 1445,120,jpaB);
-		m.add("rampe", "Launch in ramp", 500, 800,350,jpaB);
-		m.add("trou", "Put in hole", 500,0,0,jpaB);
-		m.add("hyperspace_enter", "enter in hyperspace", 500, 1500,710,jpaH);
+		m.add("target droit", "Hit right target", 500, missionTargetD);
+		m.add("rampe", "Launch in ramp", 500,missionRamp);
+		m.add("trou", "Put in hole", 500, missionHole);
+		m.add("hyperspace_enter", "enter in hyperspace", 500,missionHyperspace);
 		m.addFinal(600);
 		listMissions.add(m);
 
 		m = new Mission(300, 1500);
-		m.add("target droit", "Hit right target", 250);
-		m.add("ramp", "Launch on platform 3", 250);
-		m.add("plateforme", "Launch on platform 3", 250);
-		m.add("ramp", "Launch on platform 2", 250);
-		m.add("plateforme", "Launch on platform 2", 250);
-		m.add("ramp", "Launch on platform 1", 250);
-		m.add("plateforme", "Launch on platform 1", 250);
-		m.add("trou", "Put in hole", 500);
-		m.add("target gauche", "Hit left target", 500);
-		m.add("target droit", "Hit right target", 500);
-		m.add("target gauche", "Hit left target", 500);
-		m.add("target droit", "Hit right target", 500);
-		m.add("target gauche", "Hit left target", 500);
+		m.add("target droit", "Hit right target", 250, missionTargetD);
+		m.add("ramp", "Launch on platform 3", 250, missionRamp);
+		m.add("plateforme", "Launch on platform 3", 250, missionRamp);
+		m.add("ramp", "Launch on platform 2", 250, missionRamp);
+		m.add("plateforme", "Launch on platform 2", 250, missionRamp);
+		m.add("ramp", "Launch on platform 1", 250, missionRamp);
+		m.add("plateforme", "Launch on platform 1", 250, missionRamp);
+		m.add("trou", "Put in hole", 500, missionHole);
+		m.add("target gauche", "Hit left target", 500, missionTargetG);
+		m.add("target droit", "Hit right target", 500, missionTargetD);
+	//	m.add("target gauche", "Hit left target", 500, missionTargetG);
+	//	m.add("target droit", "Hit right target", 500, missionTargetD);
+		m.add("target gauche", "Hit left target", 500, missionTargetG);
 		m.addFinal(600);
-		//listMissions.add(m);
+		listMissions.add(m);
 
 		MissionClass mc = new MissionClass(listMissions, "Level 1");
 		listClassMissions.add(mc);
@@ -155,18 +165,18 @@ public class MissionManager {
 		ArrayList<Mission> listMissions2 = new ArrayList<>();
 
 		m = new Mission(300, 1500);
-		m.add("target droit", "Hit right target", 500);
-		m.add("rampe", "Launch in ramp", 500);
-		m.add("trou", "Put in hole", 500);
-		m.add("target droit", "Hit right target", 500);
+		m.add("target droit", "Hit right target", 500, missionTargetD);
+		m.add("rampe", "Launch in ramp", 500, missionRamp);
+		m.add("trou", "Put in hole", 500, missionHole);
+		m.add("target droit", "Hit right target", 500, missionTargetD);
 		m.addFinal(600);
 		listMissions2.add(m);
 
 		m = new Mission(300, 1500);
-		m.add("target gauche", "Hit left target", 500);
-		m.add("rampe", "Launch in ramp", 500);
-		m.add("trou", "Put in hole", 500);
-		m.add("target gauche", "Hit left target", 500);
+		m.add("target gauche", "Hit left target", 500, missionTargetG);
+		m.add("rampe", "Launch in ramp", 500, missionRamp);
+		m.add("trou", "Put in hole", 500, missionHole);
+		m.add("target gauche", "Hit left target", 500, missionTargetG);
 		m.addFinal(600);
 		listMissions2.add(m);
 
@@ -211,10 +221,10 @@ public class MissionManager {
 			return -1;
 		}
 		if(indexStart == -2) {
-			return 255;
+			return missionTargetG.x;
 		}
 		if(indexStart == -1) {
-			return 800;
+			return missionRamp.x;
 		}
 		return mission.getImgX();
 		
@@ -225,13 +235,26 @@ public class MissionManager {
 			return -1;
 		}
 		if(indexStart == -2) {
-			return 350;
+			return missionTargetG.y;
 		}
 		if(indexStart == -1) {
-			return 350;
+			return missionRamp.y;
 		}
 		return mission.getImgY();
 		
+	}
+	
+	public ImageIcon getImg() {
+		if(isDone()) {
+			return null;
+		}
+		if(indexStart == -2) {
+			return missionTargetG.img;
+		}
+		if(indexStart == -1) {
+			return missionRamp.img;
+		}
+		return mission.getImg();
 	}
 	
 
@@ -240,10 +263,10 @@ public class MissionManager {
 			return null;
 		}
 		if(indexStart == -2) {
-			return aMyTest.panelA;
+			return missionTargetG.jpa;
 		}
 		if(indexStart == -1) {
-			return aMyTest.panelA;
+			return missionRamp.jpa;
 		}
 		return mission.getJPanel();
 	}

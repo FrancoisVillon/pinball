@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 class aMyJPanel extends JPanel {
 	BufferedImage image;
 	int x = 0, y = 0;
-	ImageIcon missionImg = new ImageIcon("/home/nicolas/Bureau/mission.png");
+	//ImageIcon missionImg = new ImageIcon("/home/nicolas/Bureau/mission.png");
 
 	// ArrayList<aPolygon> list = new ArrayList<>();
 
@@ -39,10 +39,10 @@ class aMyJPanel extends JPanel {
 		try {
 			if (aMyTest.game != null && aMyTest.game.missionManager != null
 					&& aMyTest.game.missionManager.getJPanel() != null) {
-				if (this.equals(aMyTest.game.missionManager.getJPanel())) {
-					g.drawImage(missionImg.getImage(), aMyTest.game.missionManager.getImgX(),
-							aMyTest.game.missionManager.getImgY(), missionImg.getIconHeight(),
-							missionImg.getIconWidth(), missionImg.getImageObserver());
+				if (g != null && this.equals(aMyTest.game.missionManager.getJPanel())) {
+					g.drawImage(aMyTest.game.missionManager.getImg().getImage(), aMyTest.game.missionManager.getImgX(),
+							aMyTest.game.missionManager.getImgY(), aMyTest.game.missionManager.getImg().getIconHeight(),
+							aMyTest.game.missionManager.getImg().getIconWidth(), aMyTest.game.missionManager.getImg().getImageObserver());
 				}
 			}else {
 				System.out.println("1 " + aMyTest.game);
@@ -52,8 +52,8 @@ class aMyJPanel extends JPanel {
 			}
 		} catch (Exception e) {
 
-			//System.out.println("ERR : ");
-			//e.printStackTrace();
+			System.out.println("ERR : ");
+			e.printStackTrace();
 
 		}
 	}

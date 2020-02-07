@@ -59,6 +59,9 @@ public class aGame {
 			}
 
 		}
+
+		targetD.draw(aMyTest.panel.getGraphics());
+		start.draw(aMyTest.panel.getGraphics());
 		// TODO draw
 
 	}
@@ -108,7 +111,7 @@ public class aGame {
 				}
 
 				if (!pol.descr.contains("start")) {
-					//TODO System.out.println("-" + pol.descr);
+				//	System.out.println("-" + pol.descr);
 				}
 
 				if (pol.action(prev_area)) {
@@ -299,7 +302,7 @@ public class aGame {
 				new int[] { 530, 495, 495, 525 }, 4, 225, 215);
 		Target targetG3 = new Target(jpaB, "target gauche 3", 100, new int[] { 810, 810, 850, 850 },
 				new int[] { 520, 495, 495, 520 }, 4, 230, 385);
-		Target targetD = new Target(jpaB, "target droit", 100, new int[] { 725, 725, 810, 810 },
+		targetD = new Target(jpaB, "target droit", 100, new int[] { 725, 725, 810, 810 },
 				new int[] { 220, 260, 260, 220 }, 4, 1690, 35);
 
 		aPolygonCompt rampe = new aPolygonCompt(jpaB, "rampe", "Launch ramp", "+20 pts", 20,
@@ -323,7 +326,7 @@ public class aGame {
 				new int[] { 910, 910, 1045, 1090, 1063, 1010 }, new int[] { 212, 164, 168, 260, 307, 210 }, 6, 1635,
 				625, imgGdeFleche);
 
-		aPolygon start = new aPolygon(jpaB, "start", "", "", 500, new int[] { 1150, 1150, 1224, 1224 },
+		start = new aPolygon(jpaB, "start", "", "", 500, new int[] { 1150, 1150, 1224, 1224 },
 				new int[] { 145, 175, 175, 145 }, 4, -1, -1, null);
 
 		aPolygon hyperspace = new aPolygon(jpaB, "hyperspace_ball", "Extra ball !", "", 500,
@@ -376,7 +379,8 @@ public class aGame {
 		map.put(reentry1.descr, reentry1);
 
 	}
-	
+	aPolygon start;
+	Target targetD;
 
 	private void addPoints(int nbPoints) {
 		score_total += nbPoints * multiplier;

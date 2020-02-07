@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Mission {
@@ -33,20 +34,27 @@ public class Mission {
 	}
 
 	public void addFinal(int score) {
-		add("target droit", "Hit right target to conclude", score, 1445,120, aMyTest.panelA);
+		add("target droit", "Hit right target to conclude", score, aMyTest.game.missionManager.missionTargetD);
 	}
 
-	public void add(String area, String str, int score, int x, int y, JPanel jpa) {
+	public void add(String area, String str, int score, int x, int y, JPanel jpa, ImageIcon img) {
 		if (validateArea(area)) {
-			list.add(new Step(area, str, score, x, y, jpa));
+			list.add(new Step(area, str, score, x, y, jpa, img));
 		}else {
 			System.out.println("Ajout impossible, msg : "+area);
 		}
 	}
-
+@Deprecated
 	public void add(String area, String str, int score) {
 		if (validateArea(area)) {
 			list.add(new Step(area, str, score));
+		}else {
+			System.out.println("Ajout impossible, msg : "+area);
+		}
+	}
+	public void add(String area, String str, int score, AffMission aff) {
+		if (validateArea(area)) {
+			list.add(new Step(area, str, score, aff));
 		}else {
 			System.out.println("Ajout impossible, msg : "+area);
 		}
@@ -135,6 +143,9 @@ public class Mission {
 	}
 	public int getImgY() {
 		return list.get(index).y;
+	}
+	public ImageIcon getImg() {
+		return list.get(index).img;
 	}
 	public JPanel getJPanel() {
 		return list.get(index).jpa;
