@@ -61,7 +61,11 @@ public class aGame {
 		}
 
 		targetD.draw(aMyTest.panel.getGraphics());
+		targetG1.draw(aMyTest.panel.getGraphics());
+		targetG3.draw(aMyTest.panel.getGraphics());
 		start.draw(aMyTest.panel.getGraphics());
+		rampe.draw(aMyTest.panel.getGraphics());
+		plateforme.draw(aMyTest.panel.getGraphics());
 		// TODO draw
 
 	}
@@ -296,23 +300,23 @@ public class aGame {
 		JPanel jpaB = aMyTest.panelA;
 		JPanel jpaH = aMyTest.panelA2;
 
-		Target targetG1 = new Target(jpaB, "target gauche 1", 100, new int[] { 743, 743, 777, 777 },
+		targetG1 = new Target(jpaB, "target gauche 1", 100, new int[] { 743, 743, 777, 777 },
 				new int[] { 530, 495, 495, 525 }, 4, 220, 40);
 		Target targetG2 = new Target(jpaB, "target gauche 2", 100, new int[] { 810, 810, 777, 777 },
 				new int[] { 530, 495, 495, 525 }, 4, 225, 215);
-		Target targetG3 = new Target(jpaB, "target gauche 3", 100, new int[] { 810, 810, 850, 850 },
+		targetG3 = new Target(jpaB, "target gauche 3", 100, new int[] { 810, 810, 850, 850 },
 				new int[] { 520, 495, 495, 520 }, 4, 230, 385);
 		targetD = new Target(jpaB, "target droit", 100, new int[] { 725, 725, 810, 810 },
 				new int[] { 220, 260, 260, 220 }, 4, 1690, 35);
 
-		aPolygonCompt rampe = new aPolygonCompt(jpaB, "rampe", "Launch ramp", "+20 pts", 20,
+		rampe = new aPolygonCompt(jpaB, "rampe", "Launch ramp", "+20 pts", 20,
 				new int[] { 725, 680, 650, 625, 625, 635, 666, 693, 710, 685, 685, 702, 721, 756 },
 				new int[] { 380, 422, 470, 540, 583, 620, 652, 666, 600, 585, 534, 507, 484, 462 }, 14, 715, 20,
 				imgFleche);
 
-		aPolygon plateforme = new aPolygon(jpaB, "plateforme", "On the platform", "500 pts", 500,
+		plateforme = new aPolygon(jpaB, "plateforme", "On the platform", "500 pts", 500,
 				new int[] { 708, 720, 760, 780, 873, 925, 920, 700 },
-				new int[] { 602, 608, 540, 532, 526, 570, 665, 670 }, 8, 780, 160, imgFleche);
+				new int[] { 602, 608, 540, 532, 532, 580, 665, 670 }, 8, 780, 160, imgFleche);
 
 		aPolygonNeedPrev trou = new aPolygonNeedPrev(jpaB, "trou", "Pass in hole", "250 pts", 250,
 				new int[] { 930, 960, 975, 970, 950, 930, 925 }, new int[] { 580, 580, 600, 625, 630, 625, 600 }, 7, -1,
@@ -326,8 +330,8 @@ public class aGame {
 				new int[] { 910, 910, 1045, 1090, 1063, 1010 }, new int[] { 212, 164, 168, 260, 307, 210 }, 6, 1635,
 				625, imgGdeFleche);
 
-		start = new aPolygon(jpaB, "start", "", "", 500, new int[] { 1150, 1150, 1224, 1224 },
-				new int[] { 145, 175, 175, 145 }, 4, -1, -1, null);
+		start = new aPolygon(jpaB, "start", "", "", 500, new int[] { 1140, 1140, 1224, 1224 },
+				new int[] { 135, 200, 200, 135 }, 4, -1, -1, null);
 
 		aPolygon hyperspace = new aPolygon(jpaB, "hyperspace_ball", "Extra ball !", "", 500,
 				new int[] { 400, 480, 500, 460, 405 }, new int[] { 230, 230, 210, 176, 214 }, 5, -1, -1, null);
@@ -379,8 +383,9 @@ public class aGame {
 		map.put(reentry1.descr, reentry1);
 
 	}
-	aPolygon start;
-	Target targetD;
+	aPolygonCompt rampe;
+	aPolygon start, plateforme;
+	Target targetD, targetG1 , targetG3 ;
 
 	private void addPoints(int nbPoints) {
 		score_total += nbPoints * multiplier;

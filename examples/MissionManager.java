@@ -122,6 +122,10 @@ public class MissionManager {
 	public void initMission() {
 		System.out.println("passé");
 		
+
+		listClassMissions = new ArrayList<>();
+		
+		
 		aMyJPanel jpaH = aMyTest.panelA2;
 		aMyJPanel jpaB = aMyTest.panelA;
 
@@ -141,17 +145,14 @@ public class MissionManager {
 		
 		Mission m = new Mission(300, 1500);
         m.add("target droit", "Hit right target", 500, missionTargetD);
-        m.add("multi", "Launch in multi", 500, missionMulti);
         m.add("rampe", "Launch in ramp", 500, missionRamp);
-        m.add("trou", "Put in hole", 500, missionHole);
         m.add("hyperspace_enter", "enter in hyperspace", 500, missionHyperspace);
         m.addFinal(600);
         listMissions.add(m);
 		
 
         m = new Mission(300, 2500);
-        m.add("multi", "Launch in multi", 500, missionMulti);
-        m.add("trou", "Put in hole", 100, missionHole);
+        m.add("target droit", "Hit right target", 500, missionTargetD);
         m.add("target gauche", "Hit left target", 500, missionTargetG);
         m.addFinal(600);
         listMissions.add(m);
@@ -161,6 +162,29 @@ public class MissionManager {
         MissionClass mc = new MissionClass(listMissions, "Level 1");
         listClassMissions.add(mc);
 
+
+		
+		
+		m = new Mission(300, 1500);
+        m.add("target droit", "Hit right target", 500, missionTargetD);
+        m.add("rampe", "Launch in ramp", 500, missionRamp);
+        m.add("trou", "Put in hole", 500, missionHole);
+        m.add("hyperspace_enter", "enter in hyperspace", 500, missionHyperspace);
+        m.addFinal(600);
+        listMissions.add(m);
+		
+
+        m = new Mission(300, 2500);
+        m.add("trou", "Put in hole", 100, missionHole);
+        m.add("target gauche", "Hit left target", 500, missionTargetG);
+        m.addFinal(600);
+        listMissions.add(m);
+		
+
+
+        MissionClass mc1 = new MissionClass(listMissions, "Level 1b");
+        listClassMissions.add(mc1);
+        
         ArrayList<Mission> listMissions2 = new ArrayList<>();
 
         m = new Mission(300, 5000);
@@ -293,11 +317,13 @@ public class MissionManager {
 	}
 
 	public void resetMission() {
-		initMission();
 		rang = 0;
 		indexStart = -2;
 		phrase = "Select mission with left traget";
 		phrasePoint = "";
+		mission = null;
+		listClassMissions = new ArrayList<>();
+		initMission();
 	}
 	public String getRang() {
 		switch (rang) {
