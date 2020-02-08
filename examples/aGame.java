@@ -55,7 +55,7 @@ public class aGame {
 			if (verify(loc[0], loc[1])) {// TODO finir
 				aMyTest.refreshLabel();
 
-				missionManager.actionMission(loc[0], loc[1], prev_area);
+				addPoints(missionManager.actionMission(loc[0], loc[1], prev_area));
 			}
 
 		}
@@ -66,6 +66,7 @@ public class aGame {
 		start.draw(aMyTest.panel.getGraphics());
 		rampe.draw(aMyTest.panel.getGraphics());
 		plateforme.draw(aMyTest.panel.getGraphics());
+		reinit.draw(aMyTest.panel.getGraphics());
 		// TODO draw
 
 	}
@@ -97,7 +98,7 @@ public class aGame {
 	public boolean verify(int x, int y) {
 		for (Entry<String, aPolygon> entry : map.entrySet()) {
 			aPolygon pol = entry.getValue();
-
+//			System.out.println("x : "+x+" / y : "+y);
 			if (pol.contains(x, y)) {
 				nonAreaCount = 0;
 				// System.out.println(pol.descr);
@@ -107,6 +108,26 @@ public class aGame {
 					//System.out.println("mm is finished ! (useless)");
 				}
 
+				if (pol.descr.contains("reinit")) {
+					System.out.println("+" + pol.descr);
+					resetPartie();
+					
+
+//					// label.setText("Score : 0");
+//					aMyTest.labelS.setText("");
+//					aMyTest.labelM.setText("Pinball Space semi cadet");
+//					aMyTest.labelMP.setText("");
+//					aMyTest.labelB.setText("");
+//					aMyTest.labelR.setText("");
+//					aMyTest.labelS.setText("Let's go !");
+//					aMyTest.labelMiss.setText("");
+//					aMyTest.labelMissP.setText("");
+//					aMyTest.labelMulti.setText("");
+					aMyTest.refreshLabel();
+					aMyTest.nbBalle =0;
+					return false;
+				}
+				
 				if (pol.descr.contains("start") && !pol.equals(prev_area)) {
 					//System.out.println("+" + pol.descr);
 					actionStart();
@@ -345,6 +366,11 @@ public class aGame {
 		aPolygon launch = new aPolygon(jpaB, "launch", "launch !", "", 0, new int[] { 370, 370, 850, 850 },
 				new int[] { 0, 158, 158, 0 }, 4, -1, -1, null);
 
+
+		reinit = new aPolygon(jpaB, "reinit", "Restart !", "", 0, new int[] { 1160, 1160, 1300, 1300 },
+				new int[] { 600, 800, 800, 600 }, 4, -1, -1, null);
+		
+		
 		// aPolygon multi = new aPolygon("multi", "Field Multiplier !", "", 0, new int[]
 		// { 815, 815, 880, 880 },new int[] { 222, 165, 165, 222 }, 4, -1, -1, null);
 
@@ -381,10 +407,11 @@ public class aGame {
 		map.put(reentry3.descr, reentry3);
 		map.put(reentry2.descr, reentry2);
 		map.put(reentry1.descr, reentry1);
+		map.put(reinit.descr, reinit);
 
 	}
 	aPolygonCompt rampe;
-	aPolygon start, plateforme;
+	aPolygon start, plateforme, reinit;
 	Target targetD, targetG1 , targetG3 ;
 
 	private void addPoints(int nbPoints) {

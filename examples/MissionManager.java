@@ -79,7 +79,7 @@ public class MissionManager {
 	private void nextMission() {
 
 		indexStart = -2;
-		phrase = "Select mission with left traget";
+		phrase = "Select mission with left target";
 		// phrasePoint = "";
 		System.out.println("Next mission");
 	}
@@ -146,7 +146,7 @@ public class MissionManager {
 		Mission m = new Mission(300, 1500);
         m.add("target droit", "Hit right target", 500, missionTargetD);
         m.add("rampe", "Launch in ramp", 500, missionRamp);
-        m.add("hyperspace_enter", "enter in hyperspace", 500, missionHyperspace);
+        m.add("hyperspace", "enter in hyperspace", 500, missionHyperspace);
         m.addFinal(600);
         listMissions.add(m);
 		
@@ -163,26 +163,27 @@ public class MissionManager {
         listClassMissions.add(mc);
 
 
+        ArrayList<Mission> listMissions1 = new ArrayList<>();
 		
 		
 		m = new Mission(300, 1500);
         m.add("target droit", "Hit right target", 500, missionTargetD);
         m.add("rampe", "Launch in ramp", 500, missionRamp);
         m.add("trou", "Put in hole", 500, missionHole);
-        m.add("hyperspace_enter", "enter in hyperspace", 500, missionHyperspace);
+        m.add("hyperspace", "enter in hyperspace", 500, missionHyperspace);
         m.addFinal(600);
-        listMissions.add(m);
+        listMissions1.add(m);
 		
 
         m = new Mission(300, 2500);
         m.add("trou", "Put in hole", 100, missionHole);
         m.add("target gauche", "Hit left target", 500, missionTargetG);
         m.addFinal(600);
-        listMissions.add(m);
+        listMissions1.add(m);
 		
 
 
-        MissionClass mc1 = new MissionClass(listMissions, "Level 1b");
+        MissionClass mc1 = new MissionClass(listMissions1, "Level 1b");
         listClassMissions.add(mc1);
         
         ArrayList<Mission> listMissions2 = new ArrayList<>();
@@ -202,7 +203,7 @@ public class MissionManager {
         m.add("target gauche", "Hit left target (2)", 100, missionTargetG);
         m.add("target gauche", "Hit left target", 100, missionTargetG);
         m.add("multi", "Hit multiplier", 100, missionMulti);
-        m.add("hyperspace_enter", "enter in hyperspace", 500, missionHyperspace);
+        m.add("hyperspace", "enter in hyperspace", 500, missionHyperspace);
         m.addFinal(600);        
         listMissions2.add(m);
 
@@ -214,9 +215,9 @@ public class MissionManager {
         m = new Mission(300, 10000);
 
         m.add("target droit", "Hit right target", 500, missionTargetD);
-        m.add("hyperspace", "enter in hyperspace (3)", 500, missionHyperspace);
-        m.add("hyperspace", "enter in hyperspace (2)", 500, missionHyperspace);
-        m.add("hyperspace", "enter in hyperspace", 500, missionHyperspace);
+        m.add("hyperspace_center", "enter in hyperspace (3)", 500, missionHyperspace);
+        m.add("hyperspace_center", "enter in hyperspace (2)", 500, missionHyperspace);
+        m.add("hyperspace_center", "enter in hyperspace", 500, missionHyperspace);
         m.add("re-entry", "Pass in Re-entries (3)", 100, missionReEntry);
         m.add("re-entry", "Pass in Re-entries (2)", 100, missionReEntry);
         m.add("re-entry", "Pass in Re-entry", 100, missionReEntry);
@@ -319,7 +320,7 @@ public class MissionManager {
 	public void resetMission() {
 		rang = 0;
 		indexStart = -2;
-		phrase = "Select mission with left traget";
+		phrase = "Select mission with left target";
 		phrasePoint = "";
 		mission = null;
 		listClassMissions = new ArrayList<>();

@@ -75,9 +75,9 @@ public class aMyTest {
 		panelA2 = new aMyJPanel();
 		panelA2.setLayout(null);
 
-
 		ImageIcon fond2 = new ImageIcon("/home/nicolas/Bureau/aff2.png");
-		BufferedImage bimgf2 = new BufferedImage(fond2.getIconWidth(), fond2.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bimgf2 = new BufferedImage(fond2.getIconWidth(), fond2.getIconHeight(),
+				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D ggf2 = bimgf2.createGraphics();
 		ggf2.drawImage(fond2.getImage(), 0, 0, fond2.getImageObserver());
 		panelA2.setImage(bimgf2);
@@ -159,24 +159,20 @@ public class aMyTest {
 		labelMulti.setSize(labelMulti.getPreferredSize());
 		panelA.add(labelMulti);
 
-
-		
 		window4.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// window4.setUndecorated(true);
 		window4.add(panelA2);
 		window4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window4.pack();
 		window4.setVisible(true);
-		
-		
+
 		window3.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// window3.setUndecorated(true);
 		window3.add(panelA);
 		window3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window3.pack();
 		window3.setVisible(true);
-		
-		
+
 		game = new aGame();
 
 		// label.setText("Score : 0");
@@ -197,7 +193,7 @@ public class aMyTest {
 		int[] loc = new int[2];
 		loc[0] = 0;
 		loc[1] = 0;
-		
+
 		while (true) {
 
 			try {
@@ -236,15 +232,27 @@ public class aMyTest {
 	public static void refreshLabel() {
 		// System.out.println("je suis passé...");
 		// labelMissP.setText("");
-		labelR.setText(game.missionManager.getRang());
-		labelMissP.setText(game.missionManager.phrasePoint);
-		labelMiss.setText(game.missionManager.phrase);
-		labelMulti.setText("Score multiplier : "+game.multiplier + "x");
-		labelS.setText("Score : " + game.score_total);
-		if (game.score < game.SCORE_LIMIT_REDP) {
-			labelB.setText("Ball : " + nbBalle + " (D)");
+
+		if (nbBalle > 0) {
+			labelR.setText(game.missionManager.getRang());
+			labelMissP.setText(game.missionManager.phrasePoint);
+			labelMiss.setText(game.missionManager.phrase);
+			labelMulti.setText("Score multiplier : " + game.multiplier + "x");
+			labelS.setText("Score : " + game.score_total);
+			if (game.score < game.SCORE_LIMIT_REDP) {
+				labelB.setText("Ball : " + nbBalle + " (D)");
+			} else {
+				labelB.setText("Ball : " + nbBalle);
+			}
 		} else {
-			labelB.setText("Ball : " + nbBalle);
+
+			labelR.setText("");
+			labelMissP.setText("");
+			labelMiss.setText("Let's go !");
+			labelMulti.setText("");
+			labelM.setText("Pinball Space semi cadet");
+			//labelS.setText("");
+			labelB.setText("");
 		}
 		panelA.repaint();
 	}
