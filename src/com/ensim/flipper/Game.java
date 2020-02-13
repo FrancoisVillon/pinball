@@ -57,7 +57,6 @@ public class Game
 	public static final Target MIDDLE_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 550, 550, 580, 580 }, new int[] { 220, 260, 260, 220 }, 4, 1775, 750, ARROW_HAZARD);
 	public static final Target BOTTOM_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 580, 580, 610, 610 }, new int[] { 220, 260, 260, 220 }, 4, 1775, 900, ARROW_HAZARD);
 
-//	public static final Area SHOT_RAMP = new Area(Main.downDisplayPanel, "Shot Ramp", 0, new int[] { 725, 680, 650, 625, 625, 635, 666, 693, 710, 685, 685, 702, 721, 756 }, new int[] { 370, 412, 460, 530, 573, 610, 642, 656, 590, 575, 524, 497, 474, 452 }, 14, 715, 20, null, null, ARROW_SHOT_RAMP);
 	public static final Area SHOT_RAMP = new Area(Main.downDisplayPanel, "Shot Ramp", 0, new int[] { 729, 696, 659, 637, 631, 638, 660, 679, 696, 671, 664, 674, 692, 718, 752 }, new int[] { 387, 414, 462, 514, 563, 600, 634, 650, 611, 592, 556, 523, 497, 477, 457 }, 15, 715, 20, null, null, ARROW_SHOT_RAMP);
 	public static final Area SHOT_SURFACE = new Area(Main.downDisplayPanel, "", 0, new int[] { 708, 720, 760, 780, 873, 925, 920, 700 }, new int[] { 602, 608, 540, 532, 526, 570, 665, 670 }, 8, 780, 160, null, null, ARROW_SHOT_RAMP);
 	public static final AreaNeedPrev SHOT_HOLE = new AreaNeedPrev(Main.downDisplayPanel, "Full Shot", 500, new int[] { 930, 960, 975, 970, 950, 930, 925 }, new int[] { 580, 580, 600, 625, 630, 625, 600 }, 7, -1,	-1, null, null, ARROW_SHOT_HOLE, SHOT_SURFACE);
@@ -87,9 +86,9 @@ public class Game
 	
 	
 	private static final int SCORE_TRIPLE_TARGET = 250;
-	private static final int SCORE_TRIPLE_REENTRY = 500;
+	private static final int SCORE_TRIPLE_REENTRY = 1000;
 	
-	public static final long MAX_TIME_REDEPLOY = 12000; //milliseconds
+	public static final long MAX_TIME_REDEPLOY = 10000; //milliseconds
 	public static final long MAX_TIME_HYPERSPACE = 60000;
 	public static final long MAX_TIME_MULTIPLIER = 60000;
 	public static long timeSinceLaunch = 0;
@@ -259,10 +258,10 @@ public class Game
 			Main.refreshLabel();
 			System.out.println("[Game] Redeployement");
 		}
-		else if(this.passedInGateLane && !gateClosed)
+		else if(this.passedInGateLane && !this.gateClosed)
 		{
 			this.setGateOpen(false);
-			Main.messageLabel.setText("Launch this ball again \n Gate closed");
+			Main.messageLabel.setText("Launch this ball again \t Gate closed");
 			this.passedInGateLane = false;
 			System.out.println("[Game] Gate Closed : Play this ball again");
 		}
@@ -274,8 +273,9 @@ public class Game
 			Main.repaint();
 			System.out.println("[Game] Replay Ball used");
 		}
-		else if(extraBall)//TODO EXTRABALL
+		else if(extraBall)
 		{
+			this.extraBall = false;
 			Main.messageLabel.setText("Play an Extra ball");
 			//Main.pointsLabel.setText("");
 			Main.refreshLabel();
@@ -376,6 +376,8 @@ public class Game
 			{
 				MULTIPLIER_LEFT.setActive(false);
 				MULTIPLIER_RIGHT.setActive(false);
+				System.out.println("[Game] Multiplier bank full");
+				Main.messageLabel.setText("Multiplier Upgraded !");
 				timerMultiplier = System.currentTimeMillis();
 				
 				if (multiplier < 4)
@@ -439,7 +441,7 @@ public class Game
 		INDICATORS_LEVELED.add(LIGHT_HYPERSPACE);
 		
 		/*
-		//TODO Provisoire
+		//XXX Uncomment to display all indicators (Debug only)
 		for(Indicator i : INDICATORS)
 		{
 			i.setActive(true);
