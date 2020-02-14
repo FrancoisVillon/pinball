@@ -50,15 +50,16 @@ public class Game
 	public static final Target MIDDLE_MISSION_TARGET = new Target(Main.downDisplayPanel, "Mission Target", 75, new int[] { 820, 820, 795, 795 }, new int[] { 510, 475, 475, 505 }, 4, 225, 215, ARROW_MISSION);
 	public static final Target BOTTOM_MISSION_TARGET = new Target(Main.downDisplayPanel, "Mission Target", 75, new int[] { 825, 825, 850, 850 }, new int[] { 500, 475, 475, 500 }, 4, 230, 385, ARROW_MISSION);
 	
-	public static final Target TOP_FLAG_TARGET = new Target(Main.downDisplayPanel, "Flag Target", 75, new int[] { 735, 735, 760, 760 }, new int[] { 220, 260, 260, 220 }, 4, 1620, 35, ARROW_FLAG);
-	public static final Target BOTTOM_FLAG_TARGET = new Target(Main.downDisplayPanel, "Flag Target", 75, new int[] { 775, 775, 800, 800 }, new int[] { 220, 260, 260, 220 }, 4, 1620, 205, ARROW_FLAG);
+	public static final Target TOP_FLAG_TARGET = new Target(Main.downDisplayPanel, "Flag Target", 75, new int[] { 745, 745, 770, 770 }, new int[] { 220, 260, 260, 220 }, 4, 1620, 35, ARROW_FLAG);
+	public static final Target BOTTOM_FLAG_TARGET = new Target(Main.downDisplayPanel, "Flag Target", 75, new int[] { 785, 785, 810, 810 }, new int[] { 220, 260, 260, 220 }, 4, 1620, 205, ARROW_FLAG);
 
 	public static final Target TOP_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 520, 520, 550, 550 }, new int[] { 220, 260, 260, 220 }, 4, 1775, 600, ARROW_HAZARD);
 	public static final Target MIDDLE_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 550, 550, 580, 580 }, new int[] { 220, 260, 260, 220 }, 4, 1775, 750, ARROW_HAZARD);
 	public static final Target BOTTOM_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 580, 580, 610, 610 }, new int[] { 220, 260, 260, 220 }, 4, 1775, 900, ARROW_HAZARD);
 
 	public static final Area SHOT_RAMP = new Area(Main.downDisplayPanel, "Shot Ramp", 0, new int[] { 729, 696, 659, 637, 631, 638, 660, 679, 696, 671, 664, 674, 692, 718, 752 }, new int[] { 387, 414, 462, 514, 563, 600, 634, 650, 611, 592, 556, 523, 497, 477, 457 }, 15, 715, 20, null, null, ARROW_SHOT_RAMP);
-	public static final Area SHOT_SURFACE = new Area(Main.downDisplayPanel, "", 0, new int[] { 708, 720, 760, 780, 873, 925, 920, 700 }, new int[] { 602, 608, 540, 532, 526, 570, 665, 670 }, 8, 780, 160, null, null, ARROW_SHOT_RAMP);
+//	public static final Area SHOT_SURFACE = new Area(Main.downDisplayPanel, "", 0, new int[] { 708, 720, 760, 780, 873, 925, 920, 700 }, new int[] { 602, 608, 540, 532, 526, 570, 665, 670 }, 8, 780, 160, null, null, ARROW_SHOT_RAMP);
+	public static final Area SHOT_SURFACE = new Area(Main.downDisplayPanel, "", 0, new int[] { 711, 722, 766, 881, 912, 932, 697 }, new int[] { 615, 613, 551, 544, 579, 650, 653 }, 7, 780, 160, null, null, ARROW_SHOT_RAMP);
 	public static final AreaNeedPrev SHOT_HOLE = new AreaNeedPrev(Main.downDisplayPanel, "Full Shot", 500, new int[] { 930, 960, 975, 970, 950, 930, 925 }, new int[] { 580, 580, 600, 625, 630, 625, 600 }, 7, -1,	-1, null, null, ARROW_SHOT_HOLE, SHOT_SURFACE);
 
 	public static final AreaBonusPoints GATE_LANE = new AreaBonusPoints(Main.downDisplayPanel, "Gate", 5, new int[] { 910, 910, 1045, 1090, 1063, 1010 }, new int[] { 190, 164, 168, 260, 280, 210 }, 6, 1800, 700, GATE_CLOSED, null, null);
@@ -78,7 +79,7 @@ public class Game
 	public static final Target MULTIPLIER_LEFT = new Target(Main.upDisplayPanel, "Multiplier Target", 0, new int[] { 466, 491, 502, 472 }, new int[] { 447, 440, 465, 483 }, 4, 570, 450, ARROW_MULTIPLIER);
 	public static final Target MULTIPLIER_RIGHT = new Target(Main.upDisplayPanel, "Multiplier Target", 0, new int[] { 473, 504, 513, 484 }, new int[] { 484, 475, 497, 513 }, 4, 720, 400, ARROW_MULTIPLIER);
 
-	public static final Target RESET = new Target(Main.downDisplayPanel, "Reset", 0, new int[] { 1260, 1202, 1206, 1258 }, new int[] { 593, 592, 647, 646 }, 4, -1, -1, null);
+	public static final Area RESET = new Area(Main.downDisplayPanel, "Reset", 0, new int[] { 1160, 1280, 1280, 1160 }, new int[] { 575, 575, 720, 720 }, 4, -1, -1, null, null, null);
 
 	
 	public static final Area[] ALL_TARGETS = new Area[] {TOP_MISSION_TARGET, MIDDLE_MISSION_TARGET, BOTTOM_MISSION_TARGET, TOP_FLAG_TARGET, BOTTOM_FLAG_TARGET, TOP_HAZARD_TARGET, MIDDLE_HAZARD_TARGET, BOTTOM_HAZARD_TARGET, MULTIPLIER_LEFT, MULTIPLIER_RIGHT};
@@ -246,17 +247,26 @@ public class Game
 
 	private void actionStart()
 	{
-		System.out.println("[Game] action start");		
-		//System.out.println("[Game] Time since launch : " + (System.currentTimeMillis() - timeSinceLaunch));		
-		System.out.println("[GAME] Gate " + (this.gateClosed ? "closed" : "opened"));
+		System.out.println("[Game] actionStart");		
+		System.out.println("[Game] Gate " + (this.gateClosed ? "closed" : "opened"));
 		
 
 		if ((prev_area != null && prev_area.equals(LAUNCH_RAMP)) || System.currentTimeMillis() - timeSinceLaunch <= MAX_TIME_REDEPLOY)
 		{
-			Main.messageLabel.setText("Re Deploy");
-			//Main.pointsLabel.setText("");
-			Main.refreshLabel();
-			System.out.println("[Game] Redeployement");
+			if(this.passedInGateLane && !this.gateClosed)
+			{
+				this.setGateOpen(false);
+				Main.messageLabel.setText("Re Deploy \t Gate closed");
+				Main.refreshLabel();
+				System.out.println("[Game] Redployment + Gate closed");
+			}
+			
+			else
+			{
+				Main.messageLabel.setText("Re Deploy");
+				Main.refreshLabel();
+				System.out.println("[Game] Redeployement");
+			}
 		}
 		else if(this.passedInGateLane && !this.gateClosed)
 		{
@@ -296,6 +306,11 @@ public class Game
 		}
 		else
 		{
+			if(area.equals(RESET))
+			{
+				this.resetGame();
+			}
+			
 			if (area.equals(GATE_LANE) && !this.passedInGateLane)
 			{
 				this.passedInGateLane = true;
@@ -473,7 +488,8 @@ public class Game
 		this.multiplier = 1;
 		this.hyperspaceLevel = 0;				
 		this.replayBall = false;
-		this.extraBall = false;		
+		this.extraBall = false;
+		this.passedInGateLane = false;
 		this.setGateOpen(true);
 		
 		for(Area area : AREAS)
@@ -492,10 +508,13 @@ public class Game
 
 	void resetGame()
 	{
+		this.prev_area = Game.LAUNCH_RAMP;
 		System.out.println("[Game] Reset game");
 		this.scoreGame = 0;
+		Main.nbBalle = 3;
 		missionManager.resetMission();
 		this.resetAreasAndIndicators();
+		Game.timeSinceLaunch = System.currentTimeMillis();
 	}
 
 	private void resetBall()
@@ -507,7 +526,13 @@ public class Game
 
 		if (Main.nbBalle == 0)
 		{
+			for(Indicator i : INDICATORS)
+			{
+				i.setActive(false);
+			}
+			
 			Main.missionLabel.setText("Game Over");
+			Main.missionPointsLabel.setText("");
 			Main.refreshLabel();
 		}
 		else

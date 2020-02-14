@@ -241,6 +241,7 @@ public class MissionManager
 
 	public void resetMission()
 	{
+		this.mission = null;
 		initMission();
 		this.rank = 0;
 		this.indexStart = -2;

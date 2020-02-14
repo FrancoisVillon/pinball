@@ -165,7 +165,10 @@ public class Main
 
 			drawOnScreen(tracePanel);
 			
-			Main.game.updateTicks();
+			if(nbBalle != 0)
+			{
+				Main.game.updateTicks();
+			}
 		}
 	}
 
@@ -178,8 +181,13 @@ public class Main
 	public static void refreshLabel()
 	{
 		rankLabel.setText(Game.missionManager.getRang());
-		missionPointsLabel.setText(Game.missionManager.scoreInfos);
-		missionLabel.setText(Game.missionManager.instructions);
+		
+		if(Main.nbBalle != 0)
+		{
+			missionLabel.setText(Game.missionManager.instructions);
+			missionPointsLabel.setText(Game.missionManager.scoreInfos);
+		}
+		
 		multiplierLabel.setText("Score Multiplier : x" + game.multiplier);
 		scoreLabel.setText("Score : " + game.scoreGame);
 		nbBallLabel.setText(nbBalle + " Balls left");

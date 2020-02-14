@@ -59,18 +59,17 @@ public class BallPositionUtil
 			Main.drawPosBalle(loc[0], loc[1]);
 			if (Game.LAUNCH_RAMP.contains(loc[0], loc[1]))
 			{
+				Main.game.resetGame();
+				/*
 				// if (loc[0] < 360 && loc[1] < 360) {
 				Main.game.prev_area = Game.LAUNCH_RAMP;
 				Main.nbBalle = 3;
 				// System.out.println("balles : " + aMyTest.nbBalle);
 				System.out.println("[BallPositionUtil] NEW GAME !");
 				Main.game.resetGame();
-				/*
-				Main.messageLabel.setText("New game !");
-				Main.pointsLabel.setText("");
-				*/
 				Main.refreshLabel();
 				Game.timeSinceLaunch = System.currentTimeMillis();
+				*/
 			}
 		}
 	}
