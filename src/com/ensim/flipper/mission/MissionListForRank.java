@@ -5,17 +5,21 @@ import java.util.ArrayList;
 public class MissionListForRank
 {
 	ArrayList<Mission> listMissions = new ArrayList<>();
-	String str;
+	private String rank;
 
-	public MissionListForRank(ArrayList<Mission> listMissions, String str)
+	/**
+	 * @param listMissions : List of missions
+	 * @param rank : Rank (only useful for debugging)
+	 */
+	public MissionListForRank(ArrayList<Mission> listMissions, String rank)
 	{
 		this.listMissions = listMissions;
-		this.str = str;
+		this.rank = rank;
 	}
 	
 	public String toString()
 	{
-		String s = str + "\n";
+		String s = rank + "\n";
 		
 		for(Mission mission : this.listMissions)
 		{

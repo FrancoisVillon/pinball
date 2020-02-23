@@ -20,12 +20,12 @@ public class Target extends Area
 	 * @param xPoints : The array of X coordinates
 	 * @param yPoints : The array of Y coordinates
 	 * @param nbPoints : The total number of points (coordinates)
-	 * @param posX : x top coordinate of the polygon
-	 * @param posY : y top coordinate of the polygon
+	 * @param posX : x top coordinate of the graphical area
+	 * @param posY : y top coordinate of the graphical area
 	 * @param indicator : the indicator linked to the target
 	 */
-	public Target(JPanel jpanel, String name, int points, int[] xPoints, int[] yPoints, int nbPoints, int posX, int posY, Indicator indicator)
+	public Target(JPanel jpanel, String name, int points, int[] xPoints, int[] yPoints, int posX, int posY, Indicator indicator)
 	{
-		super(jpanel, name, points, xPoints, yPoints, nbPoints, posX, posY, ACTIVE, INACTIVE, indicator);
+		super(jpanel, name, points, xPoints, yPoints, posX, posY, ACTIVE, INACTIVE, indicator);
 	}
 }

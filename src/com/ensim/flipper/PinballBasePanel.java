@@ -17,6 +17,9 @@ public class PinballBasePanel extends JPanel
 	@SuppressWarnings("unused")
 	private int x = 0, y = 0;
 
+	/**
+	 * Draw all areas and indicators of the panel
+	 */
 	public void paintComponent(Graphics g)
 	{
 		if (g != null)
@@ -56,17 +59,26 @@ public class PinballBasePanel extends JPanel
 			}
 		}
 		
-		catch (Exception e)
+		catch (Exception e) //The try-catch may be useless, but still here just in case
 		{
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Set a background image to the panel
+	 * @param image : The image set as background
+	 */
 	public void setBackroundImg(BufferedImage image)
 	{
 		this.background = image;
 	}
 
+	/**
+	 * Set the X and Y coordinates (only used by tracePanel)
+	 * @param x : The X coordinate
+	 * @param y : The Y coordinate
+	 */
 	public void setXY(int x, int y)
 	{
 		this.x = x;

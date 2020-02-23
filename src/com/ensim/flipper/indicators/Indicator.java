@@ -16,6 +16,13 @@ public class Indicator
 	public ImageIcon currentImg;
 	private boolean active;
 	
+	/**
+	 * @param jpanel : JPanel that contains the indicator
+	 * @param active : Image of the activate indicator
+	 * @param inactive : Image of the inactive indicator
+	 * @param posX : X coordinate of the indicator
+	 * @param posY : Y coordinate of the indicator
+	 */
 	public Indicator(JPanel jpanel, ImageIcon active, ImageIcon inactive, int posX, int posY)
 	{
 		this.jpanel = jpanel;

@@ -18,19 +18,23 @@ public class AreaNeedPrev extends Area
 	 * @param points : The points to add to the total score 
 	 * @param xPoints : The array of X coordinates
 	 * @param yPoints : The array of Y coordinates
-	 * @param nbPoints : The total number of points (coordinates)
-	 * @param posX : x top coordinate of the polygon
-	 * @param posY : y top coordinate of the polygon
+	 * @param posX : x top coordinate of the graphical area
+	 * @param posY : y top coordinate of the graphical area
 	 * @param prevAreaList : All the previous areas that are needed to enter this area correctly 
 	 * @param imgActive : image displayed where the area is when it's active
 	 * @param imgInactive : image displayed where the area is when it's inactive
 	 */
-	public AreaNeedPrev(JPanel jpanel, String phrase, int points, int[] xPoints, int[] yPoints, int nbPoints, int posX, int posY, ImageIcon imgActive, ImageIcon imgInactive, Indicator indicator, Area... prevAreaList)
+	public AreaNeedPrev(JPanel jpanel, String phrase, int points, int[] xPoints, int[] yPoints, int posX, int posY, ImageIcon imgActive, ImageIcon imgInactive, Indicator indicator, Area... prevAreaList)
 	{
-		super(jpanel, phrase, points, xPoints, yPoints, nbPoints, posX, posY, imgActive, imgInactive, indicator);
+		super(jpanel, phrase, points, xPoints, yPoints, posX, posY, imgActive, imgInactive, indicator);
 		this.prevAreaList = prevAreaList;
 	}
 
+	/**
+	 * Check if the area can be activated
+	 * @param prev_area
+	 * @return true if the previous area is one of the previous areas needed
+	 */
 	public boolean canPerformAction(Area prevArea)
 	{
 		if(prevArea != null)

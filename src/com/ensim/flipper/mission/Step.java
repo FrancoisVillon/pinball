@@ -21,6 +21,10 @@ public class Step
 		this.points = points;
 	}
 	
+	/**
+	 * @param areaChecked : The area where the ball is
+	 * @return true if the ball is in one the areas needed by the step, false otherwise
+	 */
 	public boolean containsArea(Area areaChecked)
 	{
 		for(Area area : this.areas)
@@ -35,6 +39,10 @@ public class Step
 		return false;
 	}
 	
+	/**
+	 * (De)activates all indicators corresponding to the areas needed by the step
+	 * @param activate : true --> activate, false --> deactivate indicators
+	 */
 	public void activateIndicators(boolean activate)
 	{
 		for(Area area : areas)

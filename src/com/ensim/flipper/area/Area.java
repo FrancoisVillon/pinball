@@ -30,16 +30,15 @@ public class Area extends Polygon
 	 * @param points : The points to add to the total score 
 	 * @param xPoints : The array of X coordinates
 	 * @param yPoints : The array of Y coordinates
-	 * @param nbPoints : The total number of points (coordinates)
-	 * @param posX : x top coordinate of the polygon
-	 * @param posY : y top coordinate of the polygon
+	 * @param posX : x top coordinate of the graphical area
+	 * @param posY : y top coordinate of the graphical area
 	 * @param imgActive : image displayed where the area is when it's active
 	 * @param imgInactive : image displayed where the area is when it's inactive
 	 * @param indicator : the indicator linked to the area
 	 */
-	public Area(JPanel jpanel, String name, int points, int[] xPoints, int[] yPoints, int nbPoints, int posX, int posY, ImageIcon imgActive, ImageIcon imgInactive, Indicator indicator)
+	public Area(JPanel jpanel, String name, int points, int[] xPoints, int[] yPoints, int posX, int posY, ImageIcon imgActive, ImageIcon imgInactive, Indicator indicator)
 	{
-		super(xPoints, yPoints, nbPoints);
+		super(xPoints, yPoints, Math.min(xPoints.length, yPoints.length));
 		this.jpanel = jpanel;
 		this.img = imgInactive;
 		this.points = points;
@@ -49,8 +48,18 @@ public class Area extends Polygon
 		this.imgActive = imgActive;
 		this.imgInactive = imgInactive;
 		this.indicator = indicator;
+		
+		if(xPoints.length != yPoints.length)
+		{
+			System.err.println("[Area/ERROR] Area \"" + this.name + "\" has an error in its coordinates : "
+					+ "X Coordinates vector length : " + xPoints.length + ", Y Coordinates vector length : " + yPoints.length);
+		}
 	}
 
+	/**
+	 * Draw the area on the webcam panel
+	 * @param g : graphics (use webcamPanel.getGraphics())
+	 */
 	public void draw(Graphics g)
 	{
 		g.drawOval(xpoints[0], ypoints[0], 10, 10);
@@ -66,16 +75,28 @@ public class Area extends Polygon
 		return "[" + this.name + "] " + super.toString();
 	}
 
+	/**
+	 * Check if the area can be activated
+	 * @param prev_area
+	 * @return true if the previous area is different of the current area
+	 */
 	public boolean canPerformAction(Area prev_area)
 	{
 		return !this.equals(prev_area);
 	}
 	
+	/**
+	 * Called when the ball reach the area
+	 */
 	public void activate()
 	{
 		this.setActive(true);
 	}
 
+	/**
+	 * (De)activate the area
+	 * @param active : true --> activate, false --> deactivate the area
+	 */
 	public void setActive(boolean active)
 	{
 		this.active = active;
@@ -93,6 +114,9 @@ public class Area extends Polygon
 		return this.jpanel.equals(jpanel);
 	}
 	
+	/**
+	 * @return The points earned by reaching the area
+	 */
 	public int getPoints()
 	{
 		return this.points;
