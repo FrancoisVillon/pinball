@@ -3,6 +3,7 @@ package com.ensim.flipper.area;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import com.ensim.flipper.SoundUtil;
 import com.ensim.flipper.indicators.Indicator;
 
 public class ReEntry extends Area
@@ -26,11 +27,12 @@ public class ReEntry extends Area
 	 */
 	public ReEntry(JPanel jpanel, int points, int[] xPoints, int[] yPoints, int posX, int posY, Indicator indicator)
 	{
-		super(jpanel, "Re-entry", points, xPoints, yPoints, posX, posY, ACTIVE, INACTIVE, indicator);
+		super(jpanel, "Re-entry", points, xPoints, yPoints, posX, posY, ACTIVE, INACTIVE, indicator, "lane_reentry");
 	}
 	
 	public void activate()
 	{
 		this.setActive(!isActive());
+		SoundUtil.playSound(this.sound);
 	}
 }

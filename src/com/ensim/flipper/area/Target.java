@@ -26,6 +26,6 @@ public class Target extends Area
 	 */
 	public Target(JPanel jpanel, String name, int points, int[] xPoints, int[] yPoints, int posX, int posY, Indicator indicator)
 	{
-		super(jpanel, name, points, xPoints, yPoints, posX, posY, ACTIVE, INACTIVE, indicator);
+		super(jpanel, name, points, xPoints, yPoints, posX, posY, ACTIVE, INACTIVE, indicator, "target_hit");
 	}
 }

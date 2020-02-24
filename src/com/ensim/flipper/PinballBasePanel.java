@@ -14,8 +14,6 @@ public class PinballBasePanel extends JPanel
 	protected static final long serialVersionUID = 1L;
 	
 	private BufferedImage background;
-	@SuppressWarnings("unused")
-	private int x = 0, y = 0;
 
 	/**
 	 * Draw all areas and indicators of the panel
@@ -72,16 +70,5 @@ public class PinballBasePanel extends JPanel
 	public void setBackroundImg(BufferedImage image)
 	{
 		this.background = image;
-	}
-
-	/**
-	 * Set the X and Y coordinates (only used by tracePanel)
-	 * @param x : The X coordinate
-	 * @param y : The Y coordinate
-	 */
-	public void setXY(int x, int y)
-	{
-		this.x = x;
-		this.y = y;
 	}
 }

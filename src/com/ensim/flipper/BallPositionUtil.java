@@ -25,7 +25,7 @@ public class BallPositionUtil
 
 		if(isBallVisible(ballPosition))
 		{
-			Main.drawPosBalle(ballPosition.x, ballPosition.y);
+			Main.drawBallPos(ballPosition.x, ballPosition.y);
 
 			if (Main.game.verify(ballPosition))
 			{
@@ -45,7 +45,7 @@ public class BallPositionUtil
 
 		if(isBallVisible(ballPosition))
 		{
-			Main.drawPosBalle(ballPosition.x, ballPosition.y);
+			Main.drawBallPos(ballPosition.x, ballPosition.y);
 			
 			if (Game.LAUNCH_RAMP.contains(ballPosition))
 			{

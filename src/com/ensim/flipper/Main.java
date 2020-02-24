@@ -3,6 +3,7 @@ package com.ensim.flipper;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -16,7 +17,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import com.ensim.flipper.area.Area;
 import com.github.sarxos.webcam.Webcam;
@@ -24,24 +24,22 @@ import com.github.sarxos.webcam.WebcamPanel;
 
 public class Main
 {
-	private static final ImageIcon WINDOW_TRACE_BACKGROUND = new ImageIcon("resources/background/trace_bg.png");
 	private static final ImageIcon WINDOW_UP_BACKGROUND = new ImageIcon("resources/background/background.png");
 	private static final ImageIcon WINDOW_DOWN_BACKGROUND = new ImageIcon("resources/background/background_bottom.png");
 	private static final ImageIcon ICON = new ImageIcon("resources/icon/icon_32.png");
 	private static final Color BLACK = new Color(0);
+	private static final Color RED = new Color(200, 0, 0);
 	private static final  int WIDTH = 1920, HEIGHT = 1080;
 	private static final int NB_MAX_BALL_POS = 25;
 	
 	//Labels must be initialized with the maximum of char they can contains, that's why FULL_ZEROS is here
 	private static final String FULL_ZEROS = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
-	private static List<Dimension> ballCoordinates = new ArrayList<>();
-	private static int nbBallPos = 0;
+	private static List<Point> ballCoordinates = new ArrayList<>();
 	
 	private static Webcam webcam;
 	
 	private static WebcamPanel webcamPanel;
-	private static PinballBasePanel tracePanel = new PinballBasePanel();
 	public static PinballBasePanel downDisplayPanel = new PinballBasePanel();
 	public static PinballBasePanel upDisplayPanel = new PinballBasePanel();
 	public static JLabel scoreLabel, messageLabel, nbBallLabel, multiplierLabel, missionLabel, missionPointsLabel, rankLabel;
@@ -68,7 +66,7 @@ public class Main
 				BallPositionUtil.waitForNewGame(webcam.getImage());
 			}
 
-			drawOnScreen(tracePanel);
+			drawBallTrace(webcamPanel.getGraphics());
 			
 			if(webcamPanel.getGraphics() != null)
 			{
@@ -160,7 +158,6 @@ public class Main
 			public void keyTyped(KeyEvent e) {}
 		});
 
-		createWindow("Trace", WINDOW_TRACE_BACKGROUND, tracePanel, 720 / 2, 1280 / 2);
 		createWindow("Affichage haut", WINDOW_UP_BACKGROUND, upDisplayPanel);
 		createWindow("Affichage bas", WINDOW_DOWN_BACKGROUND, downDisplayPanel);
 
@@ -174,8 +171,6 @@ public class Main
 		downDisplayPanel.add(multiplierLabel);
 		downDisplayPanel.add(rankLabel);
 		downDisplayPanel.add(messageLabel);
-		
-		tracePanel.setXY(5, 25);
 
 		messageLabel.setText("Pinball Space K'det");		
 		missionPointsLabel.setText("");
@@ -187,16 +182,6 @@ public class Main
 		multiplierLabel.setText("");
 		
 		downDisplayPanel.repaint();
-	}
-
-	/**
-	 * Draw ball's coordinates on screen
-	 * @param x, y : coordinates of the ball
-	 */
-	public static void drawPosBalle(int x, int y)
-	{
-		webcamPanel.getGraphics().drawRect(x, y, 10, 10);
-		drawCoordiantesOnScreen(tracePanel, x, y);
 	}
 
 	/**
@@ -220,41 +205,49 @@ public class Main
 
 	/**
 	 * Draw ball's coordinates on screen
-	 * @param panel : The panel where coordinates are drawn
 	 * @param x, y : coordinates of the ball
 	 */
-	private static void drawCoordiantesOnScreen(JPanel panel, int x, int y)
+	public static void drawBallPos(int x, int y)
 	{
-		ballCoordinates.add(new Dimension(720 - y, x));
-		if (ballCoordinates.size() > 15)
-		{
-			ballCoordinates.remove(0);
-		}
-		drawOnScreen(panel);
+		webcamPanel.getGraphics().setColor(RED);
+		drawAndUpdateBallTrace(webcamPanel.getGraphics(), x, y);
 
-		if (nbBallPos++ > NB_MAX_BALL_POS)
-		{
-			panel.repaint();
-			nbBallPos = 0;
-		}
+		webcamPanel.getGraphics().drawRect(x, y, 10, 10);
 	}
 
 	/**
-	 * Draw ball's coordinates on screen
+	 * Draw ball's new coordinates on screen, and remove the older ones
+	 * @param panel : The panel where coordinates are drawn
+	 * @param x, y : coordinates of the ball
+	 */
+	private static void drawAndUpdateBallTrace(Graphics g, int x, int y)
+	{
+		ballCoordinates.add(new Point(x, y));
+		if (ballCoordinates.size() > NB_MAX_BALL_POS)
+		{
+			ballCoordinates.remove(0);
+		}
+		drawBallTrace(g);
+	}
+
+	/**
+	 * Draw ball's trace on screen
 	 * @param panel : The panel where coordinates are drawn
 	 */
-	private static void drawOnScreen(JPanel panel)
+	private static void drawBallTrace(Graphics g)
 	{
-		if(panel.getGraphics() != null)
+		if(g != null)
 		{
+			g.setColor(RED);
+			
 			if (ballCoordinates.size() > 1)
 			{
-				panel.getGraphics().fillOval(ballCoordinates.get(0).width / 2, ballCoordinates.get(0).height / 2, 10, 10);
+				g.fillOval(ballCoordinates.get(0).x, ballCoordinates.get(0).y, 8, 8);
 				
 				for (int i = 1; i < ballCoordinates.size(); i++)
 				{
-					panel.getGraphics().drawLine(ballCoordinates.get(i - 1).width / 2, ballCoordinates.get(i - 1).height / 2, ballCoordinates.get(i).width / 2, ballCoordinates.get(i).height / 2);
-					panel.getGraphics().fillOval(ballCoordinates.get(i).width / 2, ballCoordinates.get(i).height / 2, 10, 10);
+					g.drawLine(ballCoordinates.get(i - 1).x, ballCoordinates.get(i - 1).y, ballCoordinates.get(i).x, ballCoordinates.get(i).y);
+					g.fillOval(ballCoordinates.get(i).x, ballCoordinates.get(i).y, 8, 8);
 				}
 			}
 		}
@@ -273,7 +266,7 @@ public class Main
 			}
 		}
 		
-		System.err.println("[Main/Warning] Webcam Razer not found");
+		System.out.println("[Main/Warning] Webcam Razer not found");
 		return Webcam.getWebcams().get(0);
 	}
 
@@ -304,50 +297,7 @@ public class Main
 		
 		return label;
 	}
-	
-	/**
-	 * Create the base of a window
-	 * 
-	 * Called by createWindow()
-	 * 
-	 * @param name : Window's name
-	 * @param background : Background image of the window
-	 * @param panel : Panel of the window
-	 * @return The window base
-	 */
-	private static JFrame createWindowBase(String name, ImageIcon background, PinballBasePanel panel)
-	{
-		JFrame window = new JFrame(name);
-		BufferedImage img = new BufferedImage(background.getIconWidth(), background.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graphics = img.createGraphics();
-		graphics.drawImage(background.getImage(), 0, 0, background.getImageObserver());
-		panel.setBackroundImg(img);
-		panel.paintComponent(graphics);
-		window.add(panel);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setIconImage(ICON.getImage());
-		
-		return window;
-	}
-	
-	/**
-	 * Create a window
-	 * 
-	 * @param name : Window's name
-	 * @param background : Background image of the window
-	 * @param panel : Panel of the window
-	 * @param xSize, ySize : X and Y size of the window
-	 * @return The window
-	 */
-	private static JFrame createWindow(String name, ImageIcon background, PinballBasePanel panel, int xSize, int ySize)
-	{
-		JFrame window = createWindowBase(name, background, panel);
-		window.setPreferredSize(new Dimension(xSize, ySize));
-		window.pack();
-		window.setVisible(true);
-		return window;
-	}
-	
+
 	/**
 	 * Create a window
 	 * 
@@ -358,7 +308,15 @@ public class Main
 	 */
 	private static JFrame createWindow(String name, ImageIcon background, PinballBasePanel panel)
 	{
-		JFrame window = createWindowBase(name, background, panel);
+		JFrame window = new JFrame(name);
+		BufferedImage img = new BufferedImage(background.getIconWidth(), background.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = img.createGraphics();
+		graphics.drawImage(background.getImage(), 0, 0, background.getImageObserver());
+		panel.setBackroundImg(img);
+		panel.paintComponent(graphics);
+		window.add(panel);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setIconImage(ICON.getImage());
 		window.setPreferredSize(new Dimension(1880, 1400));
 		window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		window.pack();
