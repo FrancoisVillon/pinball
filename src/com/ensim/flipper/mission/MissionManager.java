@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.ensim.flipper.Game;
 import com.ensim.flipper.Main;
+import com.ensim.flipper.SoundUtil;
 import com.ensim.flipper.area.Area;
 
 public class MissionManager
@@ -67,6 +68,7 @@ public class MissionManager
 						this.scoreInfos = "Earn " + (this.scoreAcceptMission * Main.game.multiplier) + "pts";
 						Game.ARROW_SHOT_RAMP.setActive(false);
 						Main.refreshLabel();
+						SoundUtil.playSound("mission_accept");
 						return scoreAcceptMission;
 					}
 				}
@@ -82,10 +84,12 @@ public class MissionManager
 						if (this.listMissionForRank.get(this.rank).listMissions.size() == 0)
 						{
 							this.nextRank();
+							SoundUtil.playSound("mission_rank_up");
 						}
 						else
 						{
 							this.nextMission();
+							SoundUtil.playSound("mission_succes");
 						}
 					}
 					else

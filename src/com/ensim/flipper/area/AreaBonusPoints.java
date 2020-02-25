@@ -23,7 +23,7 @@ public class AreaBonusPoints extends Area
 	 */
 	public AreaBonusPoints(JPanel jpanel, String name, int points, int[] xPoints, int[] yPoints, int posX, int posY, ImageIcon imgActive, ImageIcon imgInactive, Indicator indicator)
 	{
-		super(jpanel, name, points, xPoints, yPoints, posX, posY, imgActive, imgInactive, indicator);
+		super(jpanel, name, points, xPoints, yPoints, posX, posY, imgActive, imgInactive, indicator, null);
 	}
 
 	/**

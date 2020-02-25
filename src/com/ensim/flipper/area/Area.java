@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import com.ensim.flipper.Main;
+import com.ensim.flipper.SoundUtil;
 import com.ensim.flipper.indicators.Indicator;
 
 public class Area extends Polygon
@@ -22,6 +23,7 @@ public class Area extends Polygon
 	private final ImageIcon imgActive;
 	private final ImageIcon imgInactive;
 	public final Indicator indicator;
+	protected final String sound;
 
 	/**
 	 * 
@@ -35,8 +37,9 @@ public class Area extends Polygon
 	 * @param imgActive : image displayed where the area is when it's active
 	 * @param imgInactive : image displayed where the area is when it's inactive
 	 * @param indicator : the indicator linked to the area
+	 * @param sound : the sound played when the ball enter the area
 	 */
-	public Area(JPanel jpanel, String name, int points, int[] xPoints, int[] yPoints, int posX, int posY, ImageIcon imgActive, ImageIcon imgInactive, Indicator indicator)
+	public Area(JPanel jpanel, String name, int points, int[] xPoints, int[] yPoints, int posX, int posY, ImageIcon imgActive, ImageIcon imgInactive, Indicator indicator, String sound)
 	{
 		super(xPoints, yPoints, Math.min(xPoints.length, yPoints.length));
 		this.jpanel = jpanel;
@@ -48,6 +51,7 @@ public class Area extends Polygon
 		this.imgActive = imgActive;
 		this.imgInactive = imgInactive;
 		this.indicator = indicator;
+		this.sound = sound;
 		
 		if(xPoints.length != yPoints.length)
 		{
@@ -90,7 +94,8 @@ public class Area extends Polygon
 	 */
 	public void activate()
 	{
-		this.setActive(true);
+		this.setActive(true);		
+		SoundUtil.playSound(this.sound);
 	}
 
 	/**

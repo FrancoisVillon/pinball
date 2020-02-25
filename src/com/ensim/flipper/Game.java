@@ -56,19 +56,19 @@ public class Game
 	public static final Target MIDDLE_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 550, 550, 580, 580 }, new int[] { 220, 260, 260, 220 }, 1775, 750, ARROW_HAZARD);
 	public static final Target BOTTOM_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 580, 580, 610, 610 }, new int[] { 220, 260, 260, 220 }, 1775, 900, ARROW_HAZARD);
 
-	public static final Area SHOT_RAMP = new Area(Main.downDisplayPanel, "Shot Ramp", 0, new int[] { 729, 696, 659, 637, 631, 638, 660, 679, 696, 671, 664, 674, 692, 718, 752 }, new int[] { 387, 414, 462, 514, 563, 600, 634, 650, 611, 592, 556, 523, 497, 477, 457 }, 715, 20, null, null, ARROW_SHOT_RAMP);
-	public static final Area SHOT_SURFACE = new Area(Main.downDisplayPanel, "", 0, new int[] { 711, 722, 766, 881, 912, 932, 697 }, new int[] { 615, 613, 551, 544, 579, 650, 653 }, 780, 160, null, null, ARROW_SHOT_RAMP);
-	public static final AreaNeedPrev SHOT_HOLE = new AreaNeedPrev(Main.downDisplayPanel, "Full Shot", 500, new int[] { 930, 960, 975, 970, 950, 930, 925 }, new int[] { 580, 580, 600, 625, 630, 625, 600 }, -1, -1, null, null, ARROW_SHOT_HOLE, SHOT_SURFACE);
+	public static final Area SHOT_RAMP = new Area(Main.downDisplayPanel, "Shot Ramp", 0, new int[] { 729, 696, 659, 637, 631, 638, 660, 679, 696, 671, 664, 674, 692, 718, 752 }, new int[] { 387, 414, 462, 514, 563, 600, 634, 650, 611, 592, 556, 523, 497, 477, 457 }, 715, 20, null, null, ARROW_SHOT_RAMP, null);
+	public static final Area SHOT_SURFACE = new Area(Main.downDisplayPanel, "", 0, new int[] { 711, 722, 766, 881, 912, 932, 697 }, new int[] { 615, 613, 551, 544, 579, 650, 653 }, 780, 160, null, null, ARROW_SHOT_RAMP, null);
+	public static final AreaNeedPrev SHOT_HOLE = new AreaNeedPrev(Main.downDisplayPanel, "Full Shot", 500, new int[] { 930, 960, 975, 970, 950, 930, 925 }, new int[] { 580, 580, 600, 625, 630, 625, 600 }, -1, -1, null, null, ARROW_SHOT_HOLE, "shot_ramp_hole", SHOT_SURFACE);
 
 	public static final AreaBonusPoints GATE_LANE = new AreaBonusPoints(Main.downDisplayPanel, "Gate", 5, new int[] { 910, 910, 1045, 1090, 1063, 1010 }, new int[] { 190, 164, 168, 260, 280, 210 }, 1800, 700, GATE_CLOSED, null, null);
 
-	public static final Area HYPERSPACE_END = new Area(Main.downDisplayPanel, "Hyperspace", 250, new int[] { 400, 480, 500, 460, 405 }, new int[] { 220, 220, 200, 166, 204 }, -1, -1, null, null, ARROW_HYPERSPACE);
+	public static final Area HYPERSPACE_END = new Area(Main.downDisplayPanel, "Hyperspace", 250, new int[] { 400, 480, 500, 460, 405 }, new int[] { 220, 220, 200, 166, 204 }, -1, -1, null, null, ARROW_HYPERSPACE, null);
 	public static final AreaBonusPoints HYPERSPACE_ENTRY = new AreaBonusPoints(Main.downDisplayPanel, "Gate of Hyperspace", 10,	new int[] { 610, 610, 565, 565 }, new int[] { 150, 190, 190, 150 }, -1, -1, null, null, null);
 
-	public static final Area START_ZONE = new Area(Main.downDisplayPanel, "", 0, new int[] { 1150, 1150, 1224, 1224 }, new int[] { 145, 175, 175, 145 }, -1, -1, null, null, null);
-	public static final Area LAUNCH_RAMP = new Area(Main.downDisplayPanel, "Launch", 0, new int[] { 370, 370, 850, 850 }, new int[] { 0, 140, 140, 0 }, -1, -1, null, null, null);
+	public static final Area START_ZONE = new Area(Main.downDisplayPanel, "", 0, new int[] { 1150, 1150, 1224, 1224 }, new int[] { 145, 175, 175, 145 }, -1, -1, null, null, null, null);
+	public static final Area LAUNCH_RAMP = new Area(Main.downDisplayPanel, "Launch", 0, new int[] { 370, 370, 850, 850 }, new int[] { 0, 140, 140, 0 }, -1, -1, null, null, null, null);
 
-	public static final Area TIME_WARP = new Area(Main.upDisplayPanel, "Time Warp", 250, new int[] { 488, 488, 580, 580 }, new int[] { 550, 610, 610, 550 }, 75, 528, IMG_TIME_WARP_ACTIVE, IMG_TIME_WARP, ARROW_TIME_WARP);
+	public static final Area TIME_WARP = new Area(Main.upDisplayPanel, "Time Warp", 250, new int[] { 488, 488, 580, 580 }, new int[] { 550, 610, 610, 550 }, 75, 528, IMG_TIME_WARP_ACTIVE, IMG_TIME_WARP, ARROW_TIME_WARP, "time_warp");
 
 	public static final ReEntry REENTRY_LEFT = new ReEntry(Main.upDisplayPanel, 25, new int[] { 390, 390, 458, 458 }, new int[] { 236, 293, 293, 236 }, 1744, 89, ARROW_REENTRY);
 	public static final ReEntry REENTRY_MIDDLE = new ReEntry(Main.upDisplayPanel, 25, new int[] { 390, 390, 458, 458 }, new int[] { 293, 355, 355, 293 }, 1396, 88, ARROW_REENTRY);
@@ -77,7 +77,7 @@ public class Game
 	public static final Target MULTIPLIER_LEFT = new Target(Main.upDisplayPanel, "Multiplier Target", 0, new int[] { 466, 491, 502, 472 }, new int[] { 447, 440, 465, 483 }, 570, 450, ARROW_MULTIPLIER);
 	public static final Target MULTIPLIER_RIGHT = new Target(Main.upDisplayPanel, "Multiplier Target", 0, new int[] { 473, 504, 513, 484 }, new int[] { 484, 475, 497, 513 }, 720, 400, ARROW_MULTIPLIER);
 
-	public static final Area RESET = new Area(Main.downDisplayPanel, "Reset", 0, new int[] { 1160, 1280, 1280, 1160 }, new int[] { 575, 575, 720, 720 }, -1, -1, null, null, null);
+	public static final Area RESET = new Area(Main.downDisplayPanel, "Reset", 0, new int[] { 1160, 1280, 1280, 1160 }, new int[] { 575, 575, 720, 720 }, -1, -1, null, null, null, "game_end");
 
 	
 	public static final Area[] ALL_TARGETS = new Area[] {TOP_MISSION_TARGET, MIDDLE_MISSION_TARGET, BOTTOM_MISSION_TARGET, TOP_FLAG_TARGET, BOTTOM_FLAG_TARGET, TOP_HAZARD_TARGET, MIDDLE_HAZARD_TARGET, BOTTOM_HAZARD_TARGET, MULTIPLIER_LEFT, MULTIPLIER_RIGHT};
@@ -139,7 +139,7 @@ public class Game
 			{
 				this.nonAreaTimer = 0;
 
-				if (area.equals(START_ZONE) && !area.equals(getPrevArea()))
+				if (area.equals(START_ZONE) && !area.equals(this.getPrevArea()))
 				{
 					actionStart();
 					this.prevArea = area;
@@ -205,6 +205,7 @@ public class Game
 		{
 			multiplier --;
 			timerMultiplier = System.currentTimeMillis();
+			SoundUtil.playSound("multiplier_downgrade");
 		}
 		
 		LIGHT_REDEPLOY.setActive(this.redeploy);
@@ -244,6 +245,11 @@ public class Game
 	{
 		this.gateClosed = !open;
 		GATE_LANE.setActive(this.gateClosed);
+		
+		if(!open)
+		{
+			SoundUtil.playSound("gate_closed");
+		}
 	}
 
 	/**
@@ -264,6 +270,7 @@ public class Game
 				Main.messageLabel.setText("Re Deploy \t Gate closed");
 				Main.refreshLabel();
 				System.out.println("[Game] Redployment + Gate closed");
+				SoundUtil.playSound("gate_closed");
 			}
 			
 			else
@@ -279,6 +286,7 @@ public class Game
 			Main.messageLabel.setText("Launch this ball again \t Gate closed");
 			this.passedInGateLane = false;
 			System.out.println("[Game] Gate Closed : Play this ball again");
+			SoundUtil.playSound("gate_closed");
 		}
 		else if (replayBall)
 		{
@@ -337,6 +345,7 @@ public class Game
 					extraBall = true;
 				}
 				
+				SoundUtil.playSound("hyperspace_lvl" + (hyperspaceLevel == 3 ? 1 : hyperspaceLevel));
 				LIGHT_HYPERSPACE.setLevel(hyperspaceLevel);
 			}
 
@@ -349,6 +358,7 @@ public class Game
 				System.out.println("[Game] Mission bank full");
 				Main.messageLabel.setText("Mission bank full !");
 				Main.refreshLabel();
+				SoundUtil.playSound("target_fill");
 			}
 
 			if (REENTRY_LEFT.isActive() && REENTRY_MIDDLE.isActive() && REENTRY_RIGHT.isActive())
@@ -373,12 +383,14 @@ public class Game
 				{
 					Main.messageLabel.setText("Hazard bank full !");
 					System.out.println("[Game] Hazard bank full !");
+					SoundUtil.playSound("target_fill");
 				}
 				else
 				{
 					Main.messageLabel.setText("Gate Opened !");
 					System.out.println("[Game] Gate Opened");
 					this.setGateOpen(true);
+					SoundUtil.playSound("gate_opened");
 				}				
 				
 				Main.refreshLabel();
@@ -392,6 +404,7 @@ public class Game
 				System.out.println("[Game] Flags full");
 				Main.messageLabel.setText("Flags full !");
 				Main.refreshLabel();
+				SoundUtil.playSound("target_fill");
 			}
 			
 			if(MULTIPLIER_LEFT.isActive() && MULTIPLIER_RIGHT.isActive())
@@ -406,6 +419,8 @@ public class Game
 				{
 					multiplier++;
 				}
+				
+				SoundUtil.playSound("target_fill");
 			}
 		}
 	}
@@ -527,6 +542,7 @@ public class Game
 		Main.nbBalle = 3;
 		missionManager.resetAllMissions();
 		this.resetAreasAndIndicators();
+		SoundUtil.playSound("game_start");
 		Game.timeSinceLaunch = System.currentTimeMillis();
 	}
 
@@ -550,10 +566,12 @@ public class Game
 			Main.missionLabel.setText("Game Over");
 			Main.missionPointsLabel.setText("");
 			Main.refreshLabel();
+			SoundUtil.playSound("game_end");
 		}
 		else
 		{
 			Main.missionLabel.setText("Next ball !");
+			SoundUtil.playSound("ball_loss");
 		}
 		
 		this.resetAreasAndIndicators();

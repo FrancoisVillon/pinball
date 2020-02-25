@@ -20,13 +20,14 @@ public class AreaNeedPrev extends Area
 	 * @param yPoints : The array of Y coordinates
 	 * @param posX : x top coordinate of the graphical area
 	 * @param posY : y top coordinate of the graphical area
-	 * @param prevAreaList : All the previous areas that are needed to enter this area correctly 
 	 * @param imgActive : image displayed where the area is when it's active
 	 * @param imgInactive : image displayed where the area is when it's inactive
+	 * @param sound : the sound played when the ball enter the area
+	 * @param prevAreaList : All the previous areas that are needed to enter this area correctly
 	 */
-	public AreaNeedPrev(JPanel jpanel, String phrase, int points, int[] xPoints, int[] yPoints, int posX, int posY, ImageIcon imgActive, ImageIcon imgInactive, Indicator indicator, Area... prevAreaList)
+	public AreaNeedPrev(JPanel jpanel, String phrase, int points, int[] xPoints, int[] yPoints, int posX, int posY, ImageIcon imgActive, ImageIcon imgInactive, Indicator indicator, String sound, Area... prevAreaList)
 	{
-		super(jpanel, phrase, points, xPoints, yPoints, posX, posY, imgActive, imgInactive, indicator);
+		super(jpanel, phrase, points, xPoints, yPoints, posX, posY, imgActive, imgInactive, indicator, sound);
 		this.prevAreaList = prevAreaList;
 	}
 
