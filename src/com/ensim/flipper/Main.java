@@ -39,6 +39,7 @@ public class Main
 	
 	public static boolean silentMode = false;
 	private static boolean tracelessMode = false;
+	private static boolean displayWebcamWindow = true;
 	
 	private static Webcam webcam;
 	
@@ -70,19 +71,22 @@ public class Main
 				BallPositionUtil.waitForNewGame(webcam.getImage());
 			}
 
-			drawBallTrace(webcamPanel.getGraphics());
-			
-			if(webcamPanel.getGraphics() != null)
+			if(displayWebcamWindow)
 			{
-				webcamPanel.getGraphics().setColor(BLACK);
+				drawBallTrace(webcamPanel.getGraphics());
+				
+				if(webcamPanel.getGraphics() != null)
+				{
+					webcamPanel.getGraphics().setColor(BLACK);
+				}
+				
+				for(Area area : Game.AREAS)
+				{
+					area.draw(Main.webcamPanel.getGraphics());
+				}
+				
+				AreaMaker.drawPoints(webcamPanel.getGraphics());
 			}
-			
-			for(Area area : Game.AREAS)
-			{
-				area.draw(Main.webcamPanel.getGraphics());
-			}
-			
-			AreaMaker.drawPoints(webcamPanel.getGraphics());
 		}
 	}
 	
@@ -103,10 +107,20 @@ public class Main
 			{
 				tracelessMode = true;
 			}
+			
+			if(arg != null && arg.contains("noWebcamViewMode"))
+			{
+				tracelessMode = true;
+				displayWebcamWindow = false;
+			}
 		}
 		
-		System.out.println("[Main/Info] Possible options :\n\t--silentMode : no sound is played by the game\n"
-				+ "\t--tracelessMode : ball's trace is not displayed on webcam window");
+		System.out.println("[Main/Info] Possible options :\n\tsilentMode : no sound is played by the game\n"
+				+ "\ttracelessMode : ball's trace is not displayed on webcam window\n"
+				+ "\tnoWebcamViewMode : webcam window is not displayed");
+		
+		System.out.println("[Main/Info] Selected options :\n\tsilentMode = " + silentMode
+				+ "\n\ttracelessMode = " + tracelessMode + "\n\tnoWebcamViewMode = " + displayWebcamWindow);
 	}
 	
 	/**
@@ -128,62 +142,65 @@ public class Main
 		webcam = chooseWebcam();
 		webcam.getDevice().setResolution(new Dimension(1280, 720));
 		
-		// Jpanel webcam
-		webcamPanel = new WebcamPanel(webcam);
-		webcamPanel.setFPSDisplayed(true);
-		webcamPanel.setFillArea(true);
-		
-		webcamPanel.addMouseListener(new MouseListener() 
+		if(displayWebcamWindow)
 		{
-			@Override
-			public void mouseClicked(MouseEvent event)
+			// Jpanel webcam
+			webcamPanel = new WebcamPanel(webcam);
+			webcamPanel.setFPSDisplayed(true);
+			webcamPanel.setFillArea(true);
+			
+			webcamPanel.addMouseListener(new MouseListener() 
 			{
-				AreaMaker.addPoint(new Point(event.getX(), event.getY()));
-				AreaMaker.drawPoints(webcamPanel.getGraphics());
-				System.out.println("[Main] posX : " + event.getX() + ", posY : " + event.getY());
-			}
+				@Override
+				public void mouseClicked(MouseEvent event)
+				{
+					AreaMaker.addPoint(new Point(event.getX(), event.getY()));
+					AreaMaker.drawPoints(webcamPanel.getGraphics());
+					System.out.println("[Main] posX : " + event.getX() + ", posY : " + event.getY());
+				}
 
-			@Override
-			public void mouseEntered(MouseEvent arg0) {}
-			@Override
-			public void mouseExited(MouseEvent arg0) {}
-			@Override
-			public void mousePressed(MouseEvent arg0) {}
-			@Override
-			public void mouseReleased(MouseEvent arg0) {}			
-		});
-		
-		// Webcam window
-		JFrame cameraWindow = new JFrame("Camera");
-		cameraWindow.add(webcamPanel);
-		cameraWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cameraWindow.setIconImage(ICON.getImage());
-		cameraWindow.pack();
-		cameraWindow.setVisible(true);
-		
-		cameraWindow.addKeyListener(new KeyListener()
-		{
-			@Override
-			public void keyPressed(KeyEvent e)
+				@Override
+				public void mouseEntered(MouseEvent arg0) {}
+				@Override
+				public void mouseExited(MouseEvent arg0) {}
+				@Override
+				public void mousePressed(MouseEvent arg0) {}
+				@Override
+				public void mouseReleased(MouseEvent arg0) {}			
+			});
+			
+			// Webcam window
+			JFrame cameraWindow = new JFrame("Camera");
+			cameraWindow.add(webcamPanel);
+			cameraWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			cameraWindow.setIconImage(ICON.getImage());
+			cameraWindow.pack();
+			cameraWindow.setVisible(true);
+			
+			cameraWindow.addKeyListener(new KeyListener()
 			{
-				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				@Override
+				public void keyPressed(KeyEvent e)
 				{
-					AreaMaker.displayPoints();
-					AreaMaker.clearAllPoints();
+					if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					{
+						AreaMaker.displayPoints();
+						AreaMaker.clearAllPoints();
+					}
+					
+					else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+					{
+						AreaMaker.clearAllPoints();
+					}
 				}
-				
-				else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
-				{
-					AreaMaker.clearAllPoints();
-				}
-			}
 
-			@Override
-			public void keyReleased(KeyEvent e) {}
+				@Override
+				public void keyReleased(KeyEvent e) {}
 
-			@Override
-			public void keyTyped(KeyEvent e) {}
-		});
+				@Override
+				public void keyTyped(KeyEvent e) {}
+			});
+		}
 
 		createWindow("Affichage haut", WINDOW_UP_BACKGROUND, upDisplayPanel);
 		createWindow("Affichage bas", WINDOW_DOWN_BACKGROUND, downDisplayPanel);
