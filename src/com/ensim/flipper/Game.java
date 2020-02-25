@@ -270,6 +270,7 @@ public class Game
 				Main.messageLabel.setText("Re Deploy \t Gate closed");
 				Main.refreshLabel();
 				System.out.println("[Game] Redployment + Gate closed");
+				SoundUtil.playSound("gate_closed");
 			}
 			
 			else
@@ -541,6 +542,7 @@ public class Game
 		Main.nbBalle = 3;
 		missionManager.resetAllMissions();
 		this.resetAreasAndIndicators();
+		SoundUtil.playSound("game_start");
 		Game.timeSinceLaunch = System.currentTimeMillis();
 	}
 

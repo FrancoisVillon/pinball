@@ -66,13 +66,13 @@ public class BallPositionUtil
 		{
 			if(isBallVisible(prevPoint))
 			{
-				for (int i = 0; i < 200; i++)
+				for(int i = 0; i < 200; i++)
 				{
-					for (int difX = -1; difX < 2; difX++)
+					for(int difX = -1; difX < 2; difX++)
 					{
-						for (int difY = -1; difY < 2; difY++)
+						for(int difY = -1; difY < 2; difY++)
 						{
-							if (isColorOK(img.getRGB(prevPoint.x + difX, prevPoint.y + difY)))
+							if(isPointInImage(img, prevPoint.x + difX, prevPoint.y + difY) && isColorOK(img.getRGB(prevPoint.x + difX, prevPoint.y + difY)))
 							{
 								prevPoint.translate(difX, difX);
 								return prevPoint;
@@ -130,6 +130,19 @@ public class BallPositionUtil
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Avoid a rare crash in the searchByPrevious() function (point to check out of image bounds)
+	 * 
+	 * @param img : The image get by the webcam
+	 * @param x : X coordinate of the ball
+	 * @param y : Y coordinate of the ball
+	 * @return true if the ball is in the image
+	 */
+	private static boolean isPointInImage(BufferedImage img, int x, int y)
+	{
+		return isBallVisible(new Point(x, y)) && x < img.getWidth() && y < img.getHeight();
 	}
 	
 	/**

@@ -14,7 +14,7 @@ public class SoundUtil
 	 */
 	public static synchronized void playSound(final String sound)
 	{
-		if(sound != null)
+		if(sound != null && !Main.silentMode)
 		{
 			new Thread(new Runnable()
 			{

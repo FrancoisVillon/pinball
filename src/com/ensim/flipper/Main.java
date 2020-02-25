@@ -37,6 +37,9 @@ public class Main
 
 	private static List<Point> ballCoordinates = new ArrayList<>();
 	
+	public static boolean silentMode = false;
+	private static boolean tracelessMode = false;
+	
 	private static Webcam webcam;
 	
 	private static WebcamPanel webcamPanel;
@@ -49,6 +52,7 @@ public class Main
 
 	public static void main(String[] args)
 	{
+		initOptions(args);		
 		initAllWindows();
 		
 		game = new Game();
@@ -80,6 +84,29 @@ public class Main
 			
 			AreaMaker.drawPoints(webcamPanel.getGraphics());
 		}
+	}
+	
+	/**
+	 * Initialize the options of the game
+	 * @param args : Main program's arguments (usage : java -jar "Pinball Space K\'det.jar" arg1 arg2)
+	 */
+	private static void initOptions(String[] args)
+	{
+		for(String arg : args)
+		{
+			if(arg != null && arg.contains("silentMode"))
+			{
+				silentMode = true;
+			}
+			
+			if(arg != null && arg.contains("tracelessMode"))
+			{
+				tracelessMode = true;
+			}
+		}
+		
+		System.out.println("[Main/Info] Possible options :\n\t--silentMode : no sound is played by the game\n"
+				+ "\t--tracelessMode : ball's trace is not displayed on webcam window");
 	}
 	
 	/**
@@ -222,12 +249,15 @@ public class Main
 	 */
 	private static void drawAndUpdateBallTrace(Graphics g, int x, int y)
 	{
-		ballCoordinates.add(new Point(x, y));
-		if (ballCoordinates.size() > NB_MAX_BALL_POS)
+		if(!tracelessMode)
 		{
-			ballCoordinates.remove(0);
+			ballCoordinates.add(new Point(x, y));
+			if (ballCoordinates.size() > NB_MAX_BALL_POS)
+			{
+				ballCoordinates.remove(0);
+			}
+			drawBallTrace(g);
 		}
-		drawBallTrace(g);
 	}
 
 	/**
@@ -236,7 +266,7 @@ public class Main
 	 */
 	private static void drawBallTrace(Graphics g)
 	{
-		if(g != null)
+		if(!tracelessMode && g != null)
 		{
 			g.setColor(RED);
 			
