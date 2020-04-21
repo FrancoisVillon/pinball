@@ -45,39 +45,39 @@ public class Game
 	public static final Indicator LIGHT_EXTRABALL = new Indicator(Main.downDisplayPanel, LIGHT, null, 930, 850);
 	public static final IndicatorLeveled LIGHT_HYPERSPACE = new IndicatorLeveled(Main.downDisplayPanel, 1400, 40, 4, HYPERSPACE_0, HYPERSPACE_1, HYPERSPACE_2, HYPERSPACE_3, HYPERSPACE_4);
 	
-	public static final Target TOP_MISSION_TARGET = new Target(Main.downDisplayPanel, "Mission Target",  75, new int[] { 765, 765, 790, 790 }, new int[] { 510, 475, 475, 505 }, 220, 40, ARROW_MISSION);
-	public static final Target MIDDLE_MISSION_TARGET = new Target(Main.downDisplayPanel, "Mission Target", 75, new int[] { 820, 820, 795, 795 }, new int[] { 510, 475, 475, 505 }, 225, 215, ARROW_MISSION);
-	public static final Target BOTTOM_MISSION_TARGET = new Target(Main.downDisplayPanel, "Mission Target", 75, new int[] { 825, 825, 850, 850 }, new int[] { 500, 475, 475, 500 }, 230, 385, ARROW_MISSION);
+	public static final Target TOP_MISSION_TARGET = new Target(Main.downDisplayPanel, "Mission Target",  75, new int[] { 731, 732, 762, 762 }, new int[] { 493, 460, 461, 492 }, 220, 40, ARROW_MISSION);
+	public static final Target MIDDLE_MISSION_TARGET = new Target(Main.downDisplayPanel, "Mission Target", 75, new int[] { 763, 767, 798, 801 }, new int[] { 486, 458, 457, 485 }, 225, 215, ARROW_MISSION);
+	public static final Target BOTTOM_MISSION_TARGET = new Target(Main.downDisplayPanel, "Mission Target", 75, new int[] { 814, 816, 850, 846 }, new int[] { 485, 458, 457, 488 }, 230, 385, ARROW_MISSION);
 	
-	public static final Target TOP_FLAG_TARGET = new Target(Main.downDisplayPanel, "Flag Target", 75, new int[] { 745, 745, 770, 770 }, new int[] { 220, 260, 260, 220 }, 1620, 35, ARROW_FLAG);
-	public static final Target BOTTOM_FLAG_TARGET = new Target(Main.downDisplayPanel, "Flag Target", 75, new int[] { 785, 785, 810, 810 }, new int[] { 220, 260, 260, 220 }, 1620, 205, ARROW_FLAG);
+	public static final Target TOP_FLAG_TARGET = new Target(Main.downDisplayPanel, "Flag Target", 75, new int[] { 727, 725, 756, 758 }, new int[] { 178, 211, 215, 180 }, 1620, 35, ARROW_FLAG);
+	public static final Target BOTTOM_FLAG_TARGET = new Target(Main.downDisplayPanel, "Flag Target", 75, new int[] { 776, 777, 810, 809 }, new int[] { 180, 216, 216, 181 }, 1620, 205, ARROW_FLAG);
 
-	public static final Target TOP_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 520, 520, 550, 550 }, new int[] { 220, 260, 260, 220 }, 1775, 600, ARROW_HAZARD);
-	public static final Target MIDDLE_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 550, 550, 580, 580 }, new int[] { 220, 260, 260, 220 }, 1775, 750, ARROW_HAZARD);
-	public static final Target BOTTOM_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 580, 580, 610, 610 }, new int[] { 220, 260, 260, 220 }, 1775, 900, ARROW_HAZARD);
+	public static final Target TOP_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 550, 550, 520, 520 }, new int[] { 169, 202, 202, 163 }, 1775, 600, ARROW_HAZARD);
+	public static final Target MIDDLE_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 580, 580, 550, 550 }, new int[] { 169, 202, 202, 163 }, 1775, 750, ARROW_HAZARD);
+	public static final Target BOTTOM_HAZARD_TARGET = new Target(Main.upDisplayPanel, "Hazard Target", 75, new int[] { 610, 610, 581, 582 }, new int[] { 169, 202, 202, 163 }, 1775, 900, ARROW_HAZARD);
 
-	public static final Area SHOT_RAMP = new Area(Main.downDisplayPanel, "Shot Ramp", 0, new int[] { 729, 696, 659, 637, 631, 638, 660, 679, 696, 671, 664, 674, 692, 718, 752 }, new int[] { 387, 414, 462, 514, 563, 600, 634, 650, 611, 592, 556, 523, 497, 477, 457 }, 715, 20, null, null, ARROW_SHOT_RAMP, null);
-	public static final Area SHOT_SURFACE = new Area(Main.downDisplayPanel, "", 0, new int[] { 711, 722, 766, 881, 912, 932, 697 }, new int[] { 615, 613, 551, 544, 579, 650, 653 }, 780, 160, null, null, ARROW_SHOT_RAMP, null);
-	public static final AreaNeedPrev SHOT_HOLE = new AreaNeedPrev(Main.downDisplayPanel, "Full Shot", 500, new int[] { 930, 960, 975, 970, 950, 930, 925 }, new int[] { 580, 580, 600, 625, 630, 625, 600 }, -1, -1, null, null, ARROW_SHOT_HOLE, "shot_ramp_hole", SHOT_SURFACE);
+	public static final Area SHOT_RAMP = new Area(Main.downDisplayPanel, "Shot Ramp", 0, new int[] { 709, 655, 617, 607, 610, 632, 660, 671, 649, 642, 655, 685, 737 }, new int[] { 344, 401, 458, 504, 552, 586, 603, 562, 547, 510, 475, 448, 417 }, 715, 20, null, null, ARROW_SHOT_RAMP, null);
+	public static final Area SHOT_SURFACE = new Area(Main.downDisplayPanel, "", 0, new int[] { 665, 886, 884, 855, 741, 690 }, new int[] { 602, 609, 535, 499, 502, 566 }, 780, 160, null, null, ARROW_SHOT_RAMP, null);
+	public static final AreaNeedPrev SHOT_HOLE = new AreaNeedPrev(Main.downDisplayPanel, "Full Shot", 500, new int[] { 903, 894, 905, 927, 934, 924 }, new int[] { 553, 571, 595, 589, 572, 552 }, -1, -1, null, null, ARROW_SHOT_HOLE, "shot_ramp_hole", SHOT_SURFACE);
 
-	public static final AreaBonusPoints GATE_LANE = new AreaBonusPoints(Main.downDisplayPanel, "Gate", 5, new int[] { 910, 910, 1045, 1090, 1063, 1010 }, new int[] { 190, 164, 168, 260, 280, 210 }, 1800, 700, GATE_CLOSED, null, null);
+	public static final AreaBonusPoints GATE_LANE = new AreaBonusPoints(Main.downDisplayPanel, "Gate", 5, new int[] { 920, 925, 1009, 1049, 1070, 1023 }, new int[] { 130, 165, 174, 259, 253, 150 }, 1800, 700, GATE_CLOSED, null, null);
 
-	public static final Area HYPERSPACE_END = new Area(Main.downDisplayPanel, "Hyperspace", 250, new int[] { 400, 480, 500, 460, 405 }, new int[] { 220, 220, 200, 166, 204 }, -1, -1, null, null, ARROW_HYPERSPACE, null);
-	public static final AreaBonusPoints HYPERSPACE_ENTRY = new AreaBonusPoints(Main.downDisplayPanel, "Gate of Hyperspace", 10,	new int[] { 610, 610, 565, 565 }, new int[] { 150, 190, 190, 150 }, -1, -1, null, null, null);
+	public static final Area HYPERSPACE_END = new Area(Main.downDisplayPanel, "Hyperspace", 250, new int[] { 438, 390, 460, 484 }, new int[] { 114, 154, 171, 151 }, -1, -1, null, null, ARROW_HYPERSPACE, null);
+	public static final AreaBonusPoints HYPERSPACE_ENTRY = new AreaBonusPoints(Main.downDisplayPanel, "Gate of Hyperspace", 10,	new int[] { 565, 559, 597, 604 }, new int[] { 99, 139, 147, 107 }, -1, -1, null, null, null);
 
-	public static final Area START_ZONE = new Area(Main.downDisplayPanel, "", 0, new int[] { 1150, 1150, 1224, 1224 }, new int[] { 145, 175, 175, 145 }, -1, -1, null, null, null, null);
-	public static final Area LAUNCH_RAMP = new Area(Main.downDisplayPanel, "Launch", 0, new int[] { 370, 370, 850, 850 }, new int[] { 0, 140, 140, 0 }, -1, -1, null, null, null, null);
+	public static final Area START_ZONE = new Area(Main.downDisplayPanel, "", 0, new int[] { 1152, 1153, 1229, 1236 }, new int[] { 105, 147, 152, 110 }, -1, -1, null, null, null, null);
+	public static final Area LAUNCH_RAMP = new Area(Main.downDisplayPanel, "Launch", 0, new int[] { 369, 379, 847, 844 }, new int[] { 1, 93, 115, 1 }, -1, -1, null, null, null, null);
 
-	public static final Area TIME_WARP = new Area(Main.upDisplayPanel, "Time Warp", 250, new int[] { 488, 488, 580, 580 }, new int[] { 550, 610, 610, 550 }, 75, 528, IMG_TIME_WARP_ACTIVE, IMG_TIME_WARP, ARROW_TIME_WARP, "time_warp");
+	public static final Area TIME_WARP = new Area(Main.upDisplayPanel, "Time Warp", 250, new int[] { 454, 452, 549, 550 }, new int[] { 523, 589, 601, 530 }, 75, 528, IMG_TIME_WARP_ACTIVE, IMG_TIME_WARP, ARROW_TIME_WARP, "time_warp");
 
-	public static final ReEntry REENTRY_LEFT = new ReEntry(Main.upDisplayPanel, 25, new int[] { 390, 390, 458, 458 }, new int[] { 236, 293, 293, 236 }, 1744, 89, ARROW_REENTRY);
-	public static final ReEntry REENTRY_MIDDLE = new ReEntry(Main.upDisplayPanel, 25, new int[] { 390, 390, 458, 458 }, new int[] { 293, 355, 355, 293 }, 1396, 88, ARROW_REENTRY);
-	public static final ReEntry REENTRY_RIGHT = new ReEntry(Main.upDisplayPanel, 25, new int[] { 390, 390, 458, 458 }, new int[] { 355, 427, 427, 355 }, 1022, 87, ARROW_REENTRY);
+	public static final ReEntry REENTRY_LEFT = new ReEntry(Main.upDisplayPanel, 25, new int[] { 378, 423, 424, 373 }, new int[] { 316, 321, 395, 391 }, 1744, 89, ARROW_REENTRY);
+	public static final ReEntry REENTRY_MIDDLE = new ReEntry(Main.upDisplayPanel, 25, new int[] { 384, 381, 425, 430 }, new int[] { 243, 310, 316, 248 }, 1396, 88, ARROW_REENTRY);
+	public static final ReEntry REENTRY_RIGHT = new ReEntry(Main.upDisplayPanel, 25, new int[] { 390, 390, 428, 435 }, new int[] { 186, 231, 241, 188 }, 1022, 87, ARROW_REENTRY);
 
-	public static final Target MULTIPLIER_LEFT = new Target(Main.upDisplayPanel, "Multiplier Target", 0, new int[] { 466, 491, 502, 472 }, new int[] { 447, 440, 465, 483 }, 570, 450, ARROW_MULTIPLIER);
-	public static final Target MULTIPLIER_RIGHT = new Target(Main.upDisplayPanel, "Multiplier Target", 0, new int[] { 473, 504, 513, 484 }, new int[] { 484, 475, 497, 513 }, 720, 400, ARROW_MULTIPLIER);
+	public static final Target MULTIPLIER_LEFT = new Target(Main.upDisplayPanel, "Multiplier Target", 0, new int[] { 436, 462, 472, 449 }, new int[] { 398, 392, 410, 428 }, 570, 450, ARROW_MULTIPLIER);
+	public static final Target MULTIPLIER_RIGHT = new Target(Main.upDisplayPanel, "Multiplier Target", 0, new int[] { 479, 487, 456, 450 }, new int[] { 429, 452, 456, 439 }, 720, 400, ARROW_MULTIPLIER);
 
-	public static final Area RESET = new Area(Main.downDisplayPanel, "Reset", 0, new int[] { 1160, 1280, 1280, 1160 }, new int[] { 575, 575, 720, 720 }, -1, -1, null, null, null, "game_end");
+	public static final Area RESET = new Area(Main.downDisplayPanel, "Reset", 0, new int[] { 1240, 1087, 1087, 1250 }, new int[] { 569, 571, 656, 663 }, -1, -1, null, null, null, "game_end");
 
 	
 	public static final Area[] ALL_TARGETS = new Area[] {TOP_MISSION_TARGET, MIDDLE_MISSION_TARGET, BOTTOM_MISSION_TARGET, TOP_FLAG_TARGET, BOTTOM_FLAG_TARGET, TOP_HAZARD_TARGET, MIDDLE_HAZARD_TARGET, BOTTOM_HAZARD_TARGET, MULTIPLIER_LEFT, MULTIPLIER_RIGHT};

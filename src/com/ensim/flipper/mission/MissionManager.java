@@ -13,6 +13,7 @@ public class MissionManager
 	public int indexStart = -2;
 	private int rank = 0;
 	private int scoreAcceptMission = 300;
+	private boolean areAllMissionsDone;
 	public Mission mission = null;
 
 	public String instructions;
@@ -39,8 +40,9 @@ public class MissionManager
 				{				
 					int missionIndex;
 					
-					if ((missionIndex = this.getMissionTargetIndex(area)) > 0)
+					if ((missionIndex = this.getMissionTargetIndex(area)) >= 0)
 					{
+						System.out.println("[MissionManager] Mission index = " + missionIndex);
 						Game.ARROW_MISSION.setActive(false);
 						this.choixMission(missionIndex);
 						this.instructions = "Shot to accept " + this.mission.getName() + " Mission";
@@ -122,10 +124,19 @@ public class MissionManager
 	 */
 	private void nextRank()
 	{
-		this.rank++;
-		nextMission();
-		this.scoreInfos = "Rank Up !";
-		System.out.println("[Mission Manager] Rang ++ (" + this.rank + ")");
+		if(this.rank < 5)
+		{
+			this.rank++;
+			nextMission();
+			this.scoreInfos = "Rank Up !";
+			System.out.println("[Mission Manager] Rang ++ (" + this.rank + ")");
+		}
+		
+		else
+		{
+			areAllMissionsDone = true;
+			SoundUtil.playSound("game_end_best_scores");
+		}
 	}
 	
 	/**
@@ -278,7 +289,7 @@ public class MissionManager
 	 */
 	public boolean areAllMissionsDone()
 	{
-		return this.rank >= this.listMissionForRank.size();
+		return areAllMissionsDone;
 	}
 
 	/**
